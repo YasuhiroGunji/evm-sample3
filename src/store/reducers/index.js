@@ -1,8 +1,8 @@
 import { combineReducer } from 'redux';
-import text from "./Text"
+import Apply from "./Apply"
 
 const reducer = conbineReducer({
-    text
+    Apply
 })
 
 export default reducer;

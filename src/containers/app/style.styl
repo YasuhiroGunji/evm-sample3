@@ -1,13 +1,14 @@
 .l_wrapper
   overflow: hidden
 
-.l_wrapper_content
+.l_flex_container
   position: relative
   height: calc(100vh - 60px)
-  margin: 5px
+  margin: 8px
   display: flex
 
-.l_list_container
+//list
+.l_flex_box
   flex-flow: row nowrap
   justify-content: center
   align-items: stretch
@@ -17,38 +18,14 @@
   position: relative
   width: 400px
   height: calc(100vh - 80px)
-  margin: 0 30px
+  margin: 0 24px
   background-color: #ddd
 
-.m_cardlist
-  padding: 20px 16px
-  overflow-y: scroll
-
-.jS
-  margin: 6px 0
-  position: relative
-  display: flex
-
-.iG
-  height: 28px
-  width: 72px
-  margin: -4px 0
-  position: relative
-  -webkit-align-items: center
-  display: flex
-
-.hY
-  width: 184px
-
-.rv
-  margin: 0 24px 0 8px
-  min-width: 0
-  width: 0
-  flex: 1
-
-
-
-//00A1B5
+  .content
+    position: relative
+    height: calc(100vh - 120px)
+    padding: 20px 16px
+    overflow-y: scroll
 
 .l_week_container
   border-bottom: 1px solid transparent
@@ -63,20 +40,18 @@
   -webkit-flex: 1
   flex: 1
 
-
+//form
 .l_form_container
-  flex-flow: row nowrap
-  justify-content: center
-  align-items: stretch
-  flex-grow: 1
-  flex-shrink: 1
-  flex-basis: 400px
-  position: relative
-  width: 400px
   height: 100%
-  margin: 0 30px
-
-.l_text_container
-  height: calc(100vh - 90px)
   padding: 20px 16px
   overflow-y: scroll
+
+.l_form_row
+  margin-right: 5px
+  margin-left: 5px
+  &:before
+    display: table
+    content: " "
+
+.md_form_button
+  margin-top: 24px
