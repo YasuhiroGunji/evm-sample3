@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -16,6 +17,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import MenuItem from 'material-ui/MenuItem';
+
+import * as applyActions from '../../../actions/Apply';
 
 import './applystyle.styl';
 
@@ -52,11 +55,42 @@ const rightIconMenu = (
 
 class Apply extends Component {
 
-  render() {
-    const {
-      date, kokyakuCd, projectCd, startTime, text
-    } = this.props;
+  constructor(props) {
+    super(props);
 
+    this.state = { applyForm: this.props.applyForm };
+  }
+
+  onSubmit() {
+    const { applyActionBind } = this.props;
+
+    const applyForm = new Object();
+    applyForm["date"] = this.state.applyForm.date;
+    applyForm["kokyakuCd"] = this.state.applyForm.kokyakuCd;
+    applyForm["projectCd"] = this.state.applyForm.projectCd;
+    applyForm["startTime"] = this.state.applyForm.startTime;
+    applyForm["text"] = this.state.applyForm.text;
+
+    applyActionBind.submit(applyForm);
+  }; 
+
+  handleDateChange = (x, event) => {
+    console.log(event);
+    this.setState({
+      applyForm: Object.assign({}, this.state.applyForm, {
+        date: event
+      })
+    });
+  };
+  handleChange = (event) => {
+    this.setState({
+      applyForm: Object.assign({}, this.state.applyForm, {
+        kokyakuCd: event.target.value
+      })
+    });
+  };
+
+  render() {
     return (
       <div className="l_flex_container">
 
@@ -74,7 +108,7 @@ class Apply extends Component {
                 <ListItem
                   leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
                   rightIcon={rightIconMenu}
-                  primaryText="2016/9/12(月) 画面一覧作成"
+                  primaryText={this.state.applyForm.date + ''}
                   secondaryText={
                     <p>
                       <span style={style.marginStyle}>予定：18:00～21:00</span>
@@ -146,31 +180,38 @@ class Apply extends Component {
 
             <div className="l_form_container">
               <div className="l_form_row">
-                <DatePicker 
+                <DatePicker
                   hintText="申請日"
+                  floatingLabelText="申請日"
                   autoOk={true} 
-                  defaultDate={date}
+                  defaultDate={this.state.applyForm.date}
+                  ref="date"
+                  onChange={(x, event) => this.handleDateChange(x, event)}
                 />
               </div>
               <div className="l_form_row">
                 <TextField
                   hintText=""
                   floatingLabelText="顧客コード"
-                  value={kokyakuCd}
+                  value={this.state.applyForm.kokyakuCd}
+                  ref="kokyakuCd"
+                  onChange={this.handleChange}
                 />
               </div>
               <div className="l_form_row">
                 <TextField
                   hintText=""
                   floatingLabelText="プロジェクトコード"
-                  value={projectCd}
+                  value={this.state.applyForm.projectCd}
+                  ref="projectCd"
                 />
               </div>
               <div className="l_form_row">
                 <TextField
                   hintText=""
                   floatingLabelText="作業開始時間"
-                  value={startTime}
+                  value={this.state.applyForm.startTime}
+                  ref="startTime"
                 />
               </div>
               <div className="l_form_row">
@@ -180,12 +221,18 @@ class Apply extends Component {
                   multiLine={true}
                   rows={1}
                   rowsMax={5}
-                  value={text}
+                  value={this.state.applyForm.text}
+                  ref="text"
                 />
               </div>
               <div className="l_form_row md_form_button">
                 <RaisedButton label="Cancel" style={style.marginStyle} />
-                <RaisedButton label="Submit" primary={true} style={style.marginStyle} />
+                <RaisedButton 
+                  label="Submit" 
+                  primary={true} 
+                  style={style.marginStyle}
+                  onTouchTap={() => this.onSubmit()}
+                />
               </div>
             
             </div>
@@ -199,22 +246,32 @@ class Apply extends Component {
 }
 
 Apply.propTypes = {
-  date: PropTypes.object.isRequired,
-  kokyakuCd: PropTypes.string.isRequired,
-  projectCd: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  applyForm : PropTypes.shape({
+      date: PropTypes.object.isRequired,
+      kokyakuCd: PropTypes.string.isRequired,
+      projectCd: PropTypes.string.isRequired,
+      startTime: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+  }),
+  submit: PropTypes.func,
 }
 
 function mapStateToProps( state ){
   const {
-    date, kokyakuCd, projectCd, startTime, text
+    applyForm
   } = state.Apply;
+  return  {
+    applyForm
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
   return {
-    date, kokyakuCd, projectCd, startTime, text
+    applyActionBind: bindActionCreators(applyActions, dispatch)
   };
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Apply);
