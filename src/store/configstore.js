@@ -3,12 +3,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
-import Text from '../reducers/text';
+import Apply from './reducers/Apply';
 
 const store = applyMiddleware(thunkMiddleware,createLogger());
 
 const reducers = combineReducers({
-  Text
+  Apply
 });
 
 export default createStore(reducers, {}, store);

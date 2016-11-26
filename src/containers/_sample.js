@@ -50,3 +50,17 @@
 //     mapStateToProps,
 //     mapDispatchToProps
 // )(TopContainer);
+
+// var url = 'https://42015functionfree.azurewebsites.net/api/HttpTriggerCSharp1?code=68ZNafF91QzPqzao1OJ5ge2MqMQyYvXS0HFEkoIgVKU6bxLLIQcjJg==';
+
+// var end = function (error, response) {
+
+//     console.log(error);
+//     console.log(response);
+//     console.log(req);
+// };
+
+// var req = superagent
+// .post(url)
+// .query({name: "Gunji"})
+// .end(end);

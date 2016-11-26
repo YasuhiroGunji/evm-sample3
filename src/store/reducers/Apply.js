@@ -12,21 +12,23 @@
 
 // 初期値の設定をしてあげる
 const initialState = {
-    flag: true,
+    date: new Date(),
+    kokyakuCd: "IKD",
+    projectCd: "KFS5",
+    startTime: "18:00",
     text: "入力してください",
-    number: 0
 }
 
 // action で受け取った値を state に適用して更新する
-export default function text(state = initialState, action = {}) {
-    const { flag, text, number } = action;
+export default function Apply(state = initialState, action = {}) {
+    const { date, kokyakuCd, projectCd, startTime, text } = action;
     switch (action.type) {
-        case "SUBMIT":
+        case "INIT":
             // 今回ここでは状態の更新だけだが、action の値によってさらに別な値も変えたりするなど
-            return Object.assign({}, state, {
-                text: text,
-                number: number
-            });
+            return {
+                ...state,
+                date, kokyakuCd, projectCd, startTime, text
+            };
         case "SHOW":
             return Object.assign({}, state, {
                 flag: true

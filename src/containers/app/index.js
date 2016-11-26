@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -56,7 +57,7 @@ const rightIconMenu = (
   </IconMenu>
 );
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props) {
     super(props);
@@ -68,10 +69,14 @@ export default class App extends Component {
   }
 
   render() {
+      const {
+        date, kokyakuCd, projectCd, startTime, text
+      } = this.props;
+
     return (
       <div className="l_wrapper">
         <AppBar
-          title="evm-sampl2"
+          title="evm-sampl3"
           onLeftIconButtonTouchTap={() => this.onMenuStateChange(true)}
         />
         <Drawer
@@ -175,25 +180,29 @@ export default class App extends Component {
                 <div className="l_form_row">
                   <DatePicker 
                     hintText="申請日"
-                    autoOk="true" 
+                    autoOk={true} 
+                    defaultDate={date}
                   />
                 </div>
                 <div className="l_form_row">
                   <TextField
                     hintText=""
                     floatingLabelText="顧客コード"
+                    value={kokyakuCd}
                   />
                 </div>
                 <div className="l_form_row">
                   <TextField
                     hintText=""
                     floatingLabelText="プロジェクトコード"
+                    value={projectCd}
                   />
                 </div>
                 <div className="l_form_row">
                   <TextField
                     hintText=""
                     floatingLabelText="作業開始時間"
+                    value={startTime}
                   />
                 </div>
                 <div className="l_form_row">
@@ -203,6 +212,7 @@ export default class App extends Component {
                     multiLine={true}
                     rows={1}
                     rowsMax={5}
+                    value={text}
                   />
                 </div>
                 <div className="l_form_row md_form_button">
@@ -222,7 +232,26 @@ export default class App extends Component {
   };
 }
 
+App.propTypes = {
+  date: PropTypes.object.isRequired,
+  kokyakuCd: PropTypes.string.isRequired,
+  projectCd: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+}
 
+function mapStateToProps( state ){
+  const {
+    date, kokyakuCd, projectCd, startTime, text
+  } = state.Apply;
+  return {
+    date, kokyakuCd, projectCd, startTime, text
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(App);
 
 
 // {this.props.children}

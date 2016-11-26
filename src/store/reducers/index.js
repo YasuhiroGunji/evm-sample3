@@ -1,8 +1,8 @@
-import { combineReducer } from 'redux';
-import Apply from "./Apply"
+// import { combineReducer } from 'redux';
+// import Apply from "./Apply"
 
-const reducer = conbineReducer({
-    Apply
-})
+// const reducer = conbineReducer({
+//     Apply
+// })
 
-export default reducer;
+// export default reducer;
