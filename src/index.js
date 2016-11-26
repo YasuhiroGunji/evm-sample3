@@ -25,4 +25,3 @@ class Root extends Component {
 }
 
 render(<Root />, document.getElementById('main'));
-

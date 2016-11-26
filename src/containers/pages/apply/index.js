@@ -1,4 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import {grey400, yellow600, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {List, ListItem} from 'material-ui/List';
+
+import DatePicker from 'material-ui/DatePicker';
+import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import MenuItem from 'material-ui/MenuItem';
 
 import './applystyle.styl';
 
@@ -33,7 +50,7 @@ const rightIconMenu = (
   </IconMenu>
 );
 
-export default class Apply extends Component {
+class Apply extends Component {
 
   render() {
     const {
@@ -181,7 +198,7 @@ export default class Apply extends Component {
   };
 }
 
-App.propTypes = {
+Apply.propTypes = {
   date: PropTypes.object.isRequired,
   kokyakuCd: PropTypes.string.isRequired,
   projectCd: PropTypes.string.isRequired,
