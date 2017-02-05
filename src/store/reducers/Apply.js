@@ -59,6 +59,8 @@ const initialState = {
       projectCd: "KFS5",
       startTime: "18:00",
       text: "入力してください",
+      handleTextChange: null,
+      submit: null,
     },
   }
 }

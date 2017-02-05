@@ -41,10 +41,24 @@ const rightIconMenu = (
   </IconMenu>
 );
 
-import Datas from './data';
-const data = Datas;
-
 export default class ApplyList extends Component {
+
+  static PropTypes = {
+    applyList : PropTypes.arrayOf({
+      id: PropTypes.number.isRequired,
+      date: PropTypes.object.isRequired,
+      workItem: PropTypes.string.isRequired,
+      kokyakuCd: PropTypes.string.isRequired,
+      projectCd: PropTypes.string.isRequired,
+      planStartTIme: PropTypes.string.isRequired,
+      planEndTime: PropTypes.string.isRequired,
+      actualStartTime: PropTypes.string.isRequired,
+      actualEndTIme: PropTypes.string.isRequired,
+      overTime: PropTypes.string.isRequired,
+      lateOverTime: PropTypes.string.isRequired,
+    })
+  }
+
   constructor(props) {
     super(props);
   }
@@ -103,20 +117,4 @@ export default class ApplyList extends Component {
       </div>
     )
   };
-}
-
-ApplyList.PropTypes = {
-  applyList : PropTypes.arrayOf({
-    id: PropTypes.number.isRequired,
-    date: PropTypes.object.isRequired,
-    workItem: PropTypes.string.isRequired,
-    kokyakuCd: PropTypes.string.isRequired,
-    projectCd: PropTypes.string.isRequired,
-    planStartTIme: PropTypes.string.isRequired,
-    planEndTime: PropTypes.string.isRequired,
-    actualStartTime: PropTypes.string.isRequired,
-    actualEndTIme: PropTypes.string.isRequired,
-    overTime: PropTypes.string.isRequired,
-    lateOverTime: PropTypes.string.isRequired,
-  })
 }
