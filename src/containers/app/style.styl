@@ -1,51 +1,18 @@
+body
+  background-color: #f2f2f2
 .l_wrapper
   overflow: hidden
-  
-//list
-.l_flex_box
-  flex-flow: row nowrap
-  justify-content: center
-  align-items: stretch
-  flex-grow: 1
-  flex-shrink: 1
-  flex-basis: 400px
-  position: relative
-  width: 400px
-  height: calc(100vh - 80px)
-  margin: 0 24px
-  background-color: #ddd
-
-  .content
-    position: relative
-    height: calc(100vh - 120px)
-    padding: 20px 16px
-    overflow-y: scroll
-
-.l_week_container
-  border-bottom: 1px solid transparent
-  color: #616161
-  line-height: 24px
-  margin: 20px 0 8px
-  padding: 0 24px
-  display: flex
-
-.l_week_item
-  margin-right: 48px
-  -webkit-flex: 1
-  flex: 1
-
-//form
-.l_form_container
-  height: 100%
-  padding: 20px 16px
-  overflow-y: scroll
-
-.l_form_row
-  margin-right: 5px
-  margin-left: 5px
-  &:before
-    display: table
-    content: " "
-
-.md_form_button
-  margin-top: 24px
+.l_header_override
+  background-color: #3F51B5 !important
+.l_drawer_override
+  top: 65px !important
+  padding: 12px 8px !important 
+  z-index: 100 !important
+  box-shadow: initial !important
+  overflow: visible !important
+  background-color: #f2f2f2 !important
+.l_main
+  margin: 0 16px 0 16px
+  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+  &.is_active
+    padding-left: 232px

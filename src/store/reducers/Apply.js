@@ -25,43 +25,31 @@ function getDate(){
 }
 // 初期値の設定をしてあげる
 const initialState = {
-  apply: {
-    applyList: 
-    [{
-      id: 1,
-      date: getDate(),
-      workItem: '画面一覧作成',
-      kokyakuCd: 'IKD',
-      projectCd: 'KFS5',
-      planStartTime: '18:00',
-      planEndTime: '20:00',
-      actualStartTime: '18:00',
-      actualEndTime: '21:00',
-      overTime: '2.5',
-      lateOverTime: '0',
-    },
+  applyList: 
+  [
     {
-      id: 2,
-      date: getDate(),
-      workItem: '画面一覧作成',
-      kokyakuCd: 'IKD',
-      projectCd: 'KFS5',
-      planStartTime: '18:00',
-      planEndTime: '20:00',
-      actualStartTime: '18:00',
-      actualEndTime: '21:00',
-      overTime: '2.5',
-      lateOverTime: '0',
-    }],
-    applyForm: {
-      date: new Date(),
-      kokyakuCd: "IKD",
-      projectCd: "KFS5",
-      startTime: "18:00",
-      text: "入力してください",
-      handleTextChange: null,
-      submit: null,
+      Id: 0,
+      EmpId: "42015",
+      ScheduledDate: getDate(),
+      CustomerCd: "IKD",
+      ProjectCd: "KFS5",
+      WorkContent: "画面開発",
+      PlanStartTIme: 1800,
+      PlanEndTime: 2100,
+      OvertimeStart: 1800,
+      OvertimeEnd: 2000,
+      OverTime: 1.5,
+      LateOverTime: 0,
     },
+  ],
+  applyForm: {
+    date: new Date(),
+    kokyakuCd: "IKD",
+    projectCd: "KFS5",
+    startTime: "18:00",
+    text: "入力してください",
+    handleTextChange: null,
+    submit: null,
   }
 }
 
@@ -72,10 +60,11 @@ export default function Apply(state = initialState, action = {}) {
     case "INIT":
       return {
         ...state,
-        date, kokyakuCd, projectCd, startTime, text
+        applyList: action.applyList
       };
     case "SUBMIT":
-      return { ...state, 
+      return {
+        ...state, 
         applyForm: action.applyForm
       };
     case "HIDE":

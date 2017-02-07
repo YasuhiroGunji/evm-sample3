@@ -41,7 +41,7 @@ export default class ApplyForm extends Component {
     this.setState({ applyForm: applyForm });
   }
   onSubmit = () => {
-    const { applyActionBind } = this.props.applyForm;
+    const applyActionBind = this.props.action;
 
     const applyForm = new Object();
     applyForm["date"] = this.state.applyForm.date;

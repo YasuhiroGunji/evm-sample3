@@ -11,47 +11,43 @@ import './applystyle.styl';
 class Apply extends Component {
   
   static propTypes = {
-    apply: PropTypes.shape({
-      applyList: PropTypes.arrayOf(
-        React.PropTypes.object
-      ),
-      applyForm : PropTypes.shape({
-          date: PropTypes.object.isRequired,
-          kokyakuCd: PropTypes.string.isRequired,
-          projectCd: PropTypes.string.isRequired,
-          startTime: PropTypes.string.isRequired,
-          text: PropTypes.string.isRequired,
-      })
-    })
+    applyList: PropTypes.arrayOf(
+      React.PropTypes.object
+    ),
+    applyForm : React.PropTypes.object
   }
   
   constructor(props) {
     super(props);
-    this.state = this.props.apply;
+  }
+  
+  componentDidMount() {
+    const bindActionCreators = this.props.applyActionBind;
+    bindActionCreators.init("42015");
   }
 
   render() {
     return (
       <div className="l_flex_container">
         <div className="l_flex_box">
-          <ApplyList applyList={ this.state.applyList } />
+          <ApplyList applyList={ this.props.applyList } />
         </div>
         <div className="l_flex_box">
-          <ApplyForm applyForm={ this.state.applyForm } />
+          <ApplyForm applyForm={ this.props.applyForm } action={ this.props.applyActionBind } />
         </div>
       </div>
     )
   };
 }
 
-function mapStateToProps( state ){
-  const apply = state.Apply.apply;
+function mapStateToProps(state){
+  const { applyList, applyForm, applyActionBind } = state.Apply;
   return  {
-    apply
+    applyList, applyForm, applyActionBind
   };
 }
 
-function mapDispatchToProps( dispatch ) {
+function mapDispatchToProps(dispatch) {
   return {
     applyActionBind: bindActionCreators(applyActions, dispatch)
   };
