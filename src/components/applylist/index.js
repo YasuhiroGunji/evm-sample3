@@ -1,42 +1,54 @@
-import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
+import React, { Component, PropTypes } from 'react';
+import {List, ListItem} from 'material-ui/List';
 
-import Datas from './data';
+import Card from '../common/card';
 
-const style = {
-  height: 100,
-  width: 400,
-  margin: 10,
-  textAlign: 'center',
-  display: 'block',
-};
-
-const data = Datas;
 
 export default class ApplyList extends Component {
 
+  static PropTypes = {
+    applyList : PropTypes.arrayOf({
+      Id: PropTypes.number.isRequired,
+      EmpId: PropTypes.string.isRequired,
+      ScheduledDate: PropTypes.object.isRequired,
+      CustomerCd: PropTypes.string.isRequired,
+      ProjectCd: PropTypes.string.isRequired,
+      WorkContent: PropTypes.string.isRequired,
+      PlanStartTIme: PropTypes.string.isRequired,
+      PlanEndTime: PropTypes.string.isRequired,
+      OvertimeStart: PropTypes.string.isRequired,
+      OvertimeEnd: PropTypes.string.isRequired,
+      OverTime: PropTypes.string.isRequired,
+      LateOverTime: PropTypes.string.isRequired,
+    })
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-      <div>
-        <h2>applylist</h2>
-          <ul>
-            {data.map((d) => {
-              return (
-              <li>
-                <Paper style={style} zDepth={3}>
-                  <div>
-                    {d.id}
-                  </div>
-                  <div>
-                    {d.text}
-                  </div>
-                </Paper>
-              </li>
-              )
-            })}
-          </ul>
+      <div className="content">
+
+        <div className="l_week_container">
+          <div className="l_week_item">
+            今週
+          </div>
+        </div>
+
+        <List>
+          { this.props.applyList.map(
+            (applyItem) => <Card key={ applyItem.id } applyItem={ applyItem } />
+          )}
+        </List>
+
+        <div className="l_week_container">
+          <div className="l_week_item">
+            先週
+          </div>
+        </div>
       </div>
     )
   };
-
 }

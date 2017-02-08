@@ -1,5 +1,5 @@
-import React from 'react'; 
-import { Route, Router,  IndexRoute, hashHistory } from 'react-router';
+import React from 'react';
+import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 
 import App from './containers/app';
 import Top from './containers/pages/top';
@@ -11,9 +11,8 @@ import ApplyForm from './components/applyform';
 import Detail from './components/detail';
 import Overwork from './components/overwork';
 
-export default (store) => {
-
-return (
+export default () => {
+  return (
     <Router history={hashHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Top} />
@@ -24,5 +23,5 @@ return (
         </Route>
       </Route>
     </Router>
-  )
-}
+  );
+};
