@@ -64,81 +64,77 @@ export default class ApplyForm extends Component {
 
   render() {
     return(
-      <div className="content">
+      <Paper zDepth={2}>
 
-        <Paper zDepth={3}>
-
-          <div className="l_applyform_header">
-            <div className="l_form_row">
-              
-            </div>
+        <div className="l_applyform_header">
+          <div className="l_form_row">
+            
           </div>
+        </div>
 
-          <div className="l_form_container">
-            <div className="l_form_row">
-              <DatePicker
-                hintText="申請日"
-                floatingLabelText="申請日"
-                autoOk={true} 
-                defaultDate={this.state.applyForm.date}
-                value={this.state.applyForm.date}
-                ref="date"
-                onChange={this.handleDateChange}
-              />
-            </div>
-            <div className="l_form_row">
-              <TextField
-                hintText=""
-                floatingLabelText="顧客コード"
-                value={this.state.applyForm.kokyakuCd}
-                ref="kokyakuCd"
-                onChange={this.handleTextChange.bind(this, 'kokyakuCd')}
-              />
-            </div>
-            <div className="l_form_row">
-              <TextField
-                hintText=""
-                floatingLabelText="プロジェクトコード"
-                value={this.state.applyForm.projectCd}
-                ref="projectCd"
-                onChange={this.handleTextChange.bind(this, 'projectCd')}
-              />
-            </div>
-            <div className="l_form_row">
-              <TextField
-                hintText=""
-                floatingLabelText="作業開始時間"
-                value={this.state.applyForm.startTime}
-                ref="startTime"
-                onChange={this.handleTextChange.bind(this, 'startTime')}
-              />
-            </div>
-            <div className="l_form_row">
-              <TextField
-                hintText=""
-                floatingLabelText="作業内容"
-                multiLine={true}
-                rows={1}
-                rowsMax={5}
-                value={this.state.applyForm.text}
-                ref="text"
-                onChange={this.handleTextChange.bind(this, 'text')}
-              />
-            </div>
-            <div className="l_form_row md_form_button">
-              <RaisedButton label="Cancel" style={style.marginStyle} />
-              <RaisedButton 
-                label="Submit" 
-                primary={true} 
-                style={style.marginStyle}
-                onTouchTap={() => this.onSubmit()}
-              />
-            </div>
-          
+        <div className="l_form_container">
+          <div className="l_form_row">
+            <DatePicker
+              hintText="申請日"
+              floatingLabelText="申請日"
+              autoOk={true} 
+              defaultDate={this.state.applyForm.date}
+              value={this.state.applyForm.date}
+              ref="date"
+              onChange={this.handleDateChange}
+            />
           </div>
+          <div className="l_form_row">
+            <TextField
+              hintText=""
+              floatingLabelText="顧客コード"
+              value={this.state.applyForm.kokyakuCd}
+              ref="kokyakuCd"
+              onChange={this.handleTextChange.bind(this, 'kokyakuCd')}
+            />
+          </div>
+          <div className="l_form_row">
+            <TextField
+              hintText=""
+              floatingLabelText="プロジェクトコード"
+              value={this.state.applyForm.projectCd}
+              ref="projectCd"
+              onChange={this.handleTextChange.bind(this, 'projectCd')}
+            />
+          </div>
+          <div className="l_form_row">
+            <TextField
+              hintText=""
+              floatingLabelText="作業開始時間"
+              value={this.state.applyForm.startTime}
+              ref="startTime"
+              onChange={this.handleTextChange.bind(this, 'startTime')}
+            />
+          </div>
+          <div className="l_form_row">
+            <TextField
+              hintText=""
+              floatingLabelText="作業内容"
+              multiLine={true}
+              rows={1}
+              rowsMax={5}
+              value={this.state.applyForm.text}
+              ref="text"
+              onChange={this.handleTextChange.bind(this, 'text')}
+            />
+          </div>
+          <div className="l_form_row md_form_button">
+            <RaisedButton label="Cancel" style={style.marginStyle} />
+            <RaisedButton 
+              label="Submit" 
+              primary={true} 
+              style={style.marginStyle}
+              onTouchTap={() => this.onSubmit()}
+            />
+          </div>
+        </div>
 
-        </Paper>
-      </div>
+      </Paper>
     )
   };
 }

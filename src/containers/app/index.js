@@ -127,7 +127,6 @@ export default class App extends Component {
         <Drawer
           open={this.state.showMenu}
           width={232}
-          onRequestChange={(showMenu) => this.onMenuStateChange(showMenu)}
           containerClassName="l_drawer_override"
         >
           <List>
@@ -136,7 +135,7 @@ export default class App extends Component {
               <ListItem primaryText="Top" leftIcon={<ContentInbox />} />
             </Link>
             <Link to="/attendance">
-              <ListItem primaryText="Attendancce" leftIcon={<ActionGrade />} />
+              <ListItem primaryText="Attendance" leftIcon={<ActionGrade />} />
             </Link>
             <Link to="/apply">
               <ListItem primaryText="Apply" leftIcon={<ContentSend />} />
@@ -152,6 +151,8 @@ export default class App extends Component {
         <div className={this.state.marginClass}>
           {this.props.children}
         </div>
+
+
       </div>
     )
   };
