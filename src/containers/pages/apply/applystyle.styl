@@ -1,9 +1,7 @@
 .l_flex_container
   position: relative
-  height: calc(100vh - 65px)
   margin: 0 8px
   display: flex
-  overflow: hidden
 
 .l_flex_box
   flex-flow: row nowrap
@@ -11,10 +9,7 @@
   align-items: stretch
   flex-grow: 1
   flex-shrink: 1
-  flex-basis: 400px
   position: relative
-  width: 400px
-  height: calc(100vh - 80px)
   margin: 0 24px
   background-color: #ddd
   .content
@@ -37,9 +32,21 @@
   flex: 1
 
 //form
+.l_applyform
+  top: 65px
+  bottom: 0
+  right: 0
+  position: fixed
+  width:400px
+  background-color: #ddd
+  transform: translateX(400px)
+  transition: transform .35s ease-in-out
+  &.is_active
+    transform: translateX(0)
+
 .l_applyform_header
-  height: 60px
-  background-color: black
+  height: 80px
+  background-color: #ddd
 
 .l_form_container
   height: 100%
@@ -55,3 +62,10 @@
 
 .md_form_button
   margin-top: 24px
+
+//FloatingActionButton
+.l_floating_button
+  position: fixed
+  top: 73px
+  right: 8px
+  z-index: 100

@@ -6,9 +6,11 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Edit from 'material-ui/svg-icons/editor/mode-edit';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import MenuItem from 'material-ui/MenuItem';
-import {grey400, yellow600, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400, yellow600, grey500, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 const style = {
   cardstyle: {
@@ -63,6 +65,22 @@ export default class Card extends Component {
   render() {
     return (
       <Paper style={style.cardstyle} zDepth={2}>
+        <span style={{float:'right'}}>
+          <IconButton
+            touch={true}
+            tooltip="delete"
+            tooltipPosition="top-right"
+          >
+            <Delete color={grey500} />
+          </IconButton>
+          <IconButton
+            touch={true}
+            tooltip="delete"
+            tooltipPosition="top-right"
+          >
+            <Edit color={grey500} />
+          </IconButton>
+        </span>
         <ListItem
           leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
           rightIcon={rightIconMenu}
@@ -75,7 +93,7 @@ export default class Card extends Component {
             </p>
           }
         >
-        <span style={{float:'right'}}>aaaaa</span>
+          
         </ListItem>
       </Paper>
     )
