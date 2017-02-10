@@ -118,7 +118,7 @@ export default class App extends Component {
     return (
       <div className="l_wrapper">
         <AppBar
-          title="evm-sampl3"
+          title="日報システム"
           className="l_header_override"
           zDepth={3}
           onLeftIconButtonTouchTap={() => this.onMenuStateChange()}
@@ -151,7 +151,6 @@ export default class App extends Component {
         <div className={this.state.marginClass}>
           {this.props.children}
         </div>
-
 
       </div>
     )

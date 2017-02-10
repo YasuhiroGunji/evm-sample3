@@ -4,13 +4,13 @@ export const ACTION_INIT = 'INIT';
 export const ACTION_SUBMIT = 'SUBMIT';
 
 export const init = (enpId) => {
-
   return (dispatch) => {
     
     API("Apply/GetOvertimeList/42015")
     .then(
       (obj) => {
         console.debug(obj);
+
         dispatch({
           type: ACTION_INIT,
           applyList: obj.OvertimeList

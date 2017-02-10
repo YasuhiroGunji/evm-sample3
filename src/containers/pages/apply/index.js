@@ -13,21 +13,13 @@ import * as applyActions from '../../../actions/Apply';
 import './applystyle.styl';
 
 class Apply extends Component {
-  
-  static propTypes = {
-    applyList: PropTypes.arrayOf(
-      React.PropTypes.object
-    )
-  }
 
-  static InitialState = {
-    showForm: false,
-    formClass: "l_applyform"
-  }
-  
   constructor(props) {
     super(props);
-    this.state = { showForm: false, formClass: "l_applyform" };
+    this.state = { 
+      showForm: false, 
+      formClass: "l_applyform" 
+    };
   }
   
   OpenForm() {
@@ -37,22 +29,22 @@ class Apply extends Component {
   }
 
   componentDidMount() {
-    const bindActionCreators = this.props.applyActionBind;
-    bindActionCreators.init("42015");
+    if (this.props.applyList == null || this.props.applyList.length == 0) {
+      const bindActionCreators = this.props.applyActionBind;
+      bindActionCreators.init("42015");
+    }
   }
   
   render() {
     return (
-      <div className="l_flex_container">
-        <div className="l_flex_box">
+      <div className="l_apply_container">
+        <div className="l_list_container">
           <ApplyList applyList={ this.props.applyList } />
         </div>
         <div className="l_floating_button">
-          
-            <FloatingActionButton secondary={true} style={{marginRight: 20}} zDepth={3} onClick={() => this.OpenForm()}>
-              <ContentAdd />
-            </FloatingActionButton>
-          
+          <FloatingActionButton secondary={true} style={{marginRight: 8}} zDepth={3} onClick={() => this.OpenForm()}>
+            <ContentAdd />
+          </FloatingActionButton>
         </div>
         <div className={this.state.formClass}>
           <ApplyForm applyForm={ this.props.applyForm } action={ this.props.applyActionBind } />

@@ -25,31 +25,14 @@ function getDate(){
 }
 // 初期値の設定をしてあげる
 const initialState = {
-  applyList: 
-  [
-    {
-      Id: 0,
-      EmpId: "42015",
-      ScheduledDate: getDate(),
-      CustomerCd: "IKD",
-      ProjectCd: "KFS5",
-      WorkContent: "画面開発",
-      PlanStartTIme: 1800,
-      PlanEndTime: 2100,
-      OvertimeStart: 1800,
-      OvertimeEnd: 2000,
-      OverTime: 1.5,
-      LateOverTime: 0,
-    },
-  ],
+  applyList: [],
   applyForm: {
-    date: new Date(),
-    kokyakuCd: "IKD",
-    projectCd: "KFS5",
-    startTime: "18:00",
-    text: "入力してください",
-    handleTextChange: null,
-    submit: null,
+    ScheduledDate: new Date(),
+    CustomerCd: "IKD",
+    ProjectCd: "KFS5",
+    OvertimeStart: "18:00",
+    OvertimeEnd: "20:00",
+    WorkContent: "",
   }
 }
 
@@ -63,10 +46,8 @@ export default function Apply(state = initialState, action = {}) {
         applyList: action.applyList
       };
     case "SUBMIT":
-      return {
-        ...state, 
-        applyForm: action.applyForm
-      };
+      return {...state, applyList: state.applyList.concat([action.applyForm])};
+
     case "HIDE":
       return Object.assign({}, state, {
         flag: false

@@ -12,6 +12,8 @@ import FileFolder from 'material-ui/svg-icons/file/folder';
 import MenuItem from 'material-ui/MenuItem';
 import {grey400, yellow600, grey500, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
+import * as Common from '../../actions/Common';
+
 const style = {
   cardstyle: {
     height: 72,
@@ -63,6 +65,8 @@ export default class Card extends Component {
   }
 
   render() {
+    const date = Common.DateFormatter(this.props.applyItem.ScheduledDate);
+
     return (
       <Paper style={style.cardstyle} zDepth={2}>
         <span style={{float:'right'}}>
@@ -84,7 +88,7 @@ export default class Card extends Component {
         <ListItem
           leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
           rightIcon={rightIconMenu}
-          primaryText={this.props.applyItem.ScheduledDate + '' + this.props.applyItem.WorkContent}
+          primaryText={date + '' + this.props.applyItem.WorkContent}
           secondaryText={
             <p>
               <span style={style.marginStyle}>予定：{this.props.applyItem.PlanStartTIme}～{this.props.applyItem.PlanEndTime}</span>
