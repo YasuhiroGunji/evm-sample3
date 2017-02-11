@@ -1,12 +1,13 @@
-import API from './Api';
+import * as API from './Api';
 
 export const ACTION_INIT = 'INIT';
 export const ACTION_SUBMIT = 'SUBMIT';
+export const ACTION_SUBMIT_SUCCESS = 'SUBMIT_SUCCESS';
 
 export const init = (enpId) => {
   return (dispatch) => {
     
-    API("Apply/GetOvertimeList/42015")
+    API.Get("Apply/GetOvertimeList/42015")
     .then(
       (obj) => {
         console.debug(obj);
@@ -23,14 +24,29 @@ export const init = (enpId) => {
 }
 
 export const submit = (applyForm) => {
-
-  API("Apply/GetOvertimeList/42015")
-
   return (dispatch) => {
     dispatch({
       type: ACTION_SUBMIT,
       applyForm: applyForm
     });
-  };
 
+    // API.Post("Apply/CreateOcertimeRequest")
+    // .then(
+    //   (obj) => {
+    //     console.debug(obj);
+        
+    //   }
+    // ).catch(
+    //   (err) => { console.error(err); }
+    // );
+
+    setTimeout(() => {
+
+      dispatch({
+        type: ACTION_SUBMIT_SUCCESS,
+        snackbarOpen: true
+      });
+
+    }, 1000);
+  };
 };

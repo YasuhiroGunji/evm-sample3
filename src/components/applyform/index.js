@@ -5,8 +5,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 
-// import * as applyActions from '../../actions/Apply';
-
 const style = {
   marginStyle:{
     marginRight: 8,
@@ -133,7 +131,6 @@ export default class ApplyForm extends Component {
             />
           </div>
         </div>
-
       </Paper>
     )
   };

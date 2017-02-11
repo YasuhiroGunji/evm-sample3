@@ -8,6 +8,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import ApplyList from '../../../components/applylist';
 import ApplyForm from '../../../components/applyform';
+import Snackbar from '../../../components/common/snackbar';
 import * as applyActions from '../../../actions/Apply';
 
 import './applystyle.styl';
@@ -49,15 +50,16 @@ class Apply extends Component {
         <div className={this.state.formClass}>
           <ApplyForm applyForm={ this.props.applyForm } action={ this.props.applyActionBind } />
         </div>
+        <Snackbar snackbarOpen={this.props.snackbarOpen} />
       </div> 
     )
   };
 }
 
 function mapStateToProps(state){
-  const { applyList, applyForm, applyActionBind } = state.Apply;
+  const { applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
   return  {
-    applyList, applyForm, applyActionBind
+    applyList, applyForm, applyActionBind, snackbarOpen
   };
 }
 
