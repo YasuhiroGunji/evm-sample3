@@ -1,4 +1,5 @@
 const initialState = {
+  showForm: false,
   applyList: [],
   applyForm: {
     ScheduledDate: new Date(),
@@ -20,11 +21,18 @@ export default function Apply(state = initialState, action = {}) {
         ...state,
         applyList: action.applyList
       };
+    case "FORM":
+      return {...state, showForm: action.showForm};
+    
     case "SUBMIT":
       return {...state, applyList: state.applyList.concat([action.applyForm])};
-
-    case "SUBMIT_SUCCESS":
+    
+    case "DELETE":
+      return {...state, applyList: state.applyList.concat([action.applyForm])};
+      
+    case "SNACKBAR":
       return {...state, snackbarOpen: action.snackbarOpen};
+    
     case "HIDE":
       return Object.assign({}, state, {
         flag: false

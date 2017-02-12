@@ -8,29 +8,22 @@ export default class ComSnackbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      autoHideDuration: 4000,
+      autoHideDuration: 3000,
       message: 'Event added to your calendar',
       isOpen: this.props.snackbarOpen,
     };
   }
-
+  
   handleActionTouchTap = () => {
-    this.setState({
-      isOpen: false,
-    });
+    this.props.action.Snackbar(false);
     // alert('Event removed from your calendar.');
   };
-
   handleRequestClose = () => {
-    this.setState({
-      isOpen: false,
-    });
+    this.props.action.Snackbar(false);
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.snackbarOpen) {
-      this.setState({isOpen: this.props.snackbarOpen});
-    }
+    this.setState({isOpen: nextProps.snackbarOpen}); 
   }
 
   render() {

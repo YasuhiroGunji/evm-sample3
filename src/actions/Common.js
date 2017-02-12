@@ -1,4 +1,7 @@
 
+export const SNACKBAR_OPEN = 'SNACKBAR_OPEN';
+export const SNACKBAR_CLOSE = 'SNACKBAR_CLOSE';
+
 export const DateFormatter = (targetDate) => {
   var date = new Date(targetDate);
   var year = date.getFullYear();
@@ -13,3 +16,11 @@ export const DateFormatter = (targetDate) => {
   var strDate = year + "/" + month + "/" + date;
   return strDate;
 };
+
+export const SnackbarOpen = (message) => {
+  return {open:true, message: message};
+}
+
+export const SnackbarClase = () => {
+  return {open:false}  
+}

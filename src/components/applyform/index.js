@@ -39,9 +39,10 @@ export default class ApplyForm extends Component {
     applyForm[propertyName] = event.target.value;
     this.setState({ applyForm: applyForm });
   }
+  onCancel = () => {
+    this.props.action.ShowForm(false);
+  }
   onSubmit = () => {
-    const applyActionBind = this.props.action;
-
     const applyForm = new Object();
     applyForm["id"] = 1;
     applyForm["ScheduledDate"] = this.state.applyForm.ScheduledDate;
@@ -51,7 +52,7 @@ export default class ApplyForm extends Component {
     applyForm["OvertimeStart"] = this.state.applyForm.OvertimeEnd;
     applyForm["WorkContent"] = this.state.applyForm.WorkContent;
 
-    applyActionBind.submit(applyForm);
+    this.props.action.Submit(applyForm);
   }; 
 
   render() {
@@ -122,6 +123,7 @@ export default class ApplyForm extends Component {
             <RaisedButton 
               label="Cancel" 
               style={style.marginStyle}
+              onTouchTap={() => this.onCancel()}
             />
             <RaisedButton 
               label="Submit" 

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import ClassSet from 'react-classset';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -13,26 +14,19 @@ import * as applyActions from '../../../actions/Apply';
 
 import './applystyle.styl';
 
-class Apply extends Component {
+class Apply extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
-      showForm: false, 
-      formClass: "l_applyform" 
-    };
   }
   
-  OpenForm() {
-    const isOpen = !this.state.showForm
-    this.setState({showForm: isOpen});
-    this.setState({formClass: "l_applyform" + ((isOpen) ? " is_active" : "")});  
+  ShowForm() {
+    this.props.applyActionBind.ShowForm(!this.props.showForm);
   }
 
   componentDidMount() {
     if (this.props.applyList == null || this.props.applyList.length == 0) {
-      const bindActionCreators = this.props.applyActionBind;
-      bindActionCreators.init("42015");
+      this.props.applyActionBind.Init("42015");
     }
   }
   
@@ -43,23 +37,29 @@ class Apply extends Component {
           <ApplyList applyList={ this.props.applyList } />
         </div>
         <div className="l_floating_button">
-          <FloatingActionButton secondary={true} style={{marginRight: 8}} zDepth={3} onClick={() => this.OpenForm()}>
+          <FloatingActionButton
+            zDepth={3}
+            secondary={true} 
+            style={{marginRight: 8}} onClick={() => this.ShowForm()}>
             <ContentAdd />
           </FloatingActionButton>
         </div>
-        <div className={this.state.formClass}>
-          <ApplyForm applyForm={ this.props.applyForm } action={ this.props.applyActionBind } />
+        <div className={ClassSet({
+          l_applyform: true,
+          is_active: this.props.showForm
+        })}>
+          <ApplyForm applyForm={this.props.applyForm} action={this.props.applyActionBind} />
         </div>
-        <Snackbar snackbarOpen={this.props.snackbarOpen} />
+        <Snackbar snackbarOpen={this.props.snackbarOpen} action={this.props.applyActionBind} />
       </div> 
     )
   };
 }
 
 function mapStateToProps(state){
-  const { applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
+  const { showForm, applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
   return  {
-    applyList, applyForm, applyActionBind, snackbarOpen
+    showForm, applyList, applyForm, applyActionBind, snackbarOpen
   };
 }
 

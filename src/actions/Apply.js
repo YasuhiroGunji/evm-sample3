@@ -1,10 +1,11 @@
 import * as API from './Api';
 
 export const ACTION_INIT = 'INIT';
+export const ACTION_FORM = 'FORM';
 export const ACTION_SUBMIT = 'SUBMIT';
-export const ACTION_SUBMIT_SUCCESS = 'SUBMIT_SUCCESS';
+export const ACTION_SNACKBAR = 'SNACKBAR';
 
-export const init = (enpId) => {
+export const Init = (enpId) => {
   return (dispatch) => {
     
     API.Get("Apply/GetOvertimeList/42015")
@@ -22,8 +23,15 @@ export const init = (enpId) => {
     );
   };
 }
-
-export const submit = (applyForm) => {
+export const ShowForm = (isOpen) => {
+  return (dispatch) => {
+    dispatch({
+      type: ACTION_FORM,
+      showForm: isOpen
+    });
+  };
+}
+export const Submit = (applyForm) => {
   return (dispatch) => {
     dispatch({
       type: ACTION_SUBMIT,
@@ -43,10 +51,19 @@ export const submit = (applyForm) => {
     setTimeout(() => {
 
       dispatch({
-        type: ACTION_SUBMIT_SUCCESS,
-        snackbarOpen: true
+        type: ACTION_SNACKBAR,
+        snackbarOpen: true,
       });
 
-    }, 1000);
+    }, 2000);
   };
 };
+
+export const Snackbar = (isOpen) => {
+  return (dispatch) => {
+    dispatch({
+      type: ACTION_SNACKBAR,
+      snackbarOpen: isOpen,
+    });
+  }
+}

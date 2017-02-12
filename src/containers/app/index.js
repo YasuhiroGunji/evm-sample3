@@ -25,13 +25,8 @@ import {indigo500, grey50} from 'material-ui/styles/colors';
 // import GroupTree from './grouptree';
 import './style.styl';
 
-
 import Checkbox from 'material-ui/Checkbox';
-// const style = {
-//   main: {
-//     paddingTop: 56
-//   }
-// }
+
 const GroupTree = () => (
   <IconMenu
     iconButtonElement={
