@@ -1,6 +1,6 @@
 import request from 'superagent';
 
-const url = "http://evmapp20170130101609.azurewebsites.net/api/";
+const url = 'http://evmapp20170130101609.azurewebsites.net/api/';
 
 export const Get = (apiName) => {
   return new Promise(
@@ -13,11 +13,12 @@ export const Get = (apiName) => {
             } else {
               resolve(JSON.parse(res.text));
             }
-          }
+          },
         );
-    }
+    },
   );
-}
+};
+
 export const Post = (apiName) => {
   return new Promise(
     (resolve, reject) => {
@@ -29,8 +30,9 @@ export const Post = (apiName) => {
             } else {
               resolve(JSON.parse(res.text));
             }
-          }
+          },
         );
-    }
+    },
   );
-}
+};
+

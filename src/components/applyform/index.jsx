@@ -6,44 +6,23 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 
 const style = {
-  marginStyle:{
+  marginStyle: {
     marginRight: 8,
-  }
+  },
 };
 
 export default class ApplyForm extends Component {
 
-  static propTypes = {
-    applyForm : PropTypes.shape({
-      ScheduledDate: PropTypes.object.isRequired,
-      CustomerCd: PropTypes.string.isRequired,
-      ProjectCd: PropTypes.string.isRequired,
-      OvertimeStart: PropTypes.string.isRequired,
-      OvertimeEnd: PropTypes.string.isRequired,
-      WorkContent: PropTypes.string.isRequired,
-    })
-  }
-  
   constructor(props) {
     super(props);
     this.state = this.props;
   }
 
-  handleDateChange = (e, date) => {
-    const applyForm = this.state.applyForm;
-    applyForm['ScheduledDate'] = date;
-    this.setState({ ApplyForm: applyForm });
-  }
-  handleTextChange = (propertyName, event) => {
-    const applyForm = this.state.applyForm;
-    applyForm[propertyName] = event.target.value;
-    this.setState({ applyForm: applyForm });
-  }
-  onCancel = () => {
+  onCancel() {
     this.props.action.ShowForm(false);
   }
-  onSubmit = () => {
-    const applyForm = new Object();
+  onSubmit() {
+    const applyForm = {};
     applyForm["id"] = 1;
     applyForm["ScheduledDate"] = this.state.applyForm.ScheduledDate;
     applyForm["CustomerCd"] = this.state.applyForm.CustomerCd;
@@ -53,16 +32,25 @@ export default class ApplyForm extends Component {
     applyForm["WorkContent"] = this.state.applyForm.WorkContent;
 
     this.props.action.Submit(applyForm);
-  }; 
+  }
+
+  handleDateChange(e, date) {
+    const applyForm = this.state.applyForm;
+    applyForm.ScheduledDate = date;
+    this.setState({ applyForm });
+  }
+  handleTextChange(propertyName, event) {
+    const applyForm = this.state.applyForm;
+    applyForm[propertyName] = event.target.value;
+    this.setState({ applyForm });
+  }
 
   render() {
-    return(
+    return (
       <Paper zDepth={2}>
 
         <div className="l_applyform_header">
-          <div className="l_form_row">
-            
-          </div>
+          <div className="l_form_row" />
         </div>
 
         <div className="l_form_container">
@@ -70,7 +58,7 @@ export default class ApplyForm extends Component {
             <DatePicker
               hintText="申請日"
               floatingLabelText="申請日"
-              autoOk={true} 
+              autoOk
               defaultDate={this.state.applyForm.ScheduledDate}
               value={this.state.applyForm.ScheduledDate}
               onChange={this.handleDateChange}
@@ -81,7 +69,7 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="顧客コード"
               value={this.state.applyForm.CustomerCd}
-              onChange={this.handleTextChange.bind(this, "CustomerCd")}
+              onChange={this.handleTextChange(this, 'CustomerCd')}
             />
           </div>
           <div className="l_form_row">
@@ -89,7 +77,7 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="プロジェクトコード"
               value={this.state.applyForm.ProjectCd}
-              onChange={this.handleTextChange.bind(this, "ProjectCd")}
+              onChange={this.handleTextChange(this, 'ProjectCd')}
             />
           </div>
           <div className="l_form_row">
@@ -97,7 +85,7 @@ export default class ApplyForm extends Component {
               hintText="00:00"
               floatingLabelText="作業開始時間"
               value={this.state.applyForm.OvertimeStart}
-              onChange={this.handleTextChange.bind(this, "OvertimeStart")}
+              onChange={this.handleTextChange(this, 'OvertimeStart')}
             />
           </div>
           <div className="l_form_row">
@@ -105,35 +93,39 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="作業終了時間"
               value={this.state.applyForm.OvertimeEnd}
-              onChange={this.handleTextChange.bind(this, "OvertimeEnd")}
+              onChange={this.handleTextChange(this, 'OvertimeEnd')}
             />
           </div>
           <div className="l_form_row">
             <TextField
               hintText=""
               floatingLabelText="作業内容"
-              multiLine={true}
+              multiLine
               rows={1}
               rowsMax={5}
               value={this.state.applyForm.WorkContent}
-              onChange={this.handleTextChange.bind(this, "WorkContent")}
+              onChange={this.handleTextChange(this, 'WorkContent')}
             />
           </div>
           <div className="l_form_row md_form_button">
-            <RaisedButton 
-              label="Cancel" 
+            <RaisedButton
+              label={'Cancel'}
               style={style.marginStyle}
               onTouchTap={() => this.onCancel()}
             />
-            <RaisedButton 
-              label="Submit" 
-              primary={true} 
+            <RaisedButton
+              label={'Submit'}
+              primary
               style={style.marginStyle}
               onTouchTap={() => this.onSubmit()}
             />
           </div>
         </div>
       </Paper>
-    )
-  };
+    );
+  }
 }
+
+ApplyForm.propTypes = {
+  action: PropTypes.func.isRequired,
+};

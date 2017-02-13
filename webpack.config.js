@@ -1,11 +1,11 @@
 module.exports = {
   entry: {
     js: './src/index.js',
-    html: './src/index.html'
+    html: './src/index.html',
   },
   output: {
     path: './out',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
     contentBase: 'out',
@@ -15,24 +15,24 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: [/\.js$/, /\.jsx$/],
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react', 'stage-0']
-        }
+          presets: ['es2015', 'react', 'stage-0'],
+        },
       },
       {
         test: [/\.css$/, /\.styl$/],
-        loader: 'style-loader!css-loader!stylus-loader'
+        loader: 'style-loader!css-loader!stylus-loader',
       },
       {
         test: /\.html$/,
         loader: 'file?name=[name].[ext]',
       },
-    ]
+    ],
   },
   resolve: {
     modulesDirectories: ['node_modules', './src']
-  }
+  },
 };

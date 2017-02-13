@@ -7,54 +7,53 @@ export const ACTION_SNACKBAR = 'SNACKBAR';
 
 export const Init = (enpId) => {
   return (dispatch) => {
-    
-    API.Get("Apply/GetOvertimeList/42015")
+    API.Get('Apply/GetOvertimeList/42015')
     .then(
       (obj) => {
         console.debug(obj);
 
         dispatch({
           type: ACTION_INIT,
-          applyList: obj.OvertimeList
+          applyList: obj.OvertimeList,
         });
-      }
+      },
     ).catch(
-      (err) => { console.error(err); }
+      err => console.error(err),
     );
   };
-}
+};
+
 export const ShowForm = (isOpen) => {
   return (dispatch) => {
     dispatch({
       type: ACTION_FORM,
-      showForm: isOpen
+      showForm: isOpen,
     });
   };
-}
+};
+
 export const Submit = (applyForm) => {
   return (dispatch) => {
     dispatch({
       type: ACTION_SUBMIT,
-      applyForm: applyForm
+      applyForm,
     });
 
     // API.Post("Apply/CreateOcertimeRequest")
     // .then(
     //   (obj) => {
     //     console.debug(obj);
-        
+
     //   }
     // ).catch(
     //   (err) => { console.error(err); }
     // );
 
     setTimeout(() => {
-
       dispatch({
         type: ACTION_SNACKBAR,
         snackbarOpen: true,
       });
-
     }, 2000);
   };
 };
@@ -65,5 +64,5 @@ export const Snackbar = (isOpen) => {
       type: ACTION_SNACKBAR,
       snackbarOpen: isOpen,
     });
-  }
-}
+  };
+};

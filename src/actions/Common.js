@@ -3,24 +3,20 @@ export const SNACKBAR_OPEN = 'SNACKBAR_OPEN';
 export const SNACKBAR_CLOSE = 'SNACKBAR_CLOSE';
 
 export const DateFormatter = (targetDate) => {
-  var date = new Date(targetDate);
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var date = date.getDate();
+  const date = new Date(targetDate);
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
   if (month < 10) {
-    month = "0" + month;
+    month = `0 + ${month}`;
   }
   if (date < 10) {
-    date = "0" + date;
+    day = `0 + ${day}`;
   }
-  var strDate = year + "/" + month + "/" + date;
+  const strDate = `${year} + '/' + ${month} + '/' + ${day}`;
   return strDate;
 };
 
-export const SnackbarOpen = (message) => {
-  return {open:true, message: message};
-}
+export const SnackbarOpen = message => ({ open: true, message });
 
-export const SnackbarClase = () => {
-  return {open:false}  
-}
+export const SnackbarClase = () => ({ open: false });

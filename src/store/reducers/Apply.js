@@ -3,41 +3,41 @@ const initialState = {
   applyList: [],
   applyForm: {
     ScheduledDate: new Date(),
-    CustomerCd: "IKD",
-    ProjectCd: "KFS5",
-    OvertimeStart: "18:00",
-    OvertimeEnd: "20:00",
-    WorkContent: "",
+    CustomerCd: 'IKD',
+    ProjectCd: 'KFS5',
+    OvertimeStart: '18:00',
+    OvertimeEnd: '20:00',
+    WorkContent: '',
   },
   snackbarOpen: false,
-}
+};
 
-// action で受け取った値を state に適用して更新する
 export default function Apply(state = initialState, action = {}) {
 
   switch (action.type) {
-    case "INIT":
+    case 'INIT':
       return {
         ...state,
-        applyList: action.applyList
+        applyList: action.applyList,
       };
-    case "FORM":
-      return {...state, showForm: action.showForm};
-    
-    case "SUBMIT":
-      return {...state, applyList: state.applyList.concat([action.applyForm])};
-    
-    case "DELETE":
-      return {...state, applyList: state.applyList.concat([action.applyForm])};
-      
-    case "SNACKBAR":
-      return {...state, snackbarOpen: action.snackbarOpen};
-    
-    case "HIDE":
+    case 'FORM':
+      return { ...state, showForm: action.showForm };
+
+    case 'SUBMIT':
+      return { ...state, applyList: state.applyList.concat([action.applyForm]) };
+
+    case 'DELETE':
+      return { ...state, applyList: state.applyList.concat([action.applyForm]) };
+
+    case 'SNACKBAR':
+      return { ...state, snackbarOpen: action.snackbarOpen };
+
+    case 'HIDE':
       return Object.assign({}, state, {
-        flag: false
+        flag: false,
       });
-    default: 
+
+    default:
       return state;
   }
 }

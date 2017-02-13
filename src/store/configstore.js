@@ -5,10 +5,10 @@ import createLogger from 'redux-logger';
 
 import Apply from './reducers/Apply';
 
-const store = applyMiddleware(thunkMiddleware,createLogger());
+const store = applyMiddleware(thunkMiddleware, createLogger());
 
 const reducers = combineReducers({
-  Apply
+  Apply,
 });
 
 export default createStore(reducers, {}, store);
