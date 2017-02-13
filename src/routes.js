@@ -15,11 +15,9 @@ export default () => {
   return (
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Top} />
+        <IndexRoute component={Apply} />
         <Route path="/attendance" component={Attendance} />
         <Route path="/apply" component={Apply}>
-          <Route path="/apply/applylist" component={ApplyList} />
-          <Route path="/apply/applyform" component={ApplyForm} />
         </Route>
       </Route>
     </Router>

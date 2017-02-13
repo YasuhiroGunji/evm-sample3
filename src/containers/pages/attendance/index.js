@@ -2,55 +2,27 @@ import * as React from 'react';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
 
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-    selected: true,
+import './attendancestyle.styl';
+import TableData from './data';
+
+const style = {
+  verticalLine: {
+    borderRight: '1px solid #ddd'
   },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-    selected: true,
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-];
+  verticalAlign: {
+    verticalAlign: 'middle',
+  }
+}
 
 export default class Attendance extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fixedHeader: true,
-      fixedFooter: true,
-      stripedRows: false,
-      showRowHover: false,
-      selectable: true,
-      multiSelectable: false,
-      enableSelectAll: false,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
+      height: '500px',
+      tableData: TableData,
     };
   }
   handleChange = (event) => {
@@ -58,52 +30,87 @@ export default class Attendance extends React.Component {
   };
 
   render() {
+    const data = this.state.tableData;
     return (
       <div>
         <Table
           height={this.state.height}
-          fixedHeader={this.state.fixedHeader}
-          fixedFooter={this.state.fixedFooter}
-          selectable={this.state.selectable}
-          multiSelectable={this.state.multiSelectable}
+          fixedHeader={true}
+          fixedFooter={true}
+          selectable={true}
+          style={style.verticalAlign}
         >
           <TableHeader
-            displaySelectAll={this.state.showCheckboxes}
-            adjustForCheckbox={this.state.showCheckboxes}
-            enableSelectAll={this.state.enableSelectAll}
+            adjustForCheckbox={false}
+            displaySelectAll={false}
+            enableSelectAll={false}
+            style={style.verticalAlign}
           >
-            <TableRow>
-              <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+            <TableRow className={"l_tablesuperheader_override"}>
+              <TableHeaderColumn colSpan={18} style={{textAlign: 'center'}}>
                 Super Header
               </TableHeaderColumn>
             </TableRow>
-            <TableRow>
-              <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
-              <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
-              <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
+            <TableRow className={"l_tableheader_override"}>
+              <TableHeaderColumn style={style.verticalLine}>日付</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>曜日</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>勤務形態</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>時間</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>出社</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>退社</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>直行</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>直帰</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>普通</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>深夜</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>早出</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>遅刻</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>早退</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>事故</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>外出</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>徹夜</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>変則(2)</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>備考</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
-            displayRowCheckbox={this.state.showCheckboxes}
-            deselectOnClickaway={this.state.deselectOnClickaway}
-            showRowHover={this.state.showRowHover}
-            stripedRows={this.state.stripedRows}
+            showRowHover={true}
+            stripedRows={false}
+            displayRowCheckbox={false}
+            style={style.verticalAlign}
           >
-            {tableData.map( (row, index) => (
-              <TableRow key={index} selected={row.selected}>
-                <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
+            {data.map( (row, index) => (
+              <TableRow key={index}>
+                <TableRowColumn style={style.verticalLine}>{row.date}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.dayOfWeek}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.kinmu}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.time}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.syussya}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.taisay}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>
+                  <Checkbox checked={row.tyokkou}/>
+                </TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>
+                  <Checkbox checked={row.tyokki}/>
+                </TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.hutuu}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.shinya}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.hayade}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.tikoku}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.soutai}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.jiko}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.gaisyutu}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.tetuya}</TableRowColumn>
+                <TableRowColumn style={style.verticalLine}>{row.hensoku}</TableRowColumn>
+                <TableRowColumn>{row.bikou}</TableRowColumn>
               </TableRow>
               ))}
           </TableBody>
           <TableFooter
-            adjustForCheckbox={this.state.showCheckboxes}
           >
             <TableRow>
-              <TableRowColumn>ID</TableRowColumn>
-              <TableRowColumn>Name</TableRowColumn>
-              <TableRowColumn>Status</TableRowColumn>
+              <TableRowColumn>日付</TableRowColumn>
+              <TableRowColumn>曜日</TableRowColumn>
+              <TableRowColumn>勤務形態</TableRowColumn>
             </TableRow>
             <TableRow>
               <TableRowColumn colSpan="3" style={{textAlign: 'center'}}>
