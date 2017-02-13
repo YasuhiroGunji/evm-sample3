@@ -25,7 +25,7 @@ class Apply extends React.Component {
   ShowForm() {
     this.props.applyActionBind.ShowForm(!this.props.showForm);
   }
-
+  
   render() {
     return (
       <div className="l_apply_container">
@@ -56,9 +56,9 @@ class Apply extends React.Component {
 }
 
 Apply.propTypes = {
-  applyList: React.PropTypes.arrayOf(React.propTypes.Object).isRequired,
-  applyForm: React.PropTypes.Object.isRequired,
-  applyActionBind: React.PropTypes.func.isRequired,
+  applyList: React.PropTypes.array,
+  applyForm: React.PropTypes.object,
+  applyActionBind: React.PropTypes.object.isRequired,
   showForm: React.PropTypes.bool.isRequired,
   snackbarOpen: React.PropTypes.bool.isRequired,
 };
