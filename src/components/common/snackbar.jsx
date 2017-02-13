@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Snackbar from 'material-ui/Snackbar';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 
 export default class ComSnackbar extends React.Component {
 
@@ -13,17 +11,17 @@ export default class ComSnackbar extends React.Component {
       isOpen: this.props.snackbarOpen,
     };
   }
-  
-  handleActionTouchTap = () => {
-    this.props.action.Snackbar(false);
-    // alert('Event removed from your calendar.');
-  };
-  handleRequestClose = () => {
-    this.props.action.Snackbar(false);
-  };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({isOpen: nextProps.snackbarOpen}); 
+    this.setState({ isOpen: nextProps.snackbarOpen });
+  }
+
+  handleActionTouchTap() {
+    this.props.action.Snackbar(false);
+    // alert('Event removed from your calendar.');
+  }
+  handleRequestClose() {
+    this.props.action.Snackbar(false);
   }
 
   render() {
@@ -41,3 +39,8 @@ export default class ComSnackbar extends React.Component {
     );
   }
 }
+
+ComSnackbar.PropTypes = {
+  snackbarOpen: React.PropTypes.bool.isRequired,
+  action: React.PropTypes.func,
+};

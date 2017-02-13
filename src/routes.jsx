@@ -17,8 +17,7 @@ export default () => {
       <Route path="/" component={App}>
         <IndexRoute component={Apply} />
         <Route path="/attendance" component={Attendance} />
-        <Route path="/apply" component={Apply}>
-        </Route>
+        <Route path="/apply" component={Apply} />
       </Route>
     </Router>
   );

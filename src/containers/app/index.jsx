@@ -1,17 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import ClassSet from 'react-classset';
 import { Link } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
-import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 
-//svg-icon
+// svg-icon
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
@@ -20,12 +20,11 @@ import ContentSend from 'material-ui/svg-icons/content/send';
 import Person from 'material-ui/svg-icons/social/person';
 import Group from 'material-ui/svg-icons/social/group';
 
-import {indigo500, grey50} from 'material-ui/styles/colors';
+import { grey50 } from 'material-ui/styles/colors';
+import Checkbox from 'material-ui/Checkbox';
 
 // import GroupTree from './grouptree';
 import './style.styl';
-
-import Checkbox from 'material-ui/Checkbox';
 
 const GroupTree = () => (
   <IconMenu
@@ -34,8 +33,8 @@ const GroupTree = () => (
         <Group color={grey50} />
       </IconButton>
     }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={{ horizontal: 'middle', vertical: 'bottom' }}
   >
     <List>
       <ListItem
@@ -86,8 +85,8 @@ const Profile = () => (
         <Person color={grey50} />
       </IconButton>
     }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={{ horizontal: 'middle', vertical: 'bottom' }}
   >
     <MenuItem primaryText="Edit" />
     <MenuItem primaryText="Help" />
@@ -99,14 +98,14 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { showMenu: true, marginClass: "l_main is_active" };
+    this.state = { showMenu: true, marginClass: 'l_main is_active' };
   }
 
-  onMenuStateChange(){
-      this.setState({ 
-        showMenu: !this.state.showMenu, 
-        marginClass: "l_main" + ((!this.state.showMenu == true) ? " is_active" : "")
-      });
+  onMenuStateChange() {
+    this.setState({
+      showMenu: !this.state.showMenu,
+      marginClass: 'l_main' + ((!this.state.showMenu === true) ? ' is_active' : ''),
+    });
   }
 
   render() {
@@ -142,15 +141,21 @@ export default class App extends Component {
             </Link>
           </List>
         </Drawer>
-        
-        <div className={this.state.marginClass}>
+
+        <div
+          className={ClassSet({
+            l_main: true,
+            is_active: this.state.showMenu,
+          })}
+        >
           {this.props.children}
         </div>
 
       </div>
-    )
-  };
+    );
+  }
 }
+
 // <Link to="/"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Top</MenuItem></Link>
-//           <Link to="/attendance"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Attendancce</MenuItem></Link>
-//           <Link to="/apply"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Apply</MenuItem></Link>
+// <Link to="/attendance"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Attendancce</MenuItem></Link>
+// <Link to="/apply"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Apply</MenuItem></Link>
