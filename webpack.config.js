@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    js: './src/index.js',
+    js: './src/index.jsx',
     html: './src/index.html',
   },
   output: {
@@ -33,6 +33,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modulesDirectories: ['node_modules', './src']
+    modulesDirectories: ['node_modules', './src'],
+    extensions: ['', '.js', '.jsx'],
   },
 };

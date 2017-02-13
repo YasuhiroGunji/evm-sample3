@@ -32,8 +32,8 @@ export default class ComSnackbar extends React.Component {
           message={this.state.message}
           action="undo"
           autoHideDuration={this.state.autoHideDuration}
-          onActionTouchTap={this.handleActionTouchTap}
-          onRequestClose={this.handleRequestClose}
+          onActionTouchTap={() => this.handleActionTouchTap()}
+          onRequestClose={() => this.handleRequestClose()}
         />
       </div>
     );
@@ -42,5 +42,5 @@ export default class ComSnackbar extends React.Component {
 
 ComSnackbar.PropTypes = {
   snackbarOpen: React.PropTypes.bool.isRequired,
-  action: React.PropTypes.func,
+  action: React.PropTypes.object,
 };

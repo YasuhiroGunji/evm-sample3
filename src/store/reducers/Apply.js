@@ -24,7 +24,7 @@ export default function Apply(state = initialState, action = {}) {
       return { ...state, showForm: action.showForm };
 
     case 'SUBMIT':
-      return { ...state, applyList: state.applyList.concat([action.applyForm]) };
+      return { ...state, applyList: [action.applyForm].concat(state.applyList) };
 
     case 'DELETE':
       return { ...state, applyList: state.applyList.concat([action.applyForm]) };

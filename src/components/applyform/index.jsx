@@ -69,7 +69,7 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="顧客コード"
               value={this.state.applyForm.CustomerCd}
-              onChange={this.handleTextChange(this, 'CustomerCd')}
+              onChange={this.handleTextChange.bind(this, 'CustomerCd')}
             />
           </div>
           <div className="l_form_row">
@@ -77,7 +77,7 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="プロジェクトコード"
               value={this.state.applyForm.ProjectCd}
-              onChange={this.handleTextChange(this, 'ProjectCd')}
+              onChange={this.handleTextChange.bind(this, 'ProjectCd')}
             />
           </div>
           <div className="l_form_row">
@@ -85,7 +85,7 @@ export default class ApplyForm extends Component {
               hintText="00:00"
               floatingLabelText="作業開始時間"
               value={this.state.applyForm.OvertimeStart}
-              onChange={this.handleTextChange(this, 'OvertimeStart')}
+              onChange={this.handleTextChange.bind(this, 'OvertimeStart')}
             />
           </div>
           <div className="l_form_row">
@@ -93,7 +93,7 @@ export default class ApplyForm extends Component {
               hintText=""
               floatingLabelText="作業終了時間"
               value={this.state.applyForm.OvertimeEnd}
-              onChange={this.handleTextChange(this, 'OvertimeEnd')}
+              onChange={this.handleTextChange.bind(this, 'OvertimeEnd')}
             />
           </div>
           <div className="l_form_row">
@@ -104,7 +104,7 @@ export default class ApplyForm extends Component {
               rows={1}
               rowsMax={5}
               value={this.state.applyForm.WorkContent}
-              onChange={this.handleTextChange(this, 'WorkContent')}
+              onChange={this.handleTextChange.bind(this, 'WorkContent')}
             />
           </div>
           <div className="l_form_row md_form_button">
@@ -127,5 +127,5 @@ export default class ApplyForm extends Component {
 }
 
 ApplyForm.propTypes = {
-  action: PropTypes.func.isRequired,
+  action: React.PropTypes.object,
 };
