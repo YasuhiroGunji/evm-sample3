@@ -27,7 +27,9 @@ export default class ApplyList extends Component {
     super(props);
   }
 
+
   render() {
+
     return (
       <div className="content">
 
@@ -39,7 +41,7 @@ export default class ApplyList extends Component {
 
         <List>
           { this.props.applyList.map(
-            (applyItem) => <Card key={ applyItem.id } applyItem={ applyItem } />
+            (applyItem, index) => <Card key={ index } applyItem={ applyItem } />
           )}
         </List>
 

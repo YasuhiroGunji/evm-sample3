@@ -5,8 +5,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 
-// import * as applyActions from '../../actions/Apply';
-
 const style = {
   marginStyle:{
     marginRight: 8,
@@ -17,11 +15,12 @@ export default class ApplyForm extends Component {
 
   static propTypes = {
     applyForm : PropTypes.shape({
-      date: PropTypes.object.isRequired,
-      kokyakuCd: PropTypes.string.isRequired,
-      projectCd: PropTypes.string.isRequired,
-      startTime: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
+      ScheduledDate: PropTypes.object.isRequired,
+      CustomerCd: PropTypes.string.isRequired,
+      ProjectCd: PropTypes.string.isRequired,
+      OvertimeStart: PropTypes.string.isRequired,
+      OvertimeEnd: PropTypes.string.isRequired,
+      WorkContent: PropTypes.string.isRequired,
     })
   }
   
@@ -32,7 +31,7 @@ export default class ApplyForm extends Component {
 
   handleDateChange = (e, date) => {
     const applyForm = this.state.applyForm;
-    applyForm['date'] = date;
+    applyForm['ScheduledDate'] = date;
     this.setState({ ApplyForm: applyForm });
   }
   handleTextChange = (propertyName, event) => {
@@ -40,27 +39,21 @@ export default class ApplyForm extends Component {
     applyForm[propertyName] = event.target.value;
     this.setState({ applyForm: applyForm });
   }
+  onCancel = () => {
+    this.props.action.ShowForm(false);
+  }
   onSubmit = () => {
-    const applyActionBind = this.props.action;
-
     const applyForm = new Object();
-    applyForm["date"] = this.state.applyForm.date;
-    applyForm["kokyakuCd"] = this.state.applyForm.kokyakuCd;
-    applyForm["projectCd"] = this.state.applyForm.projectCd;
-    applyForm["startTime"] = this.state.applyForm.startTime;
-    applyForm["text"] = this.state.applyForm.text;
+    applyForm["id"] = 1;
+    applyForm["ScheduledDate"] = this.state.applyForm.ScheduledDate;
+    applyForm["CustomerCd"] = this.state.applyForm.CustomerCd;
+    applyForm["ProjectCd"] = this.state.applyForm.ProjectCd;
+    applyForm["OvertimeStart"] = this.state.applyForm.OvertimeStart;
+    applyForm["OvertimeStart"] = this.state.applyForm.OvertimeEnd;
+    applyForm["WorkContent"] = this.state.applyForm.WorkContent;
 
-    applyActionBind.submit(applyForm);
+    this.props.action.Submit(applyForm);
   }; 
-  // render {
-  //   return (
-  //     <div>
-  //       <input type="text" onChange={this.handleChange.bind(this, 'firstName')} value={this.state.contact.firstName}/>
-  //       <input type="text" onChange={this.handleChange.bind(this, 'lastName')} value={this.state.contact.lastName}/>
-  //       <input type="text" onChange={this.handleChange.bind(this, 'phone')} value={this.state.contact.lastName}/>
-  //     </div>
-  //   );
-  // }
 
   render() {
     return(
@@ -78,9 +71,8 @@ export default class ApplyForm extends Component {
               hintText="申請日"
               floatingLabelText="申請日"
               autoOk={true} 
-              defaultDate={this.state.applyForm.date}
-              value={this.state.applyForm.date}
-              ref="date"
+              defaultDate={this.state.applyForm.ScheduledDate}
+              value={this.state.applyForm.ScheduledDate}
               onChange={this.handleDateChange}
             />
           </div>
@@ -88,27 +80,32 @@ export default class ApplyForm extends Component {
             <TextField
               hintText=""
               floatingLabelText="顧客コード"
-              value={this.state.applyForm.kokyakuCd}
-              ref="kokyakuCd"
-              onChange={this.handleTextChange.bind(this, 'kokyakuCd')}
+              value={this.state.applyForm.CustomerCd}
+              onChange={this.handleTextChange.bind(this, "CustomerCd")}
             />
           </div>
           <div className="l_form_row">
             <TextField
               hintText=""
               floatingLabelText="プロジェクトコード"
-              value={this.state.applyForm.projectCd}
-              ref="projectCd"
-              onChange={this.handleTextChange.bind(this, 'projectCd')}
+              value={this.state.applyForm.ProjectCd}
+              onChange={this.handleTextChange.bind(this, "ProjectCd")}
+            />
+          </div>
+          <div className="l_form_row">
+            <TextField
+              hintText="00:00"
+              floatingLabelText="作業開始時間"
+              value={this.state.applyForm.OvertimeStart}
+              onChange={this.handleTextChange.bind(this, "OvertimeStart")}
             />
           </div>
           <div className="l_form_row">
             <TextField
               hintText=""
-              floatingLabelText="作業開始時間"
-              value={this.state.applyForm.startTime}
-              ref="startTime"
-              onChange={this.handleTextChange.bind(this, 'startTime')}
+              floatingLabelText="作業終了時間"
+              value={this.state.applyForm.OvertimeEnd}
+              onChange={this.handleTextChange.bind(this, "OvertimeEnd")}
             />
           </div>
           <div className="l_form_row">
@@ -118,13 +115,16 @@ export default class ApplyForm extends Component {
               multiLine={true}
               rows={1}
               rowsMax={5}
-              value={this.state.applyForm.text}
-              ref="text"
-              onChange={this.handleTextChange.bind(this, 'text')}
+              value={this.state.applyForm.WorkContent}
+              onChange={this.handleTextChange.bind(this, "WorkContent")}
             />
           </div>
           <div className="l_form_row md_form_button">
-            <RaisedButton label="Cancel" style={style.marginStyle} />
+            <RaisedButton 
+              label="Cancel" 
+              style={style.marginStyle}
+              onTouchTap={() => this.onCancel()}
+            />
             <RaisedButton 
               label="Submit" 
               primary={true} 
@@ -133,7 +133,6 @@ export default class ApplyForm extends Component {
             />
           </div>
         </div>
-
       </Paper>
     )
   };

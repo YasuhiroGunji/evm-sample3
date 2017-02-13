@@ -1,10 +1,16 @@
 body
   background-color: #f2f2f2
+  color: #212121
+  height: 100%
 .l_wrapper
-  overflow: hidden
+  height: 100%
+  display: block
 .l_header_override
+  top: 0 !important
+  position: fixed !important
   background-color: #3F51B5 !important
 .l_drawer_override
+  color: #212121 !important
   top: 65px !important
   padding: 12px 8px !important 
   z-index: 100 !important
@@ -12,8 +18,9 @@ body
   overflow: visible !important
   background-color: #f2f2f2 !important
 .l_main
-  width: auto
-  margin: 0 104px
+  width: 95%
+  margin: 70px auto 0
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
   &.is_active
-    padding-left: 128px
+    width: auto
+    margin-left: 272px
