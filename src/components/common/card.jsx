@@ -64,6 +64,10 @@ export default class Card extends Component {
     super(props);
   }
 
+  ShowDetail() {
+    this.setState(this.state.detailOpen);
+  }
+
   render() {
     const date = Common.DateFormatter(this.props.applyItem.ScheduledDate);
 
@@ -86,8 +90,8 @@ export default class Card extends Component {
           </IconButton>
         </span>
         <ListItem
+          onClick={() => this.ShowDetail()}
           leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
-          rightIcon={rightIconMenu}
           primaryText={date + '' + this.props.applyItem.WorkContent}
           secondaryText={
             <p>

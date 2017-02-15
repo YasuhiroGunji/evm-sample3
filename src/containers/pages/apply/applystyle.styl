@@ -1,6 +1,6 @@
 .l_apply_container
-  margin-left: -16px
-  margin-right: -16px
+  // margin-left: -16px
+  margin-right: 104px
   background-color: #ddd
 
 .l_list_container
@@ -61,3 +61,18 @@
   top: 73px
   right: 8px
   z-index: 100
+
+// List Animation
+.example-enter
+  opacity: 0.01
+
+.example-enter.example-enter-active
+  opacity: 1
+  transition: opacity 500ms ease-in
+
+.example-leave
+  opacity: 1
+
+.example-leave.example-leave-active
+  opacity: 0.01
+  transition: opacity 300ms ease-in

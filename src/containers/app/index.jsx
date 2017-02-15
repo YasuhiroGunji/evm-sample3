@@ -98,13 +98,12 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { showMenu: true, marginClass: 'l_main is_active' };
+    this.state = { showMenu: true };
   }
 
   onMenuStateChange() {
     this.setState({
       showMenu: !this.state.showMenu,
-      marginClass: 'l_main' + ((!this.state.showMenu === true) ? ' is_active' : ''),
     });
   }
 
@@ -125,14 +124,16 @@ export default class App extends Component {
         >
           <List>
             <Subheader>勤怠管理</Subheader>
-            <Link to="/">
-              <ListItem primaryText="Top" leftIcon={<ContentInbox />} />
-            </Link>
             <Link to="/attendance">
-              <ListItem primaryText="Attendance" leftIcon={<ActionGrade />} />
+              <ListItem primaryText="勤務明細" leftIcon={<ActionGrade />} />
             </Link>
             <Link to="/apply">
-              <ListItem primaryText="Apply" leftIcon={<ContentSend />} />
+              <ListItem primaryText="残業申請" leftIcon={<ContentSend />} />
+            </Link>
+            <Divider />
+            <Subheader>承認</Subheader>
+            <Link to="/apply">
+              <ListItem primaryText="承認一覧" leftIcon={<ContentInbox />} />
             </Link>
             <Divider />
             <Subheader>マスタメンテ</Subheader>

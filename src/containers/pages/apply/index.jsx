@@ -25,7 +25,7 @@ class Apply extends React.Component {
   ShowForm() {
     this.props.applyActionBind.ShowForm(!this.props.showForm);
   }
-  
+
   render() {
     return (
       <div className="l_apply_container">
