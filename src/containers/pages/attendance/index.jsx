@@ -9,6 +9,7 @@ import TableData from './data';
 const style = {
   verticalLine: {
     borderRight: '1px solid #ddd',
+    width: '70px',
   },
   verticalAlign: {
     verticalAlign: 'middle',
@@ -20,7 +21,7 @@ export default class Attendance extends React.Component {
     super(props);
 
     this.state = {
-      height: '400px',
+      height: '350px',
       tableData: TableData,
     };
   }
@@ -39,38 +40,38 @@ export default class Attendance extends React.Component {
           fixedFooter
           selectable
           style={style.verticalAlign}
-          className={'md_tablelayout_override'}
         >
           <TableHeader
             adjustForCheckbox={false}
             displaySelectAll={false}
             enableSelectAll={false}
             style={style.verticalAlign}
+            className={'md_headermagin_override'}
           >
-            <TableRow className={'l_tablesuperheader_override'}>
+            <TableRow style={{ width: '500px' }}>
               <TableHeaderColumn colSpan={18} style={{ textAlign: 'center' }}>
                 Super Header
               </TableHeaderColumn>
             </TableRow>
-            <TableRow className={'l_tableheader_override'}>
+            <TableRow>
               <TableHeaderColumn style={style.verticalLine}>日付</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>曜日</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>勤務形��?</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>勤務形態</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>時間</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>出社</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>退社</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>直��?</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>直行</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>直帰</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>普��?</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>深��?</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>普通</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>深夜</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>早出</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>��?刻</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>遅刻</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>早退</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>事故</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>外�?�</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>徹��?</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>外出</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>哲也</TableHeaderColumn>
               <TableHeaderColumn style={style.verticalLine}>変則(2)</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>備��?</TableHeaderColumn>
+              <TableHeaderColumn style={style.verticalLine}>備考</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -79,7 +80,7 @@ export default class Attendance extends React.Component {
             displayRowCheckbox={false}
             style={style.verticalAlign}
           >
-            {data.map( (row, index) => (
+            {data.map((row, index) => (
               <TableRow key={index}>
                 <TableRowColumn style={style.verticalLine}>{row.date}</TableRowColumn>
                 <TableRowColumn style={style.verticalLine}>{row.dayOfWeek}</TableRowColumn>
@@ -109,12 +110,10 @@ export default class Attendance extends React.Component {
 
           <TableFooter>
             <TableRow>
-              <TableRowColumn>日��?</TableRowColumn>
-              <TableRowColumn>曜日</TableRowColumn>
-              <TableRowColumn>勤務形��?</TableRowColumn>
+              <TableRowColumn colSpan="17">日付</TableRowColumn>
             </TableRow>
             <TableRow>
-              <TableRowColumn colSpan="3" style={{ textAlign: 'center' }}>
+              <TableRowColumn colSpan="17">
                 Super Footer
               </TableRowColumn>
             </TableRow>

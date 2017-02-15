@@ -58,11 +58,11 @@ export const Submit = (applyForm) => {
   };
 };
 
-export const Snackbar = (isOpen) => {
-  return (dispatch) => {
-    dispatch({
-      type: ACTION_SNACKBAR,
-      snackbarOpen: isOpen,
-    });
-  };
-};
+export const Snackbar =
+  isOpen =>
+    dispatch =>
+      dispatch({
+        type: ACTION_SNACKBAR,
+        snackbarOpen: isOpen,
+      });
+
