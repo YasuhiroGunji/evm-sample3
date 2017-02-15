@@ -3,10 +3,13 @@
   "env": {
     "browser": true
   },
+  "ecmaFeatures": {
+    "jsx": true
+  },
   "rules": {
     "linebreak-style": [
       "warn",
-      "unix"
+      "windows"
     ]
   }
 }
