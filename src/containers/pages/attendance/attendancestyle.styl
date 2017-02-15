@@ -1,20 +1,84 @@
+width = 1126px
+
 .l_attendance_container
   margin-left: -16px
   margin-right: -72px
   background-color: #ddd
 
-th, td
-  vertical-align: middle !important
-  text-align: center !important
-  padding: 0 2px !important
-  display: table-cell !important
-  width: 70px !important
+.l_header
+  position: fixed
+  top: 65px
+  height: 80px
+  width: width
+  padding: 4px 8px
+  z-index: 100
+  display: flex
+  flex-direction: column
+  justify-content: space-around
+  div
+    display: flex
+    flex-direction: row
+.md_header_title
+  span
+    margin: 0 18px
+    font-weight: bold
+.md_header_content
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  width: width
+  .md_personal
+    flex-direction: row
+    span
+      padding-top: 12px
+      margin: 0 18px
 
-.l_tableheader_override
-  height: 50px
-  // &::before
-  //   content:" "
-  //   height: 57px
-  //   width: 95%
-  //   position: fixed
-  //   box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)
+.l_table_header
+  position: fixed
+  top: 145px
+  height: 40px
+  width: width
+  z-index: 90
+.md_table_header
+  display: table
+  table-layout: fixed
+  height: 40px
+  width: width
+  li
+    display: table-cell
+    width: 60px
+    text-align: center
+    vertical-align: middle
+    border: 1px solid #ddd
+
+.l_table
+  position: relative
+  top: 120px
+  width: width
+  z-index: 80
+  background-color: #fff
+
+.md_table
+  display: flex
+  flex-direction: column
+  li
+    list-style-type: none
+.md_table_row
+  display: table
+  table-layout: fixed
+  height: 40px
+  width: width
+  li
+    display: table-cell
+    width: 60px
+    text-align: center
+    vertical-align: middle
+    border: 1px solid #ddd
+    list-style-type: none
+
+.l_footer
+  position: fixed
+  bottom: 0px
+  height: 40px
+  width: width
+  z-index: 100

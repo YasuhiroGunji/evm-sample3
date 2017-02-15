@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { List } from 'material-ui/List';
 
 import Card from '../common/card';
@@ -16,9 +17,15 @@ export default class ApplyList extends Component {
         </div>
 
         <List>
-          { this.props.applyList.map(
-            (applyItem, index) => <Card key={index} applyItem={applyItem} />
-          )}
+          <CSSTransitionGroup
+            transitionName="sample"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+          >
+            { this.props.applyList.map(
+              (applyItem, index) => <Card key={index} applyItem={applyItem} />
+            )}
+          </CSSTransitionGroup>
         </List>
 
         <div className="l_week_container">
