@@ -2,48 +2,52 @@
   // margin-left: -16px
   margin-right: 104px
   background-color: #ddd
+.l_apply_header
 
+  
 .l_list_container
   position: relative
   margin-top: 0px
   padding-left: 16px
   padding-right: 16px
 
-.l_week_container
-  border-bottom: 1px solid transparent
-  color: #616161
-  line-height: 24px
-  margin: 20px 0 8px
-  padding: 0 24px
-  display: flex
+// .l_week_container
+//   border-bottom: 1px solid transparent
+//   color: #616161
+//   line-height: 24px
+//   margin: 20px 0 8px
+//   padding: 0 24px
+//   display: flex
 
-.l_week_item
-  margin-right: 48px
-  -webkit-flex: 1
-  flex: 1
+// .l_week_item
+//   margin-right: 48px
+//   -webkit-flex: 1
+//   flex: 1
 
 //form
-.l_applyform
+form-width = 30%
+
+.l_form_container
   position: fixed
+  display: flex
+  flex-direction: column
+  justify-content: space-between
   top: 65px
   bottom: 0
   right: 0
-  position: fixed
-  width:400px
-  background-color: #ddd
-  transform: translateX(400px)
-  transition: transform .25s ease-in-out
-  &.is_active
-    transform: translateX(0)
-
-.l_applyform_header
-  height: 80px
-  background-color: #ddd
-
-.l_form_container
-  height: 100%
-  padding: 20px 16px
-  overflow-y: scroll
+  width: form-width
+  background-color: #fff
+  .l_form_header
+    flex: (0 0 auto)
+    height: 60px
+  .l_form_content
+    overflow-y: auto
+    flex: (1 1 auto)
+    padding: 8px
+  .l_form_footer
+    flex: (0 0 auto)
+    height: 60px
+    
 
 .l_form_row
   margin-right: 5px
@@ -52,8 +56,6 @@
     display: table
     content: " "
 
-.md_form_button
-  margin-top: 24px
 
 //FloatingActionButton
 .l_floating_button
@@ -76,3 +78,14 @@
 .example-leave.example-leave-active
   opacity: 0.01
   transition: opacity 300ms ease-in
+
+.md_card_content
+  cursor: pointer
+  padding: 6px 0
+  line-height: 20px
+  position: relative
+.md_card_box
+  display: flex
+  margin: 6px 0
+  position: relative
+  
