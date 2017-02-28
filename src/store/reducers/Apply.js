@@ -1,7 +1,9 @@
 const initialState = {
-  showForm: false,
+  empId: 42015,
+  showForm: true,
   applyList: [],
   applyForm: {
+    id: 0,
     ScheduledDate: new Date(),
     CustomerCd: 'IKD',
     ProjectCd: 'KFS5',
@@ -25,6 +27,9 @@ export default function Apply(state = initialState, action = {}) {
 
     case 'SUBMIT':
       return { ...state, applyList: [action.applyForm].concat(state.applyList) };
+
+    case 'DETAIL':
+      return { ...state, applyList: state.applyList };
 
     case 'DELETE':
       return { ...state, applyList: state.applyList.concat([action.applyForm]) };

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ClassSet from 'react-classset';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import AppBar from 'material-ui/AppBar';
 import Divider from 'material-ui/Divider';
@@ -22,6 +24,8 @@ import Group from 'material-ui/svg-icons/social/group';
 
 import { grey50 } from 'material-ui/styles/colors';
 import Checkbox from 'material-ui/Checkbox';
+
+import * as baseActions from '../../actions/Base';
 
 // import GroupTree from './grouptree';
 import './style.styl';
@@ -94,17 +98,19 @@ const Profile = () => (
   </IconMenu>
 );
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { showMenu: true };
+    this.state = this.props;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ showMenu: nextProps.showMenu });
   }
 
   onMenuStateChange() {
-    this.setState({
-      showMenu: !this.state.showMenu,
-    });
+    this.props.baseActionsBind.ShowMenu(!this.state.showMenu);
   }
 
   render() {
@@ -143,20 +149,36 @@ export default class App extends Component {
           </List>
         </Drawer>
 
-        <div
+        {this.props.children}
+
+        {/*<div
           className={ClassSet({
             l_main: true,
             is_active: this.state.showMenu,
           })}
         >
-          {this.props.children}
-        </div>
+          
+        </div>*/}
 
       </div>
     );
   }
 }
 
-// <Link to="/"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Top</MenuItem></Link>
-// <Link to="/attendance"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Attendancce</MenuItem></Link>
-// <Link to="/apply"><MenuItem onTouchTap={() => this.onMenuStateChange(false)}>Apply</MenuItem></Link>
+function mapStateToProps(state) {
+  const { showMenu } = state.Base;
+  return {
+    showMenu,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    baseActionsBind: bindActionCreators(baseActions, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

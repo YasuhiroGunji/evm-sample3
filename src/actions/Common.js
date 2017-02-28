@@ -20,3 +20,18 @@ export const DateFormatter = (targetDate) => {
 export const SnackbarOpen = message => ({ open: true, message });
 
 export const SnackbarClase = () => ({ open: false });
+
+export const CreateKey = (empId, item) => {
+  const date = new Date(targetDate);
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (date < 10) {
+    day = `0${day}`;
+  }
+  const key = `${empId}${year}${month}${day}`;
+  return key;
+};

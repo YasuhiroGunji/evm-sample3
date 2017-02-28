@@ -73,7 +73,7 @@ export default class Card extends Component {
 
     return (
       <Paper style={style.cardstyle} zDepth={2}>
-        <span style={{float:'right'}}>
+        <span style={{float:'right', zIndex: 1000}}>
           <IconButton
             touch={true}
             tooltip="delete"
@@ -83,7 +83,7 @@ export default class Card extends Component {
           </IconButton>
           <IconButton
             touch={true}
-            tooltip="delete"
+            tooltip="edit"
             tooltipPosition="top-right"
           >
             <Edit color={grey500} />
