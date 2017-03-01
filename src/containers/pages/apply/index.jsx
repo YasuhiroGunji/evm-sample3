@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import ApplyList from '../../../components/applylist/index';
-import ApplyForm from '../../../components/applyform/index';
 import Card from '../../../components/common/card';
 import Snackbar from '../../../components/common/snackbar';
 import * as applyActions from '../../../actions/Apply';
@@ -111,6 +109,7 @@ class Apply extends React.Component {
             is_open_form: this.props.showForm,
           })}
         >
+
           <div className={'l_list_container'}>
             <List>
               <div className={'l_week_item'}>
@@ -134,7 +133,9 @@ class Apply extends React.Component {
               </CSSTransitionGroup>
             </List>
           </div>
-          <div className='l_floating_button'>
+
+
+          <div className={'l_floating_button'}>
             <FloatingActionButton
               zDepth={3}
               secondary
@@ -143,7 +144,8 @@ class Apply extends React.Component {
               <ContentAdd />
             </FloatingActionButton>
           </div>
-          {/*<ApplyForm applyForm={this.props.applyForm} action={this.props.applyActionBind} />*/}
+
+
           <div
             className={ClassSet({
               l_form_container: true,
@@ -227,6 +229,7 @@ class Apply extends React.Component {
               />
             </Paper>
           </div>
+
           <Snackbar snackbarOpen={this.props.snackbarOpen} action={this.props.applyActionBind} />
         </div>
       </div>
@@ -239,12 +242,12 @@ Apply.propTypes = {
   applyForm: React.PropTypes.object,
   applyActionBind: React.PropTypes.object.isRequired,
   showForm: React.PropTypes.bool.isRequired,
+  showMenu: React.PropTypes.bool.isRequired,
   snackbarOpen: React.PropTypes.bool.isRequired,
 };
 
 class PaperContent extends React.Component {
   render() {
-    const applyType = 1;
     return (
       <div className={'md_card_content'}>
         <div className={'md_card_title'}>

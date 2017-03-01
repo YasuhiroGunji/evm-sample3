@@ -41,7 +41,7 @@ const rightIconMenu = (
   </IconMenu>
 );
 
-export default class Card extends Component {
+export default class ComCard extends React.Component {
 
   static PropTypes = {
     applyItem: PropTypes.shape({

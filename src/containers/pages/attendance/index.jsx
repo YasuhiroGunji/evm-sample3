@@ -1,31 +1,39 @@
 import * as React from 'react';
-import { Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn }
-  from 'material-ui/Table';
+import ClassSet from 'react-classset';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import * as attendanceActions from '../../../actions/Attendance';
+
 import './attendancestyle.styl';
 import TableData from './data';
 
-export default class Attendance extends React.Component {
+class Attendance extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      height: '350px',
-      tableData: TableData,
-    };
+    this.state = this.props;
   }
-
-  handleChange(event) {
-    this.setState({ height: event.target.value });
+  componentWillReceiveProps(nextProps) {
+    this.setState({ showMenu: nextProps.showMenu });
+  }
+  onChangeCheckbox(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
-    const data = this.state.tableData;
+    const data = TableData;
     return (
-      <div>
+      <div
+        className={ClassSet({
+          l_apply_container: true,
+          is_open_menu: this.props.showMenu,
+        })}
+      >
         <Paper zDepth={1} className={'l_header'}>
           <div>
             <div className={'md_header_title'}>
@@ -93,9 +101,9 @@ export default class Attendance extends React.Component {
                   <li>
                     {(() => {
                       if (row.dayOfWeek === '土' || row.dayOfWeek === '日') {
-                        return <Checkbox checked={row.tyokkou} disabled />;
+                        return <Checkbox checked={row.tyokkou} disabled onChange={() => this.onChangeCheckbox(this)} />;
                       }
-                      return <Checkbox checked={row.tyokkou} />;
+                      return <Checkbox checked={row.tyokkou} onChange={() => this.onChangeCheckbox(this)} />;
                     })()}
                   </li>
                   <li>
@@ -124,93 +132,26 @@ export default class Attendance extends React.Component {
         <Paper className={'l_footer'}>
           <div>footer</div>
         </Paper>
-        {/*<Table
-          height={this.state.height}
-          fixedHeader
-          fixedFooter
-          selectable
-          style={style.verticalAlign}
-        >
-          <TableHeader
-            adjustForCheckbox={false}
-            displaySelectAll={false}
-            enableSelectAll={false}
-            style={style.verticalAlign}
-            className={'md_headermagin_override'}
-          >
-            <TableRow style={{ width: '500px' }}>
-              <TableHeaderColumn colSpan={18} style={{ textAlign: 'center' }}>
-                Super Header
-              </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn style={style.verticalLine}>日付</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>曜日</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>勤務形態</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>時間</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>出社</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>退社</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>直行</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>直帰</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>普通</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>深夜</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>早出</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>遅刻</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>早退</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>事故</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>外出</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>哲也</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>変則(2)</TableHeaderColumn>
-              <TableHeaderColumn style={style.verticalLine}>備考</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody
-            showRowHover
-            stripedRows={false}
-            displayRowCheckbox={false}
-            style={style.verticalAlign}
-          >
-            {data.map((row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn style={style.verticalLine}>{row.date}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.dayOfWeek}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.kinmu}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.time}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.syussya}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.taisay}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>
-                  <Checkbox checked={row.tyokkou} />
-                </TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>
-                  <Checkbox checked={row.tyokki} />
-                </TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.hutuu}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.shinya}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.hayade}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.tikoku}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.soutai}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.jiko}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.gaisyutu}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.tetuya}</TableRowColumn>
-                <TableRowColumn style={style.verticalLine}>{row.hensoku}</TableRowColumn>
-                <TableRowColumn>{row.bikou}</TableRowColumn>
-              </TableRow>
-              ))}
-          </TableBody>
-
-          <TableFooter>
-            <TableRow>
-              <TableRowColumn colSpan="17">日付</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn colSpan="17">
-                Super Footer
-              </TableRowColumn>
-            </TableRow>
-          </TableFooter>
-
-        </Table>*/}
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { showForm } = state.Attendance;
+  const { showMenu } = state.Base;
+  return {
+    showForm, showMenu,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    attendanceActionBind: bindActionCreators(attendanceActions, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Attendance);
