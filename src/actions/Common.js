@@ -17,6 +17,20 @@ export const DateFormatter = (targetDate) => {
   return strDate;
 };
 
+export const DateFormatterMMdd = (targetDate) => {
+  const date = new Date(targetDate);
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (date < 10) {
+    day = `0${day}`;
+  }
+  const strDate = `${month}/${day}`;
+  return strDate;
+};
+
 export const SnackbarOpen = message => ({ open: true, message });
 
 export const SnackbarClase = () => ({ open: false });

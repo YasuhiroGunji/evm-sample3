@@ -1,12 +1,10 @@
-width = 1126px
+width = 1024px
 
 .l_attendance_container
-  width: auto
   padding: 65px 0 1px
-  margin: 0 96px
+  margin: 0 24px
   background-color: #ddd
   &.is_open_menu
-    width: auto
     margin-left: 240px
 
 .l_header
@@ -19,13 +17,17 @@ width = 1126px
   display: flex
   flex-direction: column
   justify-content: space-around
-  div
-    display: flex
-    flex-direction: row
+    
 .md_header_title
-  span
-    margin: 0 18px
+  display: flex
+  justify-content: space-between
+  div
+    margin: 0 16px
     font-weight: bold
+  span
+    margin: 0 8px
+    font-size: 62.5%
+
 .md_header_content
   display: flex
   flex-direction: row
@@ -80,9 +82,3 @@ width = 1126px
     border: 1px solid #ddd
     list-style-type: none
 
-.l_footer
-  position: fixed
-  bottom: 0px
-  height: 40px
-  width: width
-  z-index: 100

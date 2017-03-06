@@ -30,39 +30,29 @@ class Attendance extends React.Component {
     return (
       <div
         className={ClassSet({
-          l_apply_container: true,
+          l_attendance_container: true,
           is_open_menu: this.props.showMenu,
         })}
       >
         <Paper zDepth={1} className={'l_header'}>
           <div>
             <div className={'md_header_title'}>
-              <span>第49期</span>
-              <span>2月度</span>
-              <span>2017/01/11〜2017/02/10</span>
-            </div>
-          </div>
-          <div>
-            <div className={'md_header_content'}>
+              <div>第49期</div>
+              <div>2月度</div>
+              <div>2017/01/11〜2017/02/10</div>
               <div>
                 <RaisedButton
                   label={'JOBCAN取得'}
                   primary
-                  style={{ marginLeft: '18px' }}
                 />
               </div>
-              <div className={'md_personal'}>
-                <div>
-                  <span>所属部署：オープンシステム統括部</span>
-                </div>
-                <div>
-                  <span>社員番号：42015</span>
-                </div>
-                <div>
-                  <span>社員名：郡司　康弘</span>
-                </div>
-              </div>
+              <span>所属部署：オープンシステム統括部</span>
+              <span>社員番号：42015</span>
+              <span>社員名：郡司　康弘</span>
             </div>
+          </div>
+          <div>
+            
           </div>
         </Paper>
         <Paper zDepth={1} className={'l_table_header'}>
@@ -77,14 +67,12 @@ class Attendance extends React.Component {
             <li>直帰</li>
             <li>普通</li>
             <li>深夜</li>
-            <li>早出</li>
             <li>遅刻</li>
             <li>早退</li>
             <li>事故</li>
             <li>外出</li>
             <li>徹夜</li>
             <li>変則</li>
-            <li>備考</li>
           </ul>
         </Paper>
         <div className={'l_table'}>
@@ -116,22 +104,17 @@ class Attendance extends React.Component {
                   </li>
                   <li>{row.hutuu}</li>
                   <li>{row.shinya}</li>
-                  <li>{row.hayade}</li>
                   <li>{row.tikoku}</li>
                   <li>{row.soutai}</li>
                   <li>{row.jiko}</li>
                   <li>{row.gaisyutu}</li>
                   <li>{row.tetuya}</li>
                   <li>{row.hensoku}</li>
-                  <li>{row.bikou}</li>
                 </ul>
               </li>
             ))}
           </ul>
         </div>
-        <Paper className={'l_footer'}>
-          <div>footer</div>
-        </Paper>
       </div>
     );
   }

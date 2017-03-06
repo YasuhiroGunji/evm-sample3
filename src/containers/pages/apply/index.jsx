@@ -63,33 +63,13 @@ class Apply extends React.Component {
     const applyItem = this.state.applyList;
     this.props.applyActionBind.ShowDetail(!this.props.showForm);
   }
-  CreateKey(item) {
-
-    if (item == 'undefined') return 0;
-    const id = this.state.empId;
-    const date = new Date();
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    let day = date.getDate();
-    if (date < 10) {
-      day = `0${day}`;
-    }
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const key = `${id}${year}${month}${day}${hour}${minutes}${seconds}`;
-
-    return key;
-  };
 
   handleDateChange(e, date) {
     const applyForm = this.state.applyForm;
     applyForm.ScheduledDate = date;
     this.setState({ applyForm });
   }
+
   handleTextChange(propertyName, event) {
     const applyForm = this.state.applyForm;
     applyForm[propertyName] = event.target.value;
@@ -97,9 +77,9 @@ class Apply extends React.Component {
   }
 
   render() {
-    var count = 100
-    var applyItems = this.props.applyList.map((applyItem, index) =>
-                        <Card key={applyItem.id} applyItem={applyItem} />);
+    const applyItems = this.props.applyList.map(
+                        (applyItem, index) =>
+                          <Card key={applyItem.ApplyId} applyItem={applyItem} />);
     return (
       <div>
         <div
@@ -115,15 +95,7 @@ class Apply extends React.Component {
               <div className={'l_week_item'}>
                 <div>今月</div>
               </div>
-              <Paper zDepth={2} className={'l_apply_item'}>
-                <ListItem
-                  onClick={() => this.ShowDetail(this)}
-                  leftAvatar={<Avatar icon={<FileFolder />}
-                  backgroundColor={yellow600} />}
-                >
-                  <PaperContent />
-                </ListItem>
-              </Paper>
+
               <CSSTransitionGroup
                 transitionName="example"
                 transitionEnterTimeout={500}
@@ -134,7 +106,6 @@ class Apply extends React.Component {
             </List>
           </div>
 
-
           <div className={'l_floating_button'}>
             <FloatingActionButton
               zDepth={3}
@@ -144,7 +115,6 @@ class Apply extends React.Component {
               <ContentAdd />
             </FloatingActionButton>
           </div>
-
 
           <div
             className={ClassSet({
@@ -174,7 +144,7 @@ class Apply extends React.Component {
                   hintText=""
                   floatingLabelText="顧客コード"
                   value={this.state.applyForm.CustomerCd}
-                  onChange={this.handleTextChange.bind(this, 'CustomerCd')}
+                  onChange={this.handleTextChange}
                 />
               </div>
               <div className="l_form_row">
@@ -246,7 +216,7 @@ Apply.propTypes = {
   snackbarOpen: React.PropTypes.bool.isRequired,
 };
 
-class PaperContent extends React.Component {
+/*class PaperContent extends React.Component {
   render() {
     return (
       <div className={'md_card_content'}>
@@ -263,7 +233,7 @@ class PaperContent extends React.Component {
       </div>
     );
   }
-}
+}*/
 
 function mapStateToProps(state) {
   const { empId, showForm, applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
