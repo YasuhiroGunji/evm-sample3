@@ -1,10 +1,8 @@
+
 module.exports = {
-  entry: {
-    js: './src/index.jsx',
-    html: './src/index.html',
-  },
+  entry: './src/index.jsx',
   output: {
-    path: './out',
+    path: '/out',
     filename: 'bundle.js',
   },
   devServer: {
@@ -13,27 +11,31 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.js$/, /\.jsx$/],
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react', 'stage-0'],
-        },
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['es2015', 'react', 'stage-0'],
+            },
+          },
+        ],
       },
       {
         test: [/\.css$/, /\.styl$/],
-        loader: 'style-loader!css-loader!stylus-loader',
-      },
-      {
-        test: /\.html$/,
-        loader: 'file?name=[name].[ext]',
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader',
+        ],
       },
     ],
   },
   resolve: {
-    modulesDirectories: ['node_modules', './src'],
-    extensions: ['', '.js', '.jsx'],
+    modules: ['node_modules', './src'],
+    extensions: ['.js', '.jsx'],
   },
 };
