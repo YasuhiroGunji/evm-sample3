@@ -10,7 +10,6 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -30,7 +29,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -50,7 +49,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -70,7 +69,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -90,7 +89,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -110,7 +109,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -130,7 +129,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -150,7 +149,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -170,7 +169,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -190,7 +189,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -210,7 +209,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -230,7 +229,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -250,7 +249,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -270,7 +269,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -290,7 +289,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -310,7 +309,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -330,7 +329,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -350,7 +349,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -370,7 +369,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -390,7 +389,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -410,7 +409,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -430,7 +429,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -450,7 +449,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -470,7 +469,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -490,7 +489,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -510,7 +509,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -530,7 +529,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -550,7 +549,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -570,7 +569,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -590,7 +589,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',
@@ -610,7 +609,7 @@ export default [
     tyokki: false,
     hutuu: '',
     shinya: '',
-    hayade: '',
+
     tikoku: '',
     soutai: '',
     jiko: '',

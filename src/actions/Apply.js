@@ -2,12 +2,13 @@ import * as API from './Api';
 
 export const ACTION_INIT = 'INIT';
 export const ACTION_FORM = 'FORM';
+export const ACTION_DETAIL = 'DETAIL';
 export const ACTION_SUBMIT = 'SUBMIT';
 export const ACTION_SNACKBAR = 'SNACKBAR';
 
-export const Init = (enpId) => {
+export const Init = (empId) => {
   return (dispatch) => {
-    API.Get('Apply/GetOvertimeList/42015')
+    API.Get('Apply/GetOvertimeList/' + empId)
     .then(
       (obj) => {
         console.debug(obj);
@@ -29,6 +30,23 @@ export const ShowForm = (isOpen) => {
       type: ACTION_FORM,
       showForm: isOpen,
     });
+  };
+};
+
+export const ShowDetail = (applyId) => {
+  return (dispatch) => {
+
+    
+    dispatch({
+      type: ACTION_DETAIL,
+      applyList: obj.OvertimeList,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: ACTION_SNACKBAR,
+        snackbarOpen: true,
+      });
+    }, 2000);
   };
 };
 
