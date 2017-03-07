@@ -5,20 +5,19 @@ import { bindActionCreators } from 'redux';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-
-import Card from '../../../components/common/card';
-import Snackbar from '../../../components/common/snackbar';
-import * as applyActions from '../../../actions/Apply';
-import * as commonActions from '../../../actions/Common';
-
-import Avatar from 'material-ui/Avatar';
-import FileFolder from 'material-ui/svg-icons/file/folder';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
-import { List, ListItem } from 'material-ui/List';
+import { List } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+
+import Card from '../../../components/common/card';
+import CardDetail from '../../../components/common/carddetail';
+import Snackbar from '../../../components/common/snackbar';
+import * as applyActions from '../../../actions/Apply';
 
 import {grey400, yellow600, grey500, teal500, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
@@ -28,8 +27,9 @@ import './applystyle.styl';
 class Apply extends React.Component {
 
   constructor(props) {
-    super();
-    this.state = props;
+    super(props);
+    this.state = this.props;
+
   }
 
   componentDidMount() {
@@ -39,13 +39,14 @@ class Apply extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({ applyList: nextProps.applyList });
     this.setState({ showMenu: nextProps.showMenu });
     this.setState({ showForm: nextProps.showForm });
   }
 
   onSubmit() {
     const applyForm = {};
-    applyForm.id = this.CreateKey(applyForm);
+    applyForm.ApplyId = this.state.applyList.length + 1;
     applyForm.ScheduledDate = this.state.applyForm.ScheduledDate;
     applyForm.CustomerCd = this.state.applyForm.CustomerCd;
     applyForm.ProjectCd = this.state.applyForm.ProjectCd;
@@ -59,14 +60,23 @@ class Apply extends React.Component {
   ShowForm() {
     this.props.applyActionBind.ShowForm(!this.props.showForm);
   }
-  ShowDetail(key) {
-    const applyItem = this.state.applyList;
-    this.props.applyActionBind.ShowDetail(!this.props.showForm);
+
+  ShowDetail = (applyId) => {
+    let newList = this.state.applyList.slice();
+    const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
+    newList[i].ShowDetail = true;
+    this.setState({ applyList: newList });
   }
 
   handleDateChange(e, date) {
     const applyForm = this.state.applyForm;
     applyForm.ScheduledDate = date;
+    this.setState({ applyForm });
+  }
+
+  handleDdlChange(propertyName, event, index, value) {
+    const applyForm = this.state.applyForm;
+    applyForm[propertyName] = value;
     this.setState({ applyForm });
   }
 
@@ -76,10 +86,18 @@ class Apply extends React.Component {
     this.setState({ applyForm });
   }
 
+  renderApplyList() {
+    return this.state.applyList.map(
+      (applyItem) => {
+        if (applyItem.ShowDetail) {
+          return <CardDetail key={applyItem.ApplyId} applyItem={applyItem} />;
+        }
+        return <Card key={applyItem.ApplyId} applyItem={applyItem} handleDetail={this.ShowDetail} />;
+      },
+    );
+  }
+
   render() {
-    const applyItems = this.props.applyList.map(
-                        (applyItem, index) =>
-                          <Card key={applyItem.ApplyId} applyItem={applyItem} />);
     return (
       <div>
         <div
@@ -101,7 +119,7 @@ class Apply extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}
               >
-                {applyItems}
+                {this.renderApplyList()}
               </CSSTransitionGroup>
             </List>
           </div>
@@ -130,14 +148,20 @@ class Apply extends React.Component {
 
             <div className="l_form_content">
               <div className="l_form_row">
-                <DatePicker
-                  hintText="申請日"
-                  floatingLabelText="申請日"
-                  autoOk
-                  defaultDate={this.state.applyForm.ScheduledDate}
-                  value={this.state.applyForm.ScheduledDate}
-                  onChange={this.handleDateChange}
-                />
+                <DropDownMenu value={this.state.applyForm.MonthValue} onChange={this.handleDdlChange.bind(this, 'MonthValue')} >
+                  <MenuItem value={201702} primaryText="2017/02" />
+                  <MenuItem value={201703} primaryText="2017/03" />
+                  <MenuItem value={201704} primaryText="2017/04" />
+                </DropDownMenu>
+                <DropDownMenu value={this.state.applyForm.DayValue} onChange={this.handleDdlChange.bind(this, 'DayValue')} >
+                  <MenuItem value={6} primaryText="06(月)" />
+                  <MenuItem value={7} primaryText="07(火)" />
+                  <MenuItem value={8} primaryText="08(水)" />
+                  <MenuItem value={9} primaryText="09(木)" />
+                  <MenuItem value={10} primaryText="10(金)" />
+                  <MenuItem value={11} primaryText="11(土)" />
+                  <MenuItem value={12} primaryText="12(日)" />
+                </DropDownMenu>
               </div>
               <div className="l_form_row">
                 <TextField

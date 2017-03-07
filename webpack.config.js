@@ -1,4 +1,4 @@
-
+// path: 'D:\\GitRepository/EVM/EVM/EVM.WebApp/Scripts',
 module.exports = {
   entry: './src/index.jsx',
   output: {

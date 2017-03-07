@@ -33,11 +33,20 @@ export const ShowForm = (isOpen) => {
   };
 };
 
-export const ShowDetail = () => {
+export const ShowDetail = (applyId) => {
   return (dispatch) => {
+
+    
     dispatch({
       type: ACTION_DETAIL,
+      applyList: obj.OvertimeList,
     });
+    setTimeout(() => {
+      dispatch({
+        type: ACTION_SNACKBAR,
+        snackbarOpen: true,
+      });
+    }, 2000);
   };
 };
 

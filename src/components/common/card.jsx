@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-
+import ClassSet from 'react-classset';
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -40,8 +40,8 @@ export default class ComCard extends React.Component {
     this.state = this.props;
   }
 
-  ShowDetail() {
-    this.setState(this.state.showDetail);
+  showDetail() {
+    this.props.handleDetail(this.props.applyItem.ApplyId);
   }
 
   render() {
@@ -49,9 +49,9 @@ export default class ComCard extends React.Component {
     const date = Common.DateFormatterMMdd(this.props.applyItem.ScheduledDate);
 
     return (
-      <Paper zDepth={2}>
+      <Paper zDepth={2} key={this.state.applyItem.ApplyId}>
         <ListItem
-          onClick={() => this.ShowDetail()}
+          onClick={() => this.showDetail()}
           leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
           rightIconButton={RightIconMenu}
           primaryText={
@@ -100,5 +100,7 @@ ComCard.propTypes = {
     IrregularActualEnd: PropTypes.number,
     OverTime: PropTypes.string,
     LateOverTime: PropTypes.string,
+    ShowDetail: PropTypes.bool,
   }).isRequired,
+  handleDetail: PropTypes.func.isRequired,
 };
