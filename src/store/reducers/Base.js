@@ -1,5 +1,8 @@
 const initialState = {
   showMenu: true,
+  pageTitle: '申請一覧',
+  isAttendance: false,
+  isApply: true,
 };
 
 export default function Base(state = initialState, action = {}) {

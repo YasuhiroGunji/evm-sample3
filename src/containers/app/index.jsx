@@ -103,6 +103,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = this.props;
+    this.onPageTransition = this.onPageTransition.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,12 +114,38 @@ class App extends Component {
     this.props.baseActionsBind.ShowMenu(!this.state.showMenu);
   }
 
+  onPageTransition(e) {
+    const pageName = e.target.innerText;
+
+    if (pageName === '勤務明細') {
+      this.setState({ pageTitle: '勤務明細' });
+      this.setState({ isAttendance: true });
+      this.setState({ isApply: false });
+      this.setState({ isAp: false });
+    } else if (pageName === '残業申請') {
+      this.setState({ pageTitle: '残業申請' });
+      this.setState({ isAttendance: false });
+      this.setState({ isApply: true });
+      this.setState({ isAp: false });
+    } else if (pageName === '承認一覧') {
+      this.setState({ pageTitle: '承認一覧' });
+      this.setState({ isAttendance: false });
+      this.setState({ isApply: false });
+      this.setState({ isAp: true });
+    }
+  }
+
   render() {
     return (
       <div className="l_wrapper">
         <AppBar
-          title="日報システム"
-          className="l_header_override"
+          title={this.state.pageTitle}
+          className={ClassSet({
+            l_header_override: true,
+            is_attendance: this.state.isAttendance,
+            is_apply: this.state.isApply,
+            is_ap: this.state.isAp,
+          })}
           zDepth={3}
           onLeftIconButtonTouchTap={() => this.onMenuStateChange()}
           iconElementRight={<Profile />}
@@ -131,15 +158,27 @@ class App extends Component {
           <List>
             <Subheader>勤怠管理</Subheader>
             <Link to="/attendance">
-              <ListItem primaryText="勤務明細" leftIcon={<ActionGrade />} />
+              <ListItem
+                primaryText={'勤務明細'}
+                onClick={this.onPageTransition}
+                leftIcon={<ActionGrade />}
+              />
             </Link>
             <Link to="/apply">
-              <ListItem primaryText="残業申請" leftIcon={<ContentSend />} />
+              <ListItem
+                primaryText={'残業申請'}
+                onClick={this.onPageTransition}
+                leftIcon={<ContentSend />}
+              />
             </Link>
             <Divider />
             <Subheader>承認</Subheader>
             <Link to="/apply">
-              <ListItem primaryText="承認一覧" leftIcon={<ContentInbox />} />
+              <ListItem
+                primaryText={'承認一覧'}
+                onClick={this.onPageTransition}
+                leftIcon={<ContentInbox />}
+              />
             </Link>
             <Divider />
             <Subheader>マスタメンテ</Subheader>
@@ -151,24 +190,15 @@ class App extends Component {
 
         {this.props.children}
 
-        {/*<div
-          className={ClassSet({
-            l_main: true,
-            is_active: this.state.showMenu,
-          })}
-        >
-          
-        </div>*/}
-
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { showMenu } = state.Base;
+  const { showMenu, baseActionsBind, pageTitle, isAttendance, isApply, isAp } = state.Base;
   return {
-    showMenu,
+    showMenu, baseActionsBind, pageTitle, isAttendance, isApply, isAp,
   };
 }
 

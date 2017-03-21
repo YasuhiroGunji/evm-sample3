@@ -7,10 +7,10 @@
   background-color: #ddd
   &.is_open_menu
     width: auto
-    margin-left: 240px
+    margin-left: 256px
   &.is_open_form
     width: auto
-    margin-right: 308px
+    margin-right: 328px
   
 .l_list_container
   position: relative
@@ -29,6 +29,15 @@
     
 
 // card
+.md_card
+  position: relative
+
+.md_card_icon
+  position: absolute
+  top: 0
+  right: 0
+  z-index: 2
+
 .md_card_content
   display: flex
   position: relative
@@ -74,6 +83,8 @@ form-width = 30%
   .l_form_header
     flex: (0 0 auto)
     height: 60px
+    color: #fff
+    background-color: #000
   .l_form_content
     overflow-y: auto
     flex: (1 1 auto)
@@ -99,18 +110,16 @@ form-width = 30%
 
 // List Animation
 .example-enter
-  opacity: 0.01
-
-.example-enter.example-enter-active
-  opacity: 1
-  transition: opacity 500ms ease-in
+  opacity: 0.1
+  &.example-enter-active
+    opacity: 1
+    transition: opacity 500ms ease-in
 
 .example-leave
   opacity: 1
-
-.example-leave.example-leave-active
-  opacity: 0.01
-  transition: opacity 300ms ease-in
+  &.example-leave-active
+    opacity: 0.1
+    transition: opacity 300ms ease-in
 
 
   
