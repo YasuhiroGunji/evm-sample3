@@ -8,19 +8,24 @@ export const ACTION_SNACKBAR = 'SNACKBAR';
 
 export const Init = (empId) => {
   return (dispatch) => {
-    API.Get('Apply/GetOvertimeList/' + empId)
-    .then(
-      (obj) => {
-        console.debug(obj);
+    // API.Get('Apply/GetOvertimeList', empId)
+    // .then(
+    //   (obj) => {
+    //     console.debug(obj);
 
-        dispatch({
-          type: ACTION_INIT,
-          applyList: obj.OvertimeList,
-        });
-      },
-    ).catch(
-      err => console.error(err),
-    );
+    //     dispatch({
+    //       type: ACTION_INIT,
+    //       applyList: obj.OvertimeList,
+    //     });
+    //   },
+    // ).catch(
+    //   err => console.error(err),
+    // );
+
+    dispatch({
+      type: ACTION_INIT,
+      applyList: [],
+    });
   };
 };
 
@@ -33,23 +38,6 @@ export const ShowForm = (isOpen) => {
   };
 };
 
-export const ShowDetail = (applyId) => {
-  return (dispatch) => {
-
-    
-    dispatch({
-      type: ACTION_DETAIL,
-      applyList: obj.OvertimeList,
-    });
-    setTimeout(() => {
-      dispatch({
-        type: ACTION_SNACKBAR,
-        snackbarOpen: true,
-      });
-    }, 2000);
-  };
-};
-
 export const Submit = (applyForm) => {
   return (dispatch) => {
     dispatch({
@@ -57,14 +45,14 @@ export const Submit = (applyForm) => {
       applyForm,
     });
 
-    // API.Post("Apply/CreateOcertimeRequest")
+    // API.Post('Apply/CreateOvertimeRequest', applyForm)
     // .then(
     //   (obj) => {
     //     console.debug(obj);
 
     //   }
     // ).catch(
-    //   (err) => { console.error(err); }
+    //   (err) => {console.error(err);}
     // );
 
     setTimeout(() => {

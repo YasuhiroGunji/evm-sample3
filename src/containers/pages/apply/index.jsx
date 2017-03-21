@@ -18,8 +18,10 @@ import Card from '../../../components/common/card';
 import CardDetail from '../../../components/common/carddetail';
 import Snackbar from '../../../components/common/snackbar';
 import * as applyActions from '../../../actions/Apply';
+import * as commonActions from '../../../actions/Common';
 
-import {grey400, yellow600, grey500, teal500, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400, yellow600, grey500, teal500, pink500,
+        darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 import './applystyle.styl';
 
@@ -30,6 +32,9 @@ class Apply extends React.Component {
     super(props);
     this.state = this.props;
 
+    this.onDelete = this.onDelete.bind(this);
+    this.ShowDetail = this.ShowDetail.bind(this);
+    this.CloseDetail = this.CloseDetail.bind(this);
   }
 
   componentDidMount() {
@@ -46,25 +51,57 @@ class Apply extends React.Component {
 
   onSubmit() {
     const applyForm = {};
-    applyForm.ApplyId = this.state.applyList.length + 1;
-    applyForm.ScheduledDate = this.state.applyForm.ScheduledDate;
+    const yyyyMM = commonActions.StringFormatterSlashyyyyMM(this.state.applyForm.MonthValue + '');
+    const dd = commonActions.ZeroFill(this.state.applyForm.DayValue);
+
+    applyForm.ApplyId = this.state.applyList.length;
+    applyForm.EmpId = '42015';
+    applyForm.ScheduledDate = commonActions.DateFormatter(`${yyyyMM}/${dd}`);
     applyForm.CustomerCd = this.state.applyForm.CustomerCd;
     applyForm.ProjectCd = this.state.applyForm.ProjectCd;
     applyForm.OvertimeStart = this.state.applyForm.OvertimeStart;
-    applyForm.OvertimeStart = this.state.applyForm.OvertimeEnd;
+    applyForm.OvertimeEnd = this.state.applyForm.OvertimeEnd;
+    applyForm.OvertimeActualStart = this.state.applyForm.OvertimeActualStart;
+    applyForm.OvertimeActualEnd = this.state.applyForm.OvertimeActualEnd;
+    applyForm.IrregularStart = this.state.applyForm.IrregularStart;
+    applyForm.IrregularEnd = this.state.applyForm.IrregularEnd;
+    applyForm.IrregularActualStart = this.state.applyForm.IrregularActualStart;
+    applyForm.IrregularActualEnd = this.state.applyForm.IrregularActualEnd;
     applyForm.WorkContent = this.state.applyForm.WorkContent;
+    applyForm.ShowDetail = false;
+
+    const newList = this.state.applyList.slice();
+    newList.unshift(applyForm);
+    this.setState({ applyList: newList });
 
     this.props.applyActionBind.Submit(applyForm);
+  }
+
+  onDelete(applyId) {
+    const newList = this.state.applyList.slice();
+    const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
+
+    newList[i].ShowDetail = true;
+    this.setState({ applyList: newList });
   }
 
   ShowForm() {
     this.props.applyActionBind.ShowForm(!this.props.showForm);
   }
 
-  ShowDetail = (applyId) => {
-    let newList = this.state.applyList.slice();
+  ShowDetail(applyId) {
+    const newList = this.state.applyList.slice();
+    newList.map(item => item.ShowDetail = false);
+
     const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
     newList[i].ShowDetail = true;
+    this.setState({ applyList: newList });
+  }
+
+  CloseDetail(applyId) {
+    const newList = this.state.applyList.slice();
+    const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
+    newList[i].ShowDetail = false;
     this.setState({ applyList: newList });
   }
 
@@ -87,14 +124,31 @@ class Apply extends React.Component {
   }
 
   renderApplyList() {
-    return this.state.applyList.map(
-      (applyItem) => {
-        if (applyItem.ShowDetail) {
-          return <CardDetail key={applyItem.ApplyId} applyItem={applyItem} />;
-        }
-        return <Card key={applyItem.ApplyId} applyItem={applyItem} handleDetail={this.ShowDetail} />;
-      },
-    );
+    if (!this.state.applyList) {
+      return;
+    }
+    return this.state.applyList.map((applyItem) => {
+      if (applyItem.ShowDetail) {
+        return (
+          <CardDetail
+            key={applyItem.ApplyId}
+            className={'example'}
+            applyItem={applyItem}
+            hsndleDelete={this.onDelete}
+            handleClose={this.CloseDetail}
+          />
+        );
+      }
+      return (
+        <Card
+          key={applyItem.ApplyId}
+          className={'example'}
+          applyItem={applyItem}
+          hsndleDelete={this.onDelete}
+          handleDetail={this.ShowDetail}
+        />
+      );
+    });
   }
 
   render() {
@@ -115,7 +169,7 @@ class Apply extends React.Component {
               </div>
 
               <CSSTransitionGroup
-                transitionName="example"
+                transitionName={'example'}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}
               >
@@ -140,7 +194,7 @@ class Apply extends React.Component {
               is_open_form: this.state.showForm,
             })}
           >
-            <Paper zDepth={2} className={'l_form_header'}>
+            <Paper zDepth={1} className={'l_form_header'}>
               <div className="l_form_row">
                 <span>残業申請</span>
               </div>
@@ -209,15 +263,12 @@ class Apply extends React.Component {
               
             </div>
 
-            <Paper zDepth={2} className={'l_form_footer'}>
+            <Paper zDepth={1} className={'l_form_footer'}>
               <RaisedButton
-                label={'Cancel'}
-                style={{ marginRight: 8 }}
-                onTouchTap={() => this.onCancel()}
-              />
-              <RaisedButton
-                label={'Submit'}
-                primary
+                label={'申請'}
+                primary={false}
+                secondary={true}
+                disabled={false}
                 style={{ marginRight: 8 }}
                 onTouchTap={() => this.onSubmit()}
               />
@@ -259,7 +310,7 @@ Apply.propTypes = {
   }
 }*/
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const { empId, showForm, applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
   const { showMenu } = state.Base;
   return {

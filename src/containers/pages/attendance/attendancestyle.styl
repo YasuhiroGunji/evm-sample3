@@ -1,84 +1,103 @@
-width = 1024px
+width = 980px
+row_height = 30px
+
+.table_row
+  display: table
+  table-layout: fixed
+  height: row_height
+  width: width
+  li
+    display: table-cell
+    text-align: center
+    vertical-align: middle
+    border: 1px solid #ddd
+    list-style-type: none
 
 .l_attendance_container
   padding: 65px 0 1px
+  min-width: 980px
   margin: 0 24px
   background-color: #ddd
   &.is_open_menu
+    width: auto
     margin-left: 240px
 
+.l_attendance_content
+  padding: 5px 10px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  background-color: #ddd
+  font-size: 80%
+
 .l_header
-  position: fixed
-  top: 65px
-  height: 80px
+  height: 130px
   width: width
-  padding: 4px 8px
-  z-index: 100
   display: flex
   flex-direction: column
+  align-items: stretch
   justify-content: space-around
-    
-.md_header_title
-  display: flex
-  justify-content: space-between
-  div
-    margin: 0 16px
-    font-weight: bold
-  span
-    margin: 0 8px
-    font-size: 62.5%
+  .l_header_row
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    justify-content: space-around
+    .l_header_item
+      flex: auto
+      align-content: center
+      align-items: center
 
-.md_header_content
-  display: flex
-  flex-direction: row
-  justify-content: space-between
-  width: width
-  .md_personal
-    flex-direction: row
-    span
-      padding-top: 12px
-      margin: 0 18px
-
-.l_table_header
-  position: fixed
-  top: 145px
-  height: 40px
-  width: width
-  z-index: 90
-.md_table_header
+.header_table
   display: table
   table-layout: fixed
-  height: 40px
-  width: width
-  li
+  height: 20px
+  th
     display: table-cell
-    width: 60px
+    text-align: center
+    vertical-align: middle
+    border: 1px solid #ddd
+  td
+    display: table-cell
     text-align: center
     vertical-align: middle
     border: 1px solid #ddd
 
-.l_table
+.md_header_table
+  margin: 10px
+  tr
+    width: 400px
+    @extend .header_table
+
+.md_header_table_min
+  margin: 10px
+  tr
+    width: 200px
+    @extend .header_table
+
+.l_tableheader
   position: relative
-  top: 120px
   width: width
-  z-index: 80
-  background-color: #fff
+  margin-top: 1px
+  .md_tableheader_row
+     @extend .table_row
 
-.md_table
-  display: flex
-  flex-direction: column
-  li
-    list-style-type: none
-.md_table_row
-  display: table
-  table-layout: fixed
-  height: 40px
-  width: width
-  li
-    display: table-cell
-    width: 60px
+.l_tablebody
+  position: relative
+  height: calc(100vh - 260px)
+  width: width + 18
+  overflow-y: scroll
+  background-color: #fff
+  .md_tablebody
+    display: flex
+    flex-direction: column
+    li
+      list-style-type: none
+  .md_tablebody_row
+    @extend .table_row
+  .md_checkbox_wrap
     text-align: center
-    vertical-align: middle
-    border: 1px solid #ddd
-    list-style-type: none
+
+.is_bold
+  font-weight: bold
+
 

@@ -15,24 +15,6 @@ import { grey400, yellow600, grey500, darkBlack, lightBlack } from 'material-ui/
 
 import * as Common from '../../actions/Common';
 
-const iconButtonElement = (
-  <IconButton
-    touch
-    tooltip="more"
-    tooltipPosition="bottom-left"
-  >
-    <MoreVertIcon color={grey400} />
-  </IconButton>
-);
-
-const RightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
-  </IconMenu>
-);
-
 export default class ComCard extends React.Component {
 
   constructor(props) {
@@ -40,24 +22,25 @@ export default class ComCard extends React.Component {
     this.state = this.props;
   }
 
-  showDetail() {
-    this.props.handleDetail(this.props.applyItem.ApplyId);
-  }
-
   render() {
     const item = this.props.applyItem;
-    const date = Common.DateFormatterMMdd(this.props.applyItem.ScheduledDate);
-
     return (
-      <Paper zDepth={2} key={this.state.applyItem.ApplyId}>
+      <Paper zDepth={2}className={'md_card'}>
+        <div className={'md_card_icon'}>
+          <IconButton
+            tooltip={'delete'}
+            tooltipPosition={'bottom-left'}
+          >
+            <Delete color={grey400} />
+          </IconButton>
+        </div>
         <ListItem
-          onClick={() => this.showDetail()}
+          onClick={() => this.props.handleDetail(item.ApplyId)}
           leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
-          rightIconButton={RightIconMenu}
           primaryText={
             <div className={'md_card_content'}>
               <div className={'md_card_title'}>
-                <div>{`${date}${item.CustomerCd}/${item.ProjectCd}`}</div>
+                <div>{`${item.ScheduledDate}${item.CustomerCd}/${item.ProjectCd}`}</div>
                 <div>{`${item.WorkContent}`}</div>
               </div>
             </div>
@@ -90,14 +73,14 @@ ComCard.propTypes = {
     CustomerCd: PropTypes.string.isRequired,
     ProjectCd: PropTypes.string.isRequired,
     WorkContent: PropTypes.string.isRequired,
-    OvertimeStart: PropTypes.number,
-    OvertimeEnd: PropTypes.number,
-    OvertimeActualStart: PropTypes.number,
-    OvertimeActualEnd: PropTypes.number,
-    IrregularStart: PropTypes.number,
-    IrregularEnd: PropTypes.number,
-    IrregularActualStart: PropTypes.number,
-    IrregularActualEnd: PropTypes.number,
+    OvertimeStart: PropTypes.string,
+    OvertimeEnd: PropTypes.string,
+    OvertimeActualStart: PropTypes.string,
+    OvertimeActualEnd: PropTypes.string,
+    IrregularStart: PropTypes.string,
+    IrregularEnd: PropTypes.string,
+    IrregularActualStart: PropTypes.string,
+    IrregularActualEnd: PropTypes.string,
     OverTime: PropTypes.string,
     LateOverTime: PropTypes.string,
     ShowDetail: PropTypes.bool,
