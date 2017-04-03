@@ -25,11 +25,12 @@ export default class ComCard extends React.Component {
   render() {
     const item = this.props.applyItem;
     return (
-      <Paper zDepth={2}className={'md_card'}>
+      <Paper zDepth={2} className={'md_card'}>
         <div className={'md_card_icon'}>
           <IconButton
             tooltip={'delete'}
             tooltipPosition={'bottom-left'}
+            onClick={() => this.props.handleDelete(item.ApplyId)}
           >
             <Delete color={grey400} />
           </IconButton>
@@ -86,4 +87,5 @@ ComCard.propTypes = {
     ShowDetail: PropTypes.bool,
   }).isRequired,
   handleDetail: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };

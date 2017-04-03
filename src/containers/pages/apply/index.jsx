@@ -10,7 +10,6 @@ import { List } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -19,9 +18,6 @@ import CardDetail from '../../../components/common/carddetail';
 import Snackbar from '../../../components/common/snackbar';
 import * as applyActions from '../../../actions/Apply';
 import * as commonActions from '../../../actions/Common';
-
-import {grey400, yellow600, grey500, teal500, pink500,
-        darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 import './applystyle.styl';
 
@@ -49,7 +45,9 @@ class Apply extends React.Component {
     this.setState({ showForm: nextProps.showForm });
   }
 
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
+
     const applyForm = {};
     const yyyyMM = commonActions.StringFormatterSlashyyyyMM(this.state.applyForm.MonthValue + '');
     const dd = commonActions.ZeroFill(this.state.applyForm.DayValue);
@@ -81,7 +79,8 @@ class Apply extends React.Component {
     const newList = this.state.applyList.slice();
     const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
 
-    newList[i].ShowDetail = true;
+    // TODO：モーダルダイアログ処理実装予定
+    newList.splice(i, 1);
     this.setState({ applyList: newList });
   }
 
@@ -103,12 +102,6 @@ class Apply extends React.Component {
     const i = this.state.applyList.findIndex(item => item.ApplyId === applyId);
     newList[i].ShowDetail = false;
     this.setState({ applyList: newList });
-  }
-
-  handleDateChange(e, date) {
-    const applyForm = this.state.applyForm;
-    applyForm.ScheduledDate = date;
-    this.setState({ applyForm });
   }
 
   handleDdlChange(propertyName, event, index, value) {
@@ -134,7 +127,7 @@ class Apply extends React.Component {
             key={applyItem.ApplyId}
             className={'example'}
             applyItem={applyItem}
-            hsndleDelete={this.onDelete}
+            handleDelete={this.onDelete}
             handleClose={this.CloseDetail}
           />
         );
@@ -144,7 +137,7 @@ class Apply extends React.Component {
           key={applyItem.ApplyId}
           className={'example'}
           applyItem={applyItem}
-          hsndleDelete={this.onDelete}
+          handleDelete={this.onDelete}
           handleDetail={this.ShowDetail}
         />
       );
@@ -171,7 +164,7 @@ class Apply extends React.Component {
               <CSSTransitionGroup
                 transitionName={'example'}
                 transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}
+                transitionLeaveTimeout={500}
               >
                 {this.renderApplyList()}
               </CSSTransitionGroup>
@@ -260,7 +253,7 @@ class Apply extends React.Component {
                   onChange={this.handleTextChange.bind(this, 'WorkContent')}
                 />
               </div>
-              
+
             </div>
 
             <Paper zDepth={1} className={'l_form_footer'}>
@@ -270,7 +263,7 @@ class Apply extends React.Component {
                 secondary={true}
                 disabled={false}
                 style={{ marginRight: 8 }}
-                onTouchTap={() => this.onSubmit()}
+                onTouchTap={e => this.onSubmit(e)}
               />
             </Paper>
           </div>
@@ -285,39 +278,19 @@ class Apply extends React.Component {
 Apply.propTypes = {
   applyList: React.PropTypes.array,
   applyForm: React.PropTypes.object,
-  applyActionBind: React.PropTypes.object.isRequired,
+  empId: React.PropTypes.number,
   showForm: React.PropTypes.bool.isRequired,
   showMenu: React.PropTypes.bool.isRequired,
   snackbarOpen: React.PropTypes.bool.isRequired,
 };
 
-/*class PaperContent extends React.Component {
-  render() {
-    return (
-      <div className={'md_card_content'}>
-        <div className={'md_card_title'}>
-          <span>2017/02/24</span>
-          <span>IKD/KFS6</span>
-          <span>画面開発ddddddddddddddddddd</span>
-        </div>
-        <div className={'md_card_detail'}>
-          <span>18:00-23:00</span>
-          <span>普通：3.5</span>
-          <span>深夜：1.0</span>
-        </div>
-      </div>
-    );
-  }
-}*/
-
-function mapStateToProps(state, ownProps) {
-  const { empId, showForm, applyList, applyForm, applyActionBind, snackbarOpen } = state.Apply;
+function mapStateToProps(state) {
+  const { applyForm, applyList, empId, showForm, snackbarOpen } = state.Apply;
   const { showMenu } = state.Base;
   return {
-    empId, showForm, applyList, applyForm, applyActionBind, snackbarOpen, showMenu,
+    applyForm, applyList, empId, showForm, snackbarOpen, showMenu,
   };
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     applyActionBind: bindActionCreators(applyActions, dispatch),

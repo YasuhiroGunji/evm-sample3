@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ClassSet from 'react-classset';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AppBar from 'material-ui/AppBar';
+// control
+import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -12,81 +13,33 @@ import IconMenu from 'material-ui/IconMenu';
 import { List, ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
-// svg-icon
+// svg-icon header
+import Dehaze from 'material-ui/svg-icons/image/dehaze';
+import Group from 'material-ui/svg-icons/social/group';
+import Person from 'material-ui/svg-icons/social/person';
+
+// svg-icon drawer
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentSend from 'material-ui/svg-icons/content/send';
+import { white } from 'material-ui/styles/colors';
 
-import Person from 'material-ui/svg-icons/social/person';
-import Group from 'material-ui/svg-icons/social/group';
-
-import { grey50 } from 'material-ui/styles/colors';
-import Checkbox from 'material-ui/Checkbox';
-
+// action
 import * as baseActions from '../../actions/Base';
 
-// import GroupTree from './grouptree';
+// stylus
 import './style.styl';
 
-const GroupTree = () => (
-  <IconMenu
-    iconButtonElement={
-      <IconButton>
-        <Group color={grey50} />
-      </IconButton>
-    }
-    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'middle', vertical: 'bottom' }}
-  >
-    <List>
-      <ListItem
-        primaryText="GS2"
-        leftCheckbox={<Checkbox />}
-        initiallyOpen={false}
-        primaryTogglesNestedList={false}
-        nestedItems={[
-          <ListItem
-            key={1}
-            leftCheckbox={<Checkbox />}
-            primaryText="T1"
-            nestedItems={[
-              <ListItem key={1} primaryText="郡司　康弘" leftCheckbox={<Checkbox />} />,
-              <ListItem key={2} primaryText="赤石　翔" leftCheckbox={<Checkbox />} />,
-              <ListItem key={3} primaryText="遠藤　美波" leftCheckbox={<Checkbox />} />,
-            ]}
-          />,
-          <ListItem
-            key={2}
-            primaryText="T2"
-            leftIcon={<Checkbox />}
-            nestedItems={[
-              <ListItem key={1} primaryText="郡司　康弘" leftCheckbox={<Checkbox />} />,
-              <ListItem key={2} primaryText="赤石　翔" leftCheckbox={<Checkbox />} />,
-              <ListItem key={3} primaryText="遠藤　美波" leftCheckbox={<Checkbox />} />,
-            ]}
-          />,
-          <ListItem
-            key={3}
-            primaryText="T3"
-            leftIcon={<Checkbox />}
-            nestedItems={[
-              <ListItem key={1} primaryText="郡司　康弘" leftCheckbox={<Checkbox />} />,
-              <ListItem key={2} primaryText="赤石　翔" leftCheckbox={<Checkbox />} />,
-              <ListItem key={3} primaryText="遠藤　美波" leftCheckbox={<Checkbox />} />,
-            ]}
-          />,
-        ]}
-      />
-    </List>
-  </IconMenu>
-);
 const Profile = () => (
   <IconMenu
     iconButtonElement={
-      <IconButton>
-        <Person color={grey50} />
+      <IconButton className={'l_profile_iconbutton'}>
+        <Person color={white} />
       </IconButton>
     }
     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -103,6 +56,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = this.props;
+    this.onToggleMenu = this.onToggleMenu.bind(this);
     this.onPageTransition = this.onPageTransition.bind(this);
   }
 
@@ -110,7 +64,7 @@ class App extends Component {
     this.setState({ showMenu: nextProps.showMenu });
   }
 
-  onMenuStateChange() {
+  onToggleMenu() {
     this.props.baseActionsBind.ShowMenu(!this.state.showMenu);
   }
 
@@ -138,27 +92,53 @@ class App extends Component {
   render() {
     return (
       <div className="l_wrapper">
-        <AppBar
-          title={this.state.pageTitle}
-          className={ClassSet({
-            l_header_override: true,
-            is_attendance: this.state.isAttendance,
-            is_apply: this.state.isApply,
-            is_ap: this.state.isAp,
-          })}
-          zDepth={3}
-          onLeftIconButtonTouchTap={() => this.onMenuStateChange()}
-          iconElementRight={<Profile />}
-        />
+
+        <Paper zDepth={2} className={'l_header_override'}>
+          <Toolbar
+            className={ClassSet({
+              l_header_override: true,
+              is_attendance: this.state.isAttendance,
+              is_apply: this.state.isApply,
+              is_ap: this.state.isAp,
+            })}
+          >
+            <ToolbarGroup firstChild>
+              <IconButton
+                onTouchTap={() => this.onToggleMenu()}
+                className={'l_menu_iconbutton'}
+              >
+                <Dehaze color={white} />
+              </IconButton>
+              <ToolbarTitle
+                text={this.state.pageTitle}
+                className={'l_header_title'}
+              />
+            </ToolbarGroup>
+            <ToolbarGroup>
+              <TextField
+                id="text-field-default"
+                className={'l_header_searchbox'}
+              />
+            </ToolbarGroup>
+            <ToolbarGroup lastChild>
+              <IconButton>
+                <Group color={white} />
+              </IconButton>
+              <Profile />
+            </ToolbarGroup>
+          </Toolbar>
+        </Paper>
+
         <Drawer
           open={this.state.showMenu}
           width={232}
-          containerClassName="l_drawer_override"
+          containerClassName={'l_drawer_override'}
         >
           <List>
             <Subheader>勤怠管理</Subheader>
             <Link to="/attendance">
               <ListItem
+                id={'link_attendance'}
                 primaryText={'勤務明細'}
                 onClick={this.onPageTransition}
                 leftIcon={<ActionGrade />}
@@ -196,9 +176,9 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { showMenu, baseActionsBind, pageTitle, isAttendance, isApply, isAp } = state.Base;
+  const { showMenu, pageTitle, isAttendance, isApply, isAp } = state.Base;
   return {
-    showMenu, baseActionsBind, pageTitle, isAttendance, isApply, isAp,
+    showMenu, pageTitle, isAttendance, isApply, isAp,
   };
 }
 

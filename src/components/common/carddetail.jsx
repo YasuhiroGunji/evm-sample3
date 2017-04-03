@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
-import LinearProgress from 'material-ui/LinearProgress';
+// import LinearProgress from 'material-ui/LinearProgress';
 
 import { grey400, yellow600, grey500, darkBlack, lightBlack } from 'material-ui/styles/colors';
 
@@ -14,8 +14,8 @@ const style = {
     marginBottom: 30,
     marginLeft: -20,
     marginRight: -20,
-  }
-}
+  },
+};
 
 export default class ComCardDetail extends React.Component {
 
@@ -53,7 +53,6 @@ export default class ComCardDetail extends React.Component {
             </div>
           </ListItem>
         </Paper>
-        <LinearProgress mode="indeterminate" />
       </div>
     );
   }
