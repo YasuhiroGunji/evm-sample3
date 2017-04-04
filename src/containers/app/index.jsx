@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // control
+// import Dialog from 'material-ui/Dialog';
+
 import Checkbox from 'material-ui/Checkbox';
+
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -28,6 +31,9 @@ import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import { white } from 'material-ui/styles/colors';
+
+// custom control
+import * as GroupDialog from './dialog';
 
 // action
 import * as baseActions from '../../actions/Base';
@@ -58,6 +64,10 @@ class App extends Component {
     this.state = this.props;
     this.onToggleMenu = this.onToggleMenu.bind(this);
     this.onPageTransition = this.onPageTransition.bind(this);
+
+    this.onGroupDialogOpen = this.onGroupDialogOpen.bind(this);
+    this.onGroupDialogClose = this.onGroupDialogClose.bind(this);
+    this.onGroupSelect = this.onGroupSelect.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,6 +97,19 @@ class App extends Component {
       this.setState({ isApply: false });
       this.setState({ isAp: true });
     }
+  }
+
+  onGroupDialogOpen() {
+    this.setState({ isGroupDialogOpen: true });
+  }
+  onGroupDialogClose() {
+    this.setState({ isGroupDialogOpen: false });
+  }
+  onGroupSelect(actionGroupIds) {
+    this.setState({ groupIds: actionGroupIds });
+    this.props.baseActionsBind.GroupSelect(actionGroupIds);
+
+    this.setState({ isGroupDialogOpen: false });
   }
 
   render() {
@@ -121,7 +144,9 @@ class App extends Component {
               />
             </ToolbarGroup>
             <ToolbarGroup lastChild>
-              <IconButton>
+              <IconButton
+                onClick={this.onGroupDialogOpen}
+              >
                 <Group color={white} />
               </IconButton>
               <Profile />
@@ -168,6 +193,12 @@ class App extends Component {
           </List>
         </Drawer>
 
+        <GroupDialog
+          isOpen={this.state.isGroupDialogOpen}
+          onSubmit={this.onGroupDialogClose}
+          onClose={this.onGroupDialogClose}
+        />
+
         {this.props.children}
 
       </div>
@@ -175,10 +206,16 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  baseActionsBind: React.PropTypes.object.isRequired,
+};
+
 function mapStateToProps(state) {
-  const { showMenu, pageTitle, isAttendance, isApply, isAp } = state.Base;
+  const { showMenu, pageTitle,
+    isAttendance, isApply, isAp,
+    groupIds, isGroupDialogOpen } = state.Base;
   return {
-    showMenu, pageTitle, isAttendance, isApply, isAp,
+    showMenu, pageTitle, isAttendance, isApply, isAp, groupIds, isGroupDialogOpen,
   };
 }
 

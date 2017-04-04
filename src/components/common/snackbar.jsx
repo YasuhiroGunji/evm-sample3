@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Snackbar from 'material-ui/Snackbar';
 
 export default class ComSnackbar extends React.Component {
@@ -40,7 +40,7 @@ export default class ComSnackbar extends React.Component {
   }
 }
 
-ComSnackbar.PropTypes = {
+ComSnackbar.propTypes = {
   snackbarOpen: React.PropTypes.bool.isRequired,
   action: React.PropTypes.object,
 };
