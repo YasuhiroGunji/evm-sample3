@@ -1,21 +1,12 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import ClassSet from 'react-classset';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // control
-// import Dialog from 'material-ui/Dialog';
-
-import Checkbox from 'material-ui/Checkbox';
-
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
-import { List, ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
-import Subheader from 'material-ui/Subheader';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
@@ -25,15 +16,11 @@ import Dehaze from 'material-ui/svg-icons/image/dehaze';
 import Group from 'material-ui/svg-icons/social/group';
 import Person from 'material-ui/svg-icons/social/person';
 
-// svg-icon drawer
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ContentSend from 'material-ui/svg-icons/content/send';
 import { white } from 'material-ui/styles/colors';
 
 // custom control
-import * as GroupDialog from './dialog';
+import GroupDialog from './dialog';
+import Drawer from './drawer';
 
 // action
 import * as baseActions from '../../actions/Base';
@@ -41,7 +28,9 @@ import * as baseActions from '../../actions/Base';
 // stylus
 import './style.styl';
 
-const Profile = () => (
+
+
+const Profile = () =>
   <IconMenu
     iconButtonElement={
       <IconButton className={'l_profile_iconbutton'}>
@@ -54,10 +43,11 @@ const Profile = () => (
     <MenuItem primaryText="Edit" />
     <MenuItem primaryText="Help" />
     <MenuItem primaryText="Sign out" />
-  </IconMenu>
-);
+  </IconMenu>;
 
-class App extends Component {
+
+
+class App extends React.Component {
 
   constructor(props) {
     super(props);
@@ -75,7 +65,7 @@ class App extends Component {
   }
 
   onToggleMenu() {
-    this.props.baseActionsBind.ShowMenu(!this.state.showMenu);
+    this.props.actions.ShowMenu(!this.state.showMenu);
   }
 
   onPageTransition(e) {
@@ -100,19 +90,25 @@ class App extends Component {
   }
 
   onGroupDialogOpen() {
-    this.setState({ isGroupDialogOpen: true });
+    this.setState({ showGroupDialog: true });
   }
   onGroupDialogClose() {
-    this.setState({ isGroupDialogOpen: false });
+    this.setState({ showGroupDialog: false });
   }
   onGroupSelect(actionGroupIds) {
     this.setState({ groupIds: actionGroupIds });
-    this.props.baseActionsBind.GroupSelect(actionGroupIds);
+    this.props.actions.GroupSelect(actionGroupIds);
 
-    this.setState({ isGroupDialogOpen: false });
+    this.setState({ showGroupDialog: false });
   }
 
   render() {
+    const GroupIcon = () => (
+      <IconButton onClick={this.onGroupDialogOpen}>
+        <Group color={white} />
+      </IconButton>
+    );
+
     return (
       <div className="l_wrapper">
 
@@ -144,60 +140,23 @@ class App extends Component {
               />
             </ToolbarGroup>
             <ToolbarGroup lastChild>
-              <IconButton
-                onClick={this.onGroupDialogOpen}
-              >
-                <Group color={white} />
-              </IconButton>
+              <GroupIcon />
               <Profile />
             </ToolbarGroup>
           </Toolbar>
         </Paper>
 
         <Drawer
-          open={this.state.showMenu}
-          width={232}
-          containerClassName={'l_drawer_override'}
-        >
-          <List>
-            <Subheader>勤怠管理</Subheader>
-            <Link to="/attendance">
-              <ListItem
-                id={'link_attendance'}
-                primaryText={'勤務明細'}
-                onClick={this.onPageTransition}
-                leftIcon={<ActionGrade />}
-              />
-            </Link>
-            <Link to="/apply">
-              <ListItem
-                primaryText={'残業申請'}
-                onClick={this.onPageTransition}
-                leftIcon={<ContentSend />}
-              />
-            </Link>
-            <Divider />
-            <Subheader>承認</Subheader>
-            <Link to="/apply">
-              <ListItem
-                primaryText={'承認一覧'}
-                onClick={this.onPageTransition}
-                leftIcon={<ContentInbox />}
-              />
-            </Link>
-            <Divider />
-            <Subheader>マスタメンテ</Subheader>
-            <Link to="/apply">
-              <ListItem primaryText="Maintainance" leftIcon={<ContentDrafts />} />
-            </Link>
-          </List>
-        </Drawer>
+          isOpen={this.state.showMenu}
+          onPageTransition={this.onPageTransition}
+        />
 
         <GroupDialog
-          isOpen={this.state.isGroupDialogOpen}
-          onSubmit={this.onGroupDialogClose}
+          isOpen={this.state.showGroupDialog}
+          onSubmit={this.onGroupSelect}
           onClose={this.onGroupDialogClose}
         />
+
 
         {this.props.children}
 
@@ -207,21 +166,16 @@ class App extends Component {
 }
 
 App.propTypes = {
-  baseActionsBind: React.PropTypes.object.isRequired,
+  actions: React.PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { showMenu, pageTitle,
-    isAttendance, isApply, isAp,
-    groupIds, isGroupDialogOpen } = state.Base;
-  return {
-    showMenu, pageTitle, isAttendance, isApply, isAp, groupIds, isGroupDialogOpen,
-  };
+  return state.Base;
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    baseActionsBind: bindActionCreators(baseActions, dispatch),
+    actions: bindActionCreators(baseActions, dispatch),
   };
 }
 

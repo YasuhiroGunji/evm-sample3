@@ -5,7 +5,7 @@ const initialState = {
   pageTitle: '申請一覧',
   isAttendance: false,
   isApply: true,
-  isGroupDialogOpen: false,
+  showGroupDialog: false,
   groupIds: [],
 };
 

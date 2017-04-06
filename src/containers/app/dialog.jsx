@@ -2,23 +2,24 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+import GroupTree from './grouptree';
+
 export default class ComDialog extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = this.props;
-    this.setState({ isOpen: false });
-    // this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
+    this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ isOpen: nextProps.isOpen });
   }
 
-  // onChangeCheckbox(e, isInputChecked) {
-  //   const newIds = this.state.groupIds.slice();
-  //   this.setState({ groupIds: newIds });
-  // }
+  onChangeCheckbox(e, isInputChecked) {
+    const newIds = this.state.groupIds.slice();
+    this.setState({ groupIds: newIds });
+  }
 
   handleSubmit() {
     this.props.onSubmit(this.state.groupIds);
@@ -32,26 +33,26 @@ export default class ComDialog extends React.Component {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
-        onTouchTap={() => this.handleClose()}
+        secondary
+        onTouchTap={this.props.onClose}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={() => this.handleSubmit()}
+        primary
+        keyboardFocused
+        onTouchTap={this.props.onSubmit}
       />,
     ];
     return (
       <div>
         <Dialog
-          title="Scrollable Dialog"
+          title="グループ選択"
           actions={actions}
-          open={false}
-          onRequestClose={() => this.handleClose()}
-          autoScrollBodyContent={true}
+          open={this.props.isOpen}
+          onRequestClose={this.props.onClose}
+          autoScrollBodyContent
         >
-        aaaaaaaaaaaa
+          <GroupTree />
         </Dialog>
       </div>
     );
