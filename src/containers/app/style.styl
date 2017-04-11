@@ -1,5 +1,5 @@
 body
-  background-color: #f2f2f2
+  background-color: #f2f2f2 !important
   color: #212121
 
 .l_wrapper
@@ -29,13 +29,23 @@ body
     font-size: 24px !important
     font-weight: 400 !important
     color: rgb(255,255,255) !important
-  .l_header_searchbox
-    background-color: rgb(255,255,255) !important
 
-// ヘッダー検索
-// #71 
-// rgb(113, 163, 247)
-// background: rgba(255,255,255,.15);
+.l_header_search
+  line-height: 20px
+  border-radius: 2px
+  min-width: 144px
+  position: relative
+  display: flex
+  flex: 1
+  background: rgba(255,255,255,.15);
+  .l_header_search_icon
+    display: inline-block;
+    height: 36px;
+    position: relative;
+    width: 72px;
+  .l_header_search_input
+    position: relative;
+    flex: 1;
 
 .l_drawer_override
   color: #212121 !important

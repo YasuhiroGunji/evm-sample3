@@ -154,7 +154,9 @@ class Apply extends React.Component {
             is_open_form: this.props.showForm,
           })}
         >
-
+          <div className="l_apply_header">
+            <span>aaaa</span>
+          </div>
           <div className={'l_list_container'}>
             <List>
               <div className={'l_week_item'}>
@@ -181,18 +183,16 @@ class Apply extends React.Component {
             </FloatingActionButton>
           </div>
 
-          <div
+          <Paper
             className={ClassSet({
               l_form_container: true,
               is_open_form: this.state.showForm,
             })}
+            zDepth={2}
           >
-            <Paper zDepth={1} className={'l_form_header'}>
-              <div className="l_form_row">
-                <span>残業申請</span>
-              </div>
-            </Paper>
-
+            <div className="l_form_header">
+              <span>残業申請</span>
+            </div>
             <div className="l_form_content">
               <div className="l_form_row">
                 <DropDownMenu value={this.state.applyForm.MonthValue} onChange={this.handleDdlChange.bind(this, 'MonthValue')} >
@@ -216,14 +216,14 @@ class Apply extends React.Component {
                   floatingLabelText="顧客コード"
                   value={this.state.applyForm.CustomerCd}
                   onChange={this.handleTextChange}
+                  style={{ width: 150 }}
                 />
-              </div>
-              <div className="l_form_row">
                 <TextField
                   hintText=""
                   floatingLabelText="プロジェクトコード"
                   value={this.state.applyForm.ProjectCd}
                   onChange={this.handleTextChange.bind(this, 'ProjectCd')}
+                  style={{ width: 150 }}
                 />
               </div>
               <div className="l_form_row">
@@ -266,7 +266,7 @@ class Apply extends React.Component {
                 onTouchTap={e => this.onSubmit(e)}
               />
             </Paper>
-          </div>
+          </Paper>
 
           <Snackbar snackbarOpen={this.props.snackbarOpen} action={this.props.applyActionBind} />
         </div>

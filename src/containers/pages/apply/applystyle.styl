@@ -1,3 +1,8 @@
+.l_apply_header
+  top: 65px
+  height: 50px
+  background-color: #fff
+
 // List
 .l_apply_container
   padding: 65px 0 1px
@@ -17,15 +22,15 @@
   margin: 0
   padding: 0
   .l_week_item
-    border-bottom: 1px solid transparent;
-    color: #616161;
-    line-height: 24px;
-    margin: 20px 0 8px;
-    padding: 0 24px;
-    align-items: center;
-    -webkit-align-items: center;
-    display: -webkit-flex;
-    display: flex;
+    border-bottom: 1px solid transparent
+    color: #616161
+    line-height: 24px
+    margin: 20px 0 8px
+    padding: 0 24px
+    align-items: center
+    -webkit-align-items: center
+    display: -webkit-flex
+    display: flex
     
 
 // card
@@ -68,43 +73,83 @@ form-width = 30%
 
 .l_form_container
   position: fixed
+  bottom: 0
+  right: 90px
+  width: 480px
+  height: 550px
+  border-top-left-radius: 7.5px
+  border-top-right-radius: 7.5px
   display: flex
   flex-direction: column
   justify-content: space-between
-  top: 65px
-  bottom: 0
-  right: 0
-  width: 300px
   background-color: #fff
-  transform: translateX(300px)
-  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+  opacity: 0
+  z-index: 3
   &.is_open_form
-    transform: translateX(0)
+    opacity: 1
+    transition: opacity 300ms ease-in
   .l_form_header
-    flex: (0 0 auto)
-    height: 60px
+    background: #424242
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
     color: #fff
-    background-color: #000
+    height: 18px
+    line-height: 18px
+    outline: 1px solid transparent
+    padding: 11px 20px
+    transform: translateZ(0)
+    -webkit-flex: 0 0 auto
+    flex: 0 0 auto
   .l_form_content
     overflow-y: auto
-    flex: (1 1 auto)
+    flex: 1 1 auto
     padding: 8px
   .l_form_footer
-    flex: (0 0 auto)
-    height: 60px
+    display: flex
+    height: 64px
+    padding: 14px 20px
+    align-items: center
+    flex: 0 0 auto
 
-.l_form_row
-  margin-right: 5px
-  margin-left: 5px
-  &:before
-    display: table
-    content: " "
+// .l_form_container
+//   position: fixed
+//   display: flex
+//   flex-direction: column
+//   justify-content: space-between
+//   top: 65px
+//   bottom: 0
+//   right: 0
+//   width: 300px
+//   background-color: #fff
+//   transform: translateX(300px)
+//   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+//   &.is_open_form
+//     transform: translateX(0)
+//   .l_form_header
+//     flex: (0 0 auto)
+//     height: 60px
+//     color: #fff
+//     background-color: #000
+//   .l_form_content
+//     overflow-y: auto
+//     flex: (1 1 auto)
+//     padding: 8px
+//   .l_form_footer
+//     flex: (0 0 auto)
+//     height: 60px
+
+// .l_form_row
+//   margin-right: 5px
+//   margin-left: 5px
+//   &:before
+//     display: table
+//     content: " "
 
 
 //FloatingActionButton
 .l_floating_button
   position: fixed
-  top: 73px
+  bottom: 16px
   right: 8px
   z-index: 100
 

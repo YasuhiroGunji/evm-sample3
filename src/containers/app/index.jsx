@@ -14,6 +14,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 // svg-icon header
 import Dehaze from 'material-ui/svg-icons/image/dehaze';
 import Group from 'material-ui/svg-icons/social/group';
+import Search from 'material-ui/svg-icons/action/search';
 import Person from 'material-ui/svg-icons/social/person';
 
 import { white } from 'material-ui/styles/colors';
@@ -28,9 +29,7 @@ import * as baseActions from '../../actions/Base';
 // stylus
 import './style.styl';
 
-
-
-const Profile = () =>
+const Profile = () => (
   <IconMenu
     iconButtonElement={
       <IconButton className={'l_profile_iconbutton'}>
@@ -43,9 +42,8 @@ const Profile = () =>
     <MenuItem primaryText="Edit" />
     <MenuItem primaryText="Help" />
     <MenuItem primaryText="Sign out" />
-  </IconMenu>;
-
-
+  </IconMenu>
+);
 
 class App extends React.Component {
 
@@ -134,10 +132,23 @@ class App extends React.Component {
               />
             </ToolbarGroup>
             <ToolbarGroup>
-              <TextField
-                id="text-field-default"
-                className={'l_header_searchbox'}
-              />
+              <div className={'l_header_search'}>
+                <div className={'l_header_search_icon'}>
+                  <Search
+                    color={white}
+                    style={{ width: 30, height: 30, marginTop: 8, marginLeft: 16 }}
+                  />
+                </div>
+                <div className={'l_header_search_input'}>
+                  <TextField
+                    id="text-header-search"
+                    hintText="検索"
+                    hintStyle={{ color: white }}
+                    underlineShow={false}
+                    style={{ zIndex: 300, color: '#fff' }}
+                  />
+                </div>
+              </div>
             </ToolbarGroup>
             <ToolbarGroup lastChild>
               <GroupIcon />
