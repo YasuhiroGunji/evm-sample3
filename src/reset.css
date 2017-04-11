@@ -25,6 +25,8 @@ time, mark, audio, video {
 }
 body {
     line-height:1;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 81.25%;
 }
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section {
@@ -47,6 +49,7 @@ a {
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    text-decoration: none;
 }
 /* change colours to suit your needs */
 ins {
