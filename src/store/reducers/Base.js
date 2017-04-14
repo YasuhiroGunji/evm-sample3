@@ -1,20 +1,20 @@
-import * as baseConst from '../../const/Base';
+import * as CONST from '../../const/Base';
 
 const initialState = {
-  showMenu: true,
+  ShowMenu: true,
   pageTitle: '申請一覧',
   isAttendance: false,
   isApply: true,
   showGroupDialog: false,
-  groupIds: [],
+  GroupIds: [],
 };
 
 export default function Base(state = initialState, action = {}) {
   switch (action.type) {
-    case baseConst.SHOW_MENU:
-      return { ...state, showMenu: action.showMenu };
-    case baseConst.SELECT_GROUP:
-      return { ...state, groupIds: action.groupIds };
+    case CONST.SHOW_MENU:
+      return { ...state, ShowMenu: action.showMenu };
+    case CONST.SELECT_GROUP:
+      return { ...state, GroupIds: action.groupIds };
 
     default:
       return state;

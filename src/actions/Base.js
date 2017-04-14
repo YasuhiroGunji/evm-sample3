@@ -1,19 +1,19 @@
-import * as baseConst from '../const/Base';
+import * as CONST from '../const/Base';
 
-export const ShowMenu = (isOpen) => {
-  return (dispatch) => {
+export const ShowMenu = isOpen =>
+  (dispatch) => {
     dispatch({
-      type: baseConst.SHOW_MENU,
+      type: CONST.SHOW_MENU,
       showMenu: isOpen,
     });
   };
-};
 
-export const GroupSelect = (groupIds) => {
-  return (dispatch) => {
+
+export const GroupSelect = groupIds =>
+  (dispatch) => {
     dispatch({
-      type: baseConst.SELECT_GROUP,
-      showMenu: groupIds,
+      type: CONST.SELECT_GROUP,
+      groupIds,
     });
   };
-};
+

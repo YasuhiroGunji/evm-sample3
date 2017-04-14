@@ -59,11 +59,11 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ showMenu: nextProps.showMenu });
+    this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
   onToggleMenu() {
-    this.props.actions.ShowMenu(!this.state.showMenu);
+    this.props.actions.ShowMenu(!this.state.ShowMenu);
   }
 
   onPageTransition(e) {
@@ -158,7 +158,7 @@ class App extends React.Component {
         </Paper>
 
         <Drawer
-          isOpen={this.state.showMenu}
+          isOpen={this.state.ShowMenu}
           onPageTransition={this.onPageTransition}
         />
 
