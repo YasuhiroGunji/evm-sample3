@@ -21,7 +21,7 @@ class Attendance extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ showMenu: true, tableData: TableData });
+    this.setState({ ShowMenu: true, tableData: TableData });
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class Attendance extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ showMenu: nextProps.showMenu });
+    this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
   onScroll() {
@@ -49,7 +49,7 @@ class Attendance extends React.Component {
       <div
         className={ClassSet({
           l_attendance_container: true,
-          is_open_menu: this.state.showMenu,
+          is_open_menu: this.state.ShowMenu,
         })}
       >
         <div className={'l_attendance_content'}>
@@ -253,9 +253,9 @@ class Attendance extends React.Component {
 
 function mapStateToProps(state) {
   const { tableData } = state.Attendance;
-  const { showMenu } = state.Base;
+  const { ShowMenu } = state.Base;
   return {
-    tableData, showMenu,
+    tableData, ShowMenu,
   };
 }
 

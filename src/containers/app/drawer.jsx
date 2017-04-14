@@ -57,7 +57,7 @@ const SideMenu = props =>
   </Drawer>
 ;
 
-SideMenu.PropTypes = {
+SideMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onPageTransition: PropTypes.func.isRequired,
 };

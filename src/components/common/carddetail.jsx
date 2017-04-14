@@ -6,8 +6,6 @@ import { ListItem } from 'material-ui/List';
 
 import { grey400, yellow600, grey500, darkBlack, lightBlack } from 'material-ui/styles/colors';
 
-import * as Common from '../../actions/Common';
-
 const style = {
   expand: {
     marginTop: 30,
@@ -17,20 +15,20 @@ const style = {
   },
 };
 
-export default class ComCardDetail extends React.Component {
-
+export default class CardDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
   }
 
   render() {
-    const item = this.props.applyItem;
+    const item = this.props.ApplicationItem;
+
     return (
       <div>
         <Paper zDepth={2} style={style.expand}>
           <ListItem
-            onClick={() => this.props.handleClose(item.ApplyId)}
+            onClick={() => this.props.handleCloseDetail(item.ApplicationId)}
           >
             <div className={'md_card_content'}>
               <div className={'md_card_title'}>
@@ -58,23 +56,26 @@ export default class ComCardDetail extends React.Component {
   }
 }
 
-ComCardDetail.propTypes = {
-  applyItem: PropTypes.shape({
-    ApplyId: PropTypes.number.isRequired,
+CardDetail.propTypes = {
+  ApplicationItem: PropTypes.shape({
+    ApplicationId: PropTypes.string.isRequired,
+    ApplicationCd: PropTypes.number.isRequired,
     ScheduledDate: PropTypes.string.isRequired,
     CustomerCd: PropTypes.string.isRequired,
     ProjectCd: PropTypes.string.isRequired,
+    OvertimeStart: PropTypes.number,
+    OvertimeEnd: PropTypes.number,
+    OvertimeActualStart: PropTypes.number,
+    OvertimeActualEnd: PropTypes.number,
+    IrregularStart: PropTypes.number,
+    IrregularEnd: PropTypes.number,
+    IrregularActualStart: PropTypes.number,
+    IrregularActualEnd: PropTypes.number,
+    OverTime: PropTypes.number,
+    LateOverTime: PropTypes.number,
     WorkContent: PropTypes.string.isRequired,
-    OvertimeStart: PropTypes.string,
-    OvertimeEnd: PropTypes.string,
-    OvertimeActualStart: PropTypes.string,
-    OvertimeActualEnd: PropTypes.string,
-    IrregularStart: PropTypes.string,
-    IrregularEnd: PropTypes.string,
-    IrregularActualStart: PropTypes.string,
-    IrregularActualEnd: PropTypes.string,
-    OverTime: PropTypes.string,
-    LateOverTime: PropTypes.string,
+    ShowDetail: PropTypes.bool,
   }).isRequired,
-  handleClose: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleCloseDetail: PropTypes.func.isRequired,
 };
