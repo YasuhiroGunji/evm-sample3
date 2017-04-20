@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
-// control
+// material-ui component
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { List } from 'material-ui/List';
-
-// svg-icon
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
+// component
 import Card from '../../../components/common/card';
 import CardDetail from '../../../components/common/carddetail';
 import Snackbar from '../../../components/common/snackbar';
 import OvertimeForm from '../../../components/applicationform/overtime';
-
+// svg-icon
+import ContentAdd from 'material-ui/svg-icons/content/add';
+// actions
 import * as applyActions from '../../../actions/Application';
-import * as Util from '../../../actions/Util';
+// enum
+import { APPL_CD } from '../../../const/Enum';
 
+// style
 import './application.styl';
 
 
@@ -33,8 +34,6 @@ class Application extends React.Component {
     this.ShowForm = this.ShowForm.bind(this);
     this.ShowDetail = this.ShowDetail.bind(this);
     this.CloseDetail = this.CloseDetail.bind(this);
-    this.handleDdlChange = this.handleDdlChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   componentDidMount() {
@@ -48,26 +47,22 @@ class Application extends React.Component {
     this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
-  onSubmit(e, applicationCd) {
-    e.preventDefault();
+  onSubmit(applicationCd, form) {
+    switch (applicationCd) {
 
-    // const ApplicationForm = {};
+      case APPL_CD.OVERTIME:
+        this.props.actions.OvertimeSubmit(form);
+        break;
 
-    // const newList = this.state.ApplicationList.slice();
-    // newList.unshift(ApplicationForm);
-    // this.setState({ ApplicationList: newList });
-
-    this.props.actions.Submit(this.state.ApplicationForm, applicationCd);
+      default:
+        break;
+    }
   }
 
-  onDelete(applyId) {
-    const newList = this.state.ApplicationList.slice();
-    const i = this.state.ApplicationList.findIndex(item => item.ApplicationId === applyId);
-
+  onDelete(applicationId) {
     // TODO: モーダルダイアログ処理実装予定
     // TODO: サーバー通信処理実装予定
-    newList.splice(i, 1);
-    this.setState({ ApplicationList: newList });
+    this.props.actions.DeleteApplication(this.state.ApplicationList, applicationId);
   }
 
   ShowForm() {
@@ -96,21 +91,6 @@ class Application extends React.Component {
       item.ApplicationId === applicationId);
     newList[i].ShowDetail = false;
     this.setState({ ApplicationList: newList });
-  }
-
-  handleDdlChange(propertyName, event, index, value) {
-    const newForm = this.state.ApplicationForm;
-    newForm[propertyName] = value;
-    newForm.NomalOvertimeHrs =
-      Util.CalcOvertimeHrs(
-        newForm.OvertimeStart, newForm.OvertimeEnd);
-    this.setState({ newForm });
-  }
-
-  handleTextChange(propertyName, event) {
-    const newForm = this.state.ApplicationForm;
-    newForm[propertyName] = event.target.value;
-    this.setState({ newForm });
   }
 
   render() {
@@ -221,9 +201,7 @@ class Application extends React.Component {
 
         <OvertimeForm
           showForm={this.state.ShowForm}
-          applicationForm={this.state.ApplicationForm}
-          handleDdlChange={this.handleDdlChange}
-          handleTextChange={this.handleTextChange}
+          applicationForm={this.props.ApplicationForm}
           handleSubmit={this.onSubmit}
         />
 
@@ -238,6 +216,7 @@ class Application extends React.Component {
 
 Application.propTypes = {
   ApplicationList: React.PropTypes.array,
+  ApplicationForm: React.PropTypes.object,
   actions: React.PropTypes.object.isRequired,
   EmpId: React.PropTypes.number.isRequired,
   ShowMenu: React.PropTypes.bool.isRequired,

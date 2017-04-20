@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react';
 import ClassSet from 'react-classset';
 
+// material-ui component
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-
+// component
 import DropDown from '../common/dropdown';
 import TextBox from '../common/textbox';
 import TextArea from '../common/textarea';
+// enum
 import { APPL_CD } from '../../const/Enum';
+// actions
+import * as Util from '../../actions/Util';
 
 import './form.styl';
 
@@ -16,6 +20,30 @@ export default class OvertimeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
+
+    this.handleDdlChange = this.handleDdlChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleDdlChange(propertyName, event, index, value) {
+    const newForm = this.state.applicationForm;
+    newForm[propertyName] = value;
+    newForm.NomalOvertimeHrs =
+      Util.CalcOvertimeHrs(
+        newForm.OvertimeStart, newForm.OvertimeEnd);
+    this.setState({ applicationForm: newForm });
+  }
+
+  handleTextChange(propertyName, event) {
+    const newForm = this.state.applicationForm;
+    newForm[propertyName] = event.target.value;
+    this.setState({ applicationForm: newForm });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.handleSubmit(APPL_CD.OVERTIME, this.state.applicationForm);
   }
 
   render() {
@@ -76,71 +104,71 @@ export default class OvertimeForm extends React.Component {
             <DropDown
               label="申請月"
               propertyName="MonthValue"
-              selectValue={this.props.applicationForm.MonthValue}
+              selectValue={this.state.applicationForm.MonthValue}
               data={monthData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
             />
             <DropDown
               label="申請日"
               propertyName="DayValue"
-              selectValue={this.props.applicationForm.DayValue}
+              selectValue={this.state.applicationForm.DayValue}
               data={dayData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
             />
           </div>
           <div className="l_form_row">
             <TextBox
               label="顧客コード"
               propertyName="CustomerCd"
-              value={this.props.applicationForm.CustomerCd}
-              handleTextChange={this.props.handleTextChange}
+              value={this.state.applicationForm.CustomerCd}
+              handleTextChange={this.handleTextChange}
             />
             <TextBox
               label="プロジェクトコード"
-              value={this.props.applicationForm.ProjectCd}
+              value={this.state.applicationForm.ProjectCd}
               propertyName="ProjectCd"
-              handleTextChange={this.props.handleTextChange}
+              handleTextChange={this.handleTextChange}
             />
           </div>
           <div className="l_form_row">
             <TextArea
               label="作業内容"
               propertyName="WorkContent"
-              value={this.props.applicationForm.WorkContent}
-              handleTextChange={this.props.handleTextChange}
+              value={this.state.applicationForm.WorkContent}
+              handleTextChange={this.handleTextChange}
             />
           </div>
           <div className="l_form_row">
             <DropDown
               label="残業予定時間"
               propertyName="OvertimeStart"
-              selectValue={this.props.applicationForm.OvertimeStart}
+              selectValue={this.state.applicationForm.OvertimeStart}
               data={timeData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
             />
             <DropDown
               label=" "
               propertyName="OvertimeEnd"
-              selectValue={this.props.applicationForm.OvertimeEnd}
+              selectValue={this.state.applicationForm.OvertimeEnd}
               data={timeData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
             />
           </div>
           <div className="l_form_row">
             <DropDown
               label="残業実績時間"
               propertyName="OvertimeActualStart"
-              selectValue={this.props.applicationForm.OvertimeActualStart}
+              selectValue={this.state.applicationForm.OvertimeActualStart}
               data={timeData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
               disabled={true}
             />
             <DropDown
               label="残業実績時間"
               propertyName="OvertimeActualEnd"
-              selectValue={this.props.applicationForm.OvertimeActualEnd}
+              selectValue={this.state.applicationForm.OvertimeActualEnd}
               data={timeData}
-              handleDdlChange={this.props.handleDdlChange}
+              handleDdlChange={this.handleDdlChange}
               disabled={true}
             />
           </div>
@@ -159,7 +187,7 @@ export default class OvertimeForm extends React.Component {
             primary={false}
             secondary={true}
             disabled={false}
-            onTouchTap={e => this.props.handleSubmit(e, APPL_CD.OVERTIME)}
+            onTouchTap={e => this.handleSubmit(e, APPL_CD.OVERTIME)}
           />
         </Paper>
 
@@ -171,7 +199,5 @@ export default class OvertimeForm extends React.Component {
 OvertimeForm.propTypes = {
   showForm: PropTypes.bool.isRequired,
   applicationForm: PropTypes.object.isRequired,
-  handleDdlChange: PropTypes.func.isRequired,
-  handleTextChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
