@@ -79,14 +79,10 @@ export default function Application(state = initialState, action = {}) {
       return { ...state, ShowForm: action.showForm };
 
     case CONST.ACTION_SUBMIT:
-
       return { ...state, ApplicationList: AddListItem(state, action) };
 
-    case CONST.ACTION_DETAIL:
-      return { ...state, ApplicationList: state.ApplicationList };
-
     case CONST.ACTION_DELETE:
-      return { ...state, ApplicationList: state.ApplicationList.concat([action.applicationForm]) };
+      return { ...state, ApplicationList: action.applicationList };
 
     case CONST.ACTION_SNACKBAR:
       return { ...state, SnackbarOpen: action.snackbarOpen };

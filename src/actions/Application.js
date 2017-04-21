@@ -1,7 +1,9 @@
 import * as API from './Api';
 import * as Util from './Util';
-
+// const
 import * as CONST from '../const/Application';
+// enum
+import { APPL_CD } from '../const/Enum';
 
 export const Init = (empId) => {
   return (dispatch) => {
@@ -26,35 +28,14 @@ export const Init = (empId) => {
   };
 };
 
-export const ApplicationItem = {
-  ApplicationId: -1,
-  ApplicationCd: 1,
-  ScheduledDate: Util.GetCurrentTimeString(),
-  CustomerCd: '',
-  ProjectCd: '',
-  OvertimeStart: 1800,
-  OvertimeEnd: 2000,
-  OvertimeActualStart: 0,
-  OvertimeActualEnd: 0,
-  NomalOvertimeHrs: 0,
-  LateOvertimeHrs: 0,
-  IrregularStart: 0,
-  IrregularEnd: 0,
-  IrregularActualStart: 0,
-  IrregularActualEnd: 0,
-  IrregularHrs: 0,
-  WorkContent: '',
-  ShowDetail: false,
-};
-
-export const Submit = (formData, applicationCd) => {
+export const OvertimeSubmit = (formData) => {
   const postData = {};
   const yyyyMM = Util.SpliceSlashYYYYMM(`${formData.MonthValue}`);
   const dd = Util.ZeroFill(formData.DayValue);
 
   // TODO：社員番号はLocalStorageに保存
   postData.ApplicationId = Util.GenerateKey();
-  postData.ApplicationCd = applicationCd;
+  postData.ApplicationCd = APPL_CD.OVERTIME;
   postData.ScheduledDate = `${yyyyMM}/${dd}`;
   postData.CustomerCd = formData.CustomerCd;
   postData.ProjectCd = formData.ProjectCd;
@@ -106,6 +87,18 @@ export const Submit = (formData, applicationCd) => {
         snackbarOpen: true,
       });
     }, 2000);
+  };
+};
+
+export const DeleteApplication = (list, applicationId) => {
+  const i = list.findIndex(item => item.ApplicationId === applicationId);
+  list.splice(i, 1);
+
+  return (dispatch) => {
+    dispatch({
+      type: CONST.ACTION_DELETE,
+      applicationList: list,
+    });
   };
 };
 

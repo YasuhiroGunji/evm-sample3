@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
-// control
+// material-ui component
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { List } from 'material-ui/List';
-
-// svg-icon
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
+// component
 import Card from '../../../components/common/card';
 import CardDetail from '../../../components/common/carddetail';
 import Snackbar from '../../../components/common/snackbar';
 import OvertimeForm from '../../../components/applicationform/overtime';
-
+// svg-icon
+import ContentAdd from 'material-ui/svg-icons/content/add';
+// actions
 import * as applyActions from '../../../actions/Application';
-import * as Util from '../../../actions/Util';
+// enum
+import { APPL_CD } from '../../../const/Enum';
 
+// style
 import './application.styl';
 
 
@@ -33,8 +34,6 @@ class Application extends React.Component {
     this.ShowForm = this.ShowForm.bind(this);
     this.ShowDetail = this.ShowDetail.bind(this);
     this.CloseDetail = this.CloseDetail.bind(this);
-    this.handleDdlChange = this.handleDdlChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   componentDidMount() {
@@ -48,26 +47,22 @@ class Application extends React.Component {
     this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
-  onSubmit(e, applicationCd) {
-    e.preventDefault();
+  onSubmit(applicationCd, form) {
+    switch (applicationCd) {
 
-    // const ApplicationForm = {};
+      case APPL_CD.OVERTIME:
+        this.props.actions.OvertimeSubmit(form);
+        break;
 
-    // const newList = this.state.ApplicationList.slice();
-    // newList.unshift(ApplicationForm);
-    // this.setState({ ApplicationList: newList });
-
-    this.props.actions.Submit(this.state.ApplicationForm, applicationCd);
+      default:
+        break;
+    }
   }
 
-  onDelete(applyId) {
-    const newList = this.state.ApplicationList.slice();
-    const i = this.state.ApplicationList.findIndex(item => item.ApplicationId === applyId);
-
+  onDelete(applicationId) {
     // TODO: モーダルダイアログ処理実装予定
     // TODO: サーバー通信処理実装予定
-    newList.splice(i, 1);
-    this.setState({ ApplicationList: newList });
+    this.props.actions.DeleteApplication(this.props.ApplicationList, applicationId);
   }
 
   ShowForm() {
@@ -98,66 +93,10 @@ class Application extends React.Component {
     this.setState({ ApplicationList: newList });
   }
 
-  handleDdlChange(propertyName, event, index, value) {
-    const newForm = this.state.ApplicationForm;
-    newForm[propertyName] = value;
-    newForm.NomalOvertimeHrs =
-      Util.CalcOvertimeHrs(
-        newForm.OvertimeStart, newForm.OvertimeEnd);
-    this.setState({ newForm });
-  }
-
-  handleTextChange(propertyName, event) {
-    const newForm = this.state.ApplicationForm;
-    newForm[propertyName] = event.target.value;
-    this.setState({ newForm });
-  }
-
   render() {
-    const monthData = [
-      { text: '2017/02', value: 201702 },
-      { text: '2017/03', value: 201703 },
-      { text: '2017/04', value: 201704 },
-    ];
-    const dayData = [
-      { text: '6(月)', value: 6 },
-      { text: '7(火)', value: 7 },
-      { text: '8(水)', value: 8 },
-      { text: '9(木)', value: 9 },
-      { text: '10(金)', value: 10 },
-      { text: '11(土)', value: 11 },
-      { text: '12(日)', value: 12 },
-    ];
-    const timeData = [
-      { text: '18:00', value: 1800 },
-      { text: '18:30', value: 1830 },
-      { text: '19:00', value: 1900 },
-      { text: '19:30', value: 1930 },
-      { text: '20:00', value: 2000 },
-      { text: '20:30', value: 2030 },
-      { text: '21:00', value: 2100 },
-      { text: '21:30', value: 2130 },
-      { text: '22:00', value: 2200 },
-      { text: '22:30', value: 2230 },
-      { text: '23:00', value: 2300 },
-      { text: '23:30', value: 2330 },
-      { text: '24:00', value: 2400 },
-      { text: '24:30', value: 2430 },
-      { text: '25:00', value: 2500 },
-      { text: '25:30', value: 2530 },
-      { text: '26:00', value: 2600 },
-      { text: '26:30', value: 2630 },
-      { text: '27:00', value: 2700 },
-      { text: '27:30', value: 2730 },
-      { text: '28:00', value: 2800 },
-      { text: '28:30', value: 2830 },
-      { text: '29:00', value: 2900 },
-      { text: '29:30', value: 2930 },
-    ];
-
     let applicationList = [];
-    if (this.state.ApplicationList) {
-      applicationList = this.state.ApplicationList.map((item) => {
+    if (this.props.ApplicationList) {
+      applicationList = this.props.ApplicationList.map((item) => {
         if (item.ShowDetail) {
           return (
             <CardDetail
@@ -221,9 +160,7 @@ class Application extends React.Component {
 
         <OvertimeForm
           showForm={this.state.ShowForm}
-          applicationForm={this.state.ApplicationForm}
-          handleDdlChange={this.handleDdlChange}
-          handleTextChange={this.handleTextChange}
+          applicationForm={this.props.ApplicationForm}
           handleSubmit={this.onSubmit}
         />
 
@@ -238,6 +175,7 @@ class Application extends React.Component {
 
 Application.propTypes = {
   ApplicationList: React.PropTypes.array,
+  ApplicationForm: React.PropTypes.object,
   actions: React.PropTypes.object.isRequired,
   EmpId: React.PropTypes.number.isRequired,
   ShowMenu: React.PropTypes.bool.isRequired,
