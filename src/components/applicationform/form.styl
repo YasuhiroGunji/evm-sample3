@@ -1,49 +1,29 @@
 //form
-.l_form_container
-  position: fixed
-  bottom: 0
-  right: 90px
-  width: 480px
-  height: 550px
-  border-top-left-radius: 7.5px
-  border-top-right-radius: 7.5px
-  display: none
-  flex-direction: column
-  justify-content: space-between
-  background-color: #fff
-  opacity: 0
-  z-index: 0
-  &.is_open_form
-    display: flex
-    opacity: 1
-    transition: opacity 300ms ease-in
-    z-index: 3
-  .l_form_header
-    background: #424242
-    border-top-left-radius: 5px
-    border-top-right-radius: 5px
-    color: #fff
-    height: 18px
-    line-height: 18px
-    outline: 1px solid transparent
-    padding: 11px 20px
-    transform: translateZ(0)
-    -webkit-flex: 0 0 auto
-    flex: 0 0 auto
-  .l_form_content
-    overflow-y: auto
-    flex: 1 1 auto
-    padding: 8px
-  .l_form_footer
-    display: flex
-    height: 64px
-    padding: 14px 20px
-    align-items: center
-    flex: 0 0 auto
+.l_form_header
+  background: #424242
+  border-top-left-radius: 5px
+  border-top-right-radius: 5px
+  color: #fff
+  height: 18px
+  line-height: 18px
+  outline: 1px solid transparent
+  padding: 11px 20px
+  transform: translateZ(0)
+  -webkit-flex: 0 0 auto
+  flex: 0 0 auto
+
+.l_form_content
+  overflow-y: auto
+  flex: 1 1 auto
+  padding: 8px
 
 .l_form_row
   margin-right: 8px
   margin-left: 8px
-  &:before
-    display: table
-    content: " "
+
+.l_form_footer
+  display: flex
+  height: 64px
+  padding: 14px 20px
+  align-items: center
+  flex: 0 0 auto

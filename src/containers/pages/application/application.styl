@@ -72,6 +72,27 @@
   right: 8px
   z-index: 100
 
+//form
+.l_form_container
+  position: fixed
+  bottom: 0
+  right: 90px
+  width: 480px
+  height: 550px
+  border-top-left-radius: 7.5px
+  border-top-right-radius: 7.5px
+  display: none
+  flex-direction: column
+  justify-content: space-between
+  background-color: #fff
+  opacity: 0
+  z-index: 0
+  &.is_open_form
+    display: flex
+    opacity: 1
+    transition: opacity 300ms ease-in
+    z-index: 3
+
 // List Animation
 .example-enter
   opacity: 0.1
