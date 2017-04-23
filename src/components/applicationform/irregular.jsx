@@ -14,8 +14,7 @@ import * as Util from '../../actions/Util';
 
 import './form.styl';
 
-export default class OvertimeForm extends React.Component {
-
+export default class IrregularForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props;
@@ -29,8 +28,7 @@ export default class OvertimeForm extends React.Component {
     const newForm = this.state.applicationForm;
     newForm[propertyName] = value;
     newForm.NomalOvertimeHrs =
-      Util.CalcOvertimeHrs(
-        newForm.OvertimeStart, newForm.OvertimeEnd);
+      Util.CalcOvertimeHrs(newForm.OvertimeStart, newForm.OvertimeEnd);
     this.setState({ applicationForm: newForm });
   }
 
@@ -42,7 +40,7 @@ export default class OvertimeForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.handleSubmit(APPL_CD.OVERTIME, this.state.applicationForm);
+    this.props.handleSubmit(APPL_CD.IRREGULAR, this.state.applicationForm);
   }
 
   render() {
@@ -88,9 +86,9 @@ export default class OvertimeForm extends React.Component {
     ];
 
     return (
-      <Paper zDepth={2}>
+      <Paperz Depth={2}>
         <div className="l_form_header">
-          <span>残業申請</span>
+          <span>変則勤務申請</span>
         </div>
         <div className="l_form_content">
           <div className="l_form_row">
@@ -149,6 +147,22 @@ export default class OvertimeForm extends React.Component {
           </div>
           <div className="l_form_row">
             <DropDown
+              label="変則予定時間"
+              propertyName="OvertimeStart"
+              selectValue={this.state.applicationForm.OvertimeStart}
+              data={timeData}
+              handleDdlChange={this.handleDdlChange}
+            />
+            <DropDown
+              label=" "
+              propertyName="OvertimeEnd"
+              selectValue={this.state.applicationForm.OvertimeEnd}
+              data={timeData}
+              handleDdlChange={this.handleDdlChange}
+            />
+          </div>
+          <div className="l_form_row">
+            <DropDown
               label="残業実績時間"
               propertyName="OvertimeActualStart"
               selectValue={this.state.applicationForm.OvertimeActualStart}
@@ -187,9 +201,4 @@ export default class OvertimeForm extends React.Component {
       </Paper>
     );
   }
-}
-
-OvertimeForm.propTypes = {
-  applicationForm: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 };

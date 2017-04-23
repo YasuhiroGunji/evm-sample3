@@ -92,12 +92,12 @@ export const OvertimeSubmit = (formData) => {
 
 export const DeleteApplication = (list, applicationId) => {
   const i = list.findIndex(item => item.ApplicationId === applicationId);
-  list.splice(i, 1);
+  const applicationList = list.filter((item, index) => index !== i);
 
   return (dispatch) => {
     dispatch({
       type: CONST.ACTION_DELETE,
-      applicationList: list,
+      applicationList,
     });
   };
 };

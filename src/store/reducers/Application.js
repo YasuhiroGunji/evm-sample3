@@ -48,8 +48,8 @@ export default function Application(state = initialState, action = {}) {
   switch (action.type) {
 
     case CONST.ACTION_INIT: {
-      if (!action.applicationList) {
-        return { ...state, ApplicationList: action.applicationList };
+      if (!action.applicationList || action.applicationList === undefined) {
+        return state;
       }
       const ApplicationList = action.applicationList.map(item => ({
         ApplicationId: item.ApplicationId,
@@ -93,8 +93,17 @@ export default function Application(state = initialState, action = {}) {
 }
 
 export function AddListItem(state, action) {
-  if (state.ApplicationList) {
-    return [action.applicationForm].concat(state.ApplicationList);
-  }
-  return [action.applicationForm];
+  const newlist = state.ApplicationList.slice();
+  return [action.applicationForm].concat(newlist);
+
+  // if (state.ApplicationList) {
+  //   return [action.applicationForm].concat(state.ApplicationList);
+  // }
+  // return [action.applicationForm];
+}
+
+export function RempveListItem(state, action) {
+  const i = state.ApplicationList.findIndex(item => item.ApplicationId === action.applicationId);
+  state.ApplicationList.splice(i, 1);
+  return state.ApplicationList;
 }

@@ -94,31 +94,29 @@ class Application extends React.Component {
   }
 
   render() {
-    let applicationList = [];
-    if (this.props.ApplicationList) {
-      applicationList = this.props.ApplicationList.map((item) => {
-        if (item.ShowDetail) {
-          return (
-            <CardDetail
-              key={item.ApplicationId}
-              className={'example'}
-              ApplicationItem={item}
-              handleDelete={this.onDelete}
-              handleCloseDetail={this.CloseDetail}
-            />
-          );
-        }
+    const applicationList = this.props.ApplicationList.map((item) => {
+      if (item.ShowDetail) {
         return (
-          <Card
+          <CardDetail
             key={item.ApplicationId}
             className={'example'}
             ApplicationItem={item}
             handleDelete={this.onDelete}
-            handleOpenDetail={this.ShowDetail}
+            handleCloseDetail={this.CloseDetail}
           />
         );
-      });
-    }
+      }
+
+      return (
+        <Card
+          key={item.ApplicationId}
+          className={'example'}
+          ApplicationItem={item}
+          handleDelete={this.onDelete}
+          handleOpenDetail={this.ShowDetail}
+        />
+      );
+    });
 
     return (
       <div
@@ -158,11 +156,17 @@ class Application extends React.Component {
           </FloatingActionButton>
         </div>
 
-        <OvertimeForm
-          showForm={this.state.ShowForm}
-          applicationForm={this.props.ApplicationForm}
-          handleSubmit={this.onSubmit}
-        />
+        <div
+          className={ClassSet({
+            l_form_container: true,
+            is_open_form: this.state.ShowForm,
+          })}
+        >
+          <OvertimeForm
+            applicationForm={this.props.ApplicationForm}
+            handleSubmit={this.onSubmit}
+          />
+        </div>
 
         <Snackbar
           snackbarOpen={this.props.SnackbarOpen}

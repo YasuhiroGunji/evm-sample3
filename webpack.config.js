@@ -2,7 +2,7 @@
 module.exports = {
   entry: './src/index.jsx',
   output: {
-    path: '/out',
+    path: __dirname + "/out",
     filename: 'bundle.js',
   },
   devServer: {
@@ -35,7 +35,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: ['node_modules', './src'],
+    modules: ['node_modules', __dirname + './src'],
     extensions: ['.js', '.jsx'],
   },
 };
