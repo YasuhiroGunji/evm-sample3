@@ -6,25 +6,26 @@ import * as CONST from '../const/Application';
 import { APPL_CD } from '../const/Enum';
 
 export const Init = (empId) => {
+  const yyyymm = Util.GetCurrentTimeStringYYYYMM();
+
   return (dispatch) => {
-    // API.Get('Apply/GetOvertimeList', empId)
-    // .then(
-    //   (obj) => {
-    //     console.debug(obj);
+    API.Get('Appl/GetApplList', empId, yyyymm)
+    .then(
+      (obj) => {
+        console.debug(obj);
+        dispatch({
+          type: CONST.ACTION_INIT,
+          applicationList: obj.ApplList,
+        });
+      },
+    ).catch(
+      err => console.error(err),
+    );
 
-    //     dispatch({
-    //       type: ACTION_INIT,
-    //       applyList: obj.OvertimeList,
-    //     });
-    //   },
-    // ).catch(
-    //   err => console.error(err),
-    // );
-
-    dispatch({
-      type: CONST.ACTION_INIT,
-      applyList: [],
-    });
+    // dispatch({
+    //   type: CONST.ACTION_INIT,
+    //   applyList: [],
+    // });
   };
 };
 

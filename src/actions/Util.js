@@ -23,6 +23,18 @@ export const GetCurrentTimeString = () => {
   return strDate;
 };
 
+// CurrentTime → string(yyyyMM)
+export const GetCurrentTimeStringYYYYMM = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+
+  month = ZeroFill(month);
+
+  const yyyymm = `${year}${month}`;
+  return yyyymm;
+};
+
 // date → string(yyyy/MM/dd)
 export const DateToStringYYYYMMDD = (targetDate) => {
   const date = new Date(targetDate);
