@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-// control
+// Material-UI Components
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-
-// svg-icon drawer
+// SideMenu SVG-Icon
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentSend from 'material-ui/svg-icons/content/send';
-
 // stylus
-import './style.styl';
+import './base.styl';
 
 const SideMenu = props =>
   <Drawer
@@ -28,14 +26,14 @@ const SideMenu = props =>
         <ListItem
           id={'link_attendance'}
           primaryText={'勤務明細'}
-          onClick={props.onPageTransition}
+          onClick={() => props.handlePageTransition('勤務明細')}
           leftIcon={<ActionGrade />}
         />
       </Link>
       <Link to="/apply">
         <ListItem
-          primaryText={'残業申請'}
-          onClick={props.onPageTransition}
+          primaryText={'申請一覧'}
+          onClick={() => props.handlePageTransition('申請一覧')}
           leftIcon={<ContentSend />}
         />
       </Link>
@@ -44,7 +42,7 @@ const SideMenu = props =>
       <Link to="/apply">
         <ListItem
           primaryText={'承認一覧'}
-          onClick={props.onPageTransition}
+          onClick={() => props.handlePageTransition('承認一覧')}
           leftIcon={<ContentInbox />}
         />
       </Link>
@@ -59,7 +57,7 @@ const SideMenu = props =>
 
 SideMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onPageTransition: PropTypes.func.isRequired,
+  handlePageTransition: PropTypes.func.isRequired,
 };
 
 export default SideMenu;

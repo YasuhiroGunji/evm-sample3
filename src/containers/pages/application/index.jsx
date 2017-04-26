@@ -44,7 +44,6 @@ class Application extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ ApplicationList: nextProps.ApplicationList });
-    this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
   onSubmit(applicationCd, form) {
@@ -122,7 +121,7 @@ class Application extends React.Component {
       <div
         className={ClassSet({
           l_apply_container: true,
-          is_open_menu: this.props.ShowMenu,
+          is_open_menu: this.props.ShowSideMenu,
         })}
       >
         <div className="l_apply_header">
@@ -182,15 +181,15 @@ Application.propTypes = {
   ApplicationForm: React.PropTypes.object,
   actions: React.PropTypes.object.isRequired,
   EmpId: React.PropTypes.number.isRequired,
-  ShowMenu: React.PropTypes.bool.isRequired,
+  ShowSideMenu: React.PropTypes.bool.isRequired,
   SnackbarOpen: React.PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
   const { ApplicationForm, ApplicationList, EmpId, ShowForm, SnackbarOpen } = state.Application;
-  const { ShowMenu } = state.Base;
+  const { ShowSideMenu } = state.Base;
   return {
-    ApplicationForm, ApplicationList, EmpId, ShowForm, SnackbarOpen, ShowMenu,
+    ApplicationForm, ApplicationList, EmpId, ShowForm, SnackbarOpen, ShowSideMenu,
   };
 }
 
