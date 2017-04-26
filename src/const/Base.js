@@ -1,2 +1,4 @@
-export const SHOW_MENU = 'SHOW_MENU';
+export const SHOW_SIDEMENU = 'SHOW_SIDEMENU';
+export const PAGE_TRANSITION = 'PAGE_TRANSITION';
+export const SHOW_GROUP_DIALOG = 'SHOW_GROUP_DIALOG';
 export const SELECT_GROUP = 'SELECT_GROUP';
