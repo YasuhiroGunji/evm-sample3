@@ -7,8 +7,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDown from '../common/dropdown';
 import TextBox from '../common/textbox';
 import TextArea from '../common/textarea';
-// enum
-import { APPL_CD } from '../../const/Enum';
 // actions
 import * as Util from '../../actions/Util';
 
@@ -42,7 +40,7 @@ export default class OvertimeForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.handleSubmit(APPL_CD.OVERTIME, this.state.applicationForm);
+    this.props.onSubmit(this.state.applicationForm);
   }
 
   render() {
@@ -167,9 +165,9 @@ export default class OvertimeForm extends React.Component {
           </div>
           <div className="l_form_row">
             <span>残業実績：</span>
-            <span>{this.props.applicationForm.NomalOvertimeHrs}</span>
+            <span>{this.state.applicationForm.NomalOvertimeHrs}</span>
             <span>残業実績(深夜)：</span>
-            <span>{this.props.applicationForm.LateOvertimeHrs}</span>
+            <span>{this.state.applicationForm.LateOvertimeHrs}</span>
           </div>
 
         </div>
@@ -180,7 +178,7 @@ export default class OvertimeForm extends React.Component {
             primary={false}
             secondary={true}
             disabled={false}
-            onTouchTap={e => this.handleSubmit(e, APPL_CD.OVERTIME)}
+            onTouchTap={e => this.handleSubmit(e)}
           />
         </Paper>
 
@@ -190,6 +188,5 @@ export default class OvertimeForm extends React.Component {
 }
 
 OvertimeForm.propTypes = {
-  applicationForm: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
