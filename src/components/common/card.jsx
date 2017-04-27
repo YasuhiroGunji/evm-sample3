@@ -40,8 +40,7 @@ export default class Card extends React.Component {
           primaryText={
             <div className={'md_card_content'}>
               <div className={'md_card_title'}>
-                <div>{`${item.ScheduledDate}${item.CustomerCd}/${item.ProjectCd}`}</div>
-                <div>{`${item.WorkContent}`}</div>
+                <div>{`${item.ScheduledDate}    ${item.CustomerCd}/${item.ProjectCd}    ${item.WorkContent}`}</div>
               </div>
             </div>
           }
@@ -51,8 +50,8 @@ export default class Card extends React.Component {
                 <span>予定：</span>
                 <span>{item.OvertimeStart}～{item.OvertimeEnd}</span>
                 <span>普通：</span>
-                <span>{item.OverTime} 深夜：</span>
-                <span>{item.LateOverTime}</span>
+                <span>{item.NomalOvertimeHrs} 深夜：</span>
+                <span>{item.LateOvertimeHrs}</span>
               </div>
               <div>
                 <span>実績：</span>

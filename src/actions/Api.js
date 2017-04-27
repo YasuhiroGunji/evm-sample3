@@ -1,14 +1,13 @@
 import request from 'superagent';
 
-const url = 'http://evmapp20170130101609.azurewebsites.net/api/';
-// const url = 'http://localhost:18593/api/';
+// const url = 'http://evmapp20170130101609.azurewebsites.net/api/';
+const url = 'http://localhost:18593/api/v1';
 
-export const Get = (apiName, queryStr) => {
+export const Get = (apiName, param1, param2) => {
   return new Promise(
     (resolve, reject) => {
       request
-        .get(url + apiName)
-        .query({ queryStr })
+        .get(`${url}/${apiName}/${param1}/${param2}`)
         .end(
           (err, res) => {
             if (err) {

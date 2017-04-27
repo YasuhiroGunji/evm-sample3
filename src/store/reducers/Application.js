@@ -52,9 +52,9 @@ export default function Application(state = initialState, action = {}) {
         return state;
       }
       const ApplicationList = action.applicationList.map(item => ({
-        ApplicationId: item.ApplicationId,
-        ApplicationCd: item.ApplicationCd,
-        ScheduledDate: item.ScheduledDate,
+        ApplicationId: item.ApplId,
+        ApplicationCd: item.ApplCd,
+        ScheduledDate: Util.DateToStringYYYYMMDD(item.ApplDate),
         CustomerCd: item.CustomerCd,
         ProjectCd: item.ProjectCd,
         OvertimeStart: item.OvertimeStart,
