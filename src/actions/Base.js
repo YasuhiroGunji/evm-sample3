@@ -1,19 +1,32 @@
 import * as CONST from '../const/Base';
 
-export const ShowMenu = isOpen =>
+export const ShowSideMenu = () =>
   (dispatch) => {
     dispatch({
-      type: CONST.SHOW_MENU,
-      showMenu: isOpen,
+      type: CONST.SHOW_SIDEMENU,
     });
   };
 
+export const PageTransition = pageTitle =>
+  (dispatch) => {
+    dispatch({
+      type: CONST.PAGE_TRANSITION,
+      PageTitle: pageTitle,
+    });
+  };
 
-export const GroupSelect = groupIds =>
+export const ShowGroupDialog = isOpen =>
+  (dispatch) => {
+    dispatch({
+      type: CONST.SHOW_GROUP_DIALOG,
+      ShowGroupDialog: isOpen,
+    });
+  };
+
+export const GroupSubmit = groupIds =>
   (dispatch) => {
     dispatch({
       type: CONST.SELECT_GROUP,
       groupIds,
     });
   };
-

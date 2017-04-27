@@ -22,11 +22,7 @@ export default class ComDialog extends React.Component {
   }
 
   handleSubmit() {
-    this.props.onSubmit(this.state.groupIds);
-  }
-
-  handleclose() {
-    this.props.onClose();
+    this.props.hsndleSubmit(this.state.groupIds);
   }
 
   render() {
@@ -34,13 +30,13 @@ export default class ComDialog extends React.Component {
       <FlatButton
         label="Cancel"
         secondary
-        onTouchTap={this.props.onClose}
+        onTouchTap={() => this.props.handleShowDialog(false)}
       />,
       <FlatButton
         label="Submit"
         primary
         keyboardFocused
-        onTouchTap={this.props.onSubmit}
+        onTouchTap={this.hsndleSubmit}
       />,
     ];
     return (
@@ -49,7 +45,7 @@ export default class ComDialog extends React.Component {
           title="グループ選択"
           actions={actions}
           open={this.props.isOpen}
-          onRequestClose={this.props.onClose}
+          onRequestClose={() => this.props.handleShowDialog(false)}
           autoScrollBodyContent
         >
           <GroupTree />
@@ -61,6 +57,6 @@ export default class ComDialog extends React.Component {
 
 ComDialog.propTypes = {
   isOpen: React.PropTypes.bool.isRequired,
-  onSubmit: React.PropTypes.func.isRequired,
-  onClose: React.PropTypes.func.isRequired,
+  hsndleSubmit: React.PropTypes.func.isRequired,
+  handleShowDialog: React.PropTypes.func.isRequired,
 };
