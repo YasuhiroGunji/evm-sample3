@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react';
 import ClassSet from 'react-classset';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+// import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 // material-ui component
-import { List } from 'material-ui/List';
+// import { List } from 'material-ui/List';
 // component
-import Card from '../../../components/common/card';
-import CardDetail from '../../../components/common/carddetail';
+import ApplicationList from '../../../components/applicationlist/list';
+// import Card from '../../../components/common/card';
+// import CardDetail from '../../../components/common/carddetail';
 import FloatingActionButton from '../../../components/floatingactionbutton';
 import OvertimeForm from '../../../components/applicationform/overtime';
 import Snackbar from '../../../components/common/snackbar';
@@ -70,30 +71,6 @@ class Application extends React.Component {
   }
 
   render() {
-    const applicationList = this.props.ApplicationList.map((item) => {
-      if (item.ShowDetail) {
-        return (
-          <CardDetail
-            key={item.ApplicationId}
-            className={'example'}
-            ApplicationItem={item}
-            handleDelete={this.onDelete}
-            handleCloseDetail={this.CloseDetail}
-          />
-        );
-      }
-
-      return (
-        <Card
-          key={item.ApplicationId}
-          className={'example'}
-          ApplicationItem={item}
-          handleDelete={this.onDelete}
-          handleOpenDetail={this.ShowDetail}
-        />
-      );
-    });
-
     return (
       <div
         className={ClassSet({
@@ -102,21 +79,10 @@ class Application extends React.Component {
         })}
       >
 
-        <div className={'l_list_container'}>
-          <div className="l_list_header">
-            <span>ヘッダー</span>
-          </div>
-          <List>
-            <CSSTransitionGroup
-              transitionName={'example'}
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={500}
-            >
-              {applicationList}
-            </CSSTransitionGroup>
-          </List>
-        </div>
-
+        <ApplicationList
+          ApplicationList={this.props.ApplicationList}
+          handleDelete={this.porps.actions.DeleteApplication}
+        />
 
         <FloatingActionButton
           handleShowForm={this.props.actions.ShowForm}
