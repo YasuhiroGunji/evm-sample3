@@ -1,9 +1,4 @@
-.l_apply_header
-  top: 65px
-  height: 50px
-  background-color: #fff
 
-// List
 .l_apply_container
   padding: 65px 0 1px
   width: auto
@@ -13,26 +8,31 @@
   &.is_open_menu
     width: auto
     margin-left: 256px
-  
+
+// List
 .l_list_container
   position: relative
   margin: 0
   padding: 0
-  .l_week_item
-    border-bottom: 1px solid transparent
-    color: #616161
-    line-height: 24px
-    margin: 20px 0 8px
-    padding: 0 24px
-    align-items: center
-    -webkit-align-items: center
-    display: -webkit-flex
-    display: flex
+  .l_list_header
+    top: 65px
+    height: 50px
+
+  // .l_week_item
+  //   border-bottom: 1px solid transparent
+  //   color: #616161
+  //   line-height: 24px
+  //   margin: 20px 0 8px
+  //   padding: 0 24px
+  //   align-items: center
+  //   -webkit-align-items: center
+  //   display: -webkit-flex
+  //   display: flex
 
 // card
 .md_card
   position: relative
-  margin-bottom: 2px
+  margin:0 16px 2px 16px
 
 .md_card_icon
   position: absolute
@@ -54,29 +54,12 @@
     font-weight: bold
     span
       margin-right: 8px
-  .md_card_detail
-    margin: 0 24px 0 8px
-    min-width: 0
-    text-overflow: ellipsis
-    text-align: left
-    white-space: nowrap
-    flex: (1 1 auto)
-    color: #757575
-    span
-      margin-right: 8px
-
-//FloatingActionButton
-.l_floating_button
-  position: fixed
-  bottom: 16px
-  right: 8px
-  z-index: 100
 
 //form
 .l_form_container
   position: fixed
   bottom: 0
-  right: 90px
+  right: 96px
   width: 480px
   height: 550px
   border-top-left-radius: 7.5px

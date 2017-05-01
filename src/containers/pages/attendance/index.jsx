@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { PropTypes } from 'react';
 import ClassSet from 'react-classset';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,15 +21,11 @@ class Attendance extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ ShowMenu: true, tableData: TableData });
+    this.setState({ tableData: TableData });
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, false);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ShowMenu: nextProps.ShowMenu });
   }
 
   onScroll() {
@@ -39,7 +35,7 @@ class Attendance extends React.Component {
   }
 
   onChangeCheckbox(e, isInputChecked) {
-    let newList = this.state.tableData.slice();
+    const newList = this.state.tableData.slice();
     newList[e.target.id].tyokkou = isInputChecked;
     this.setState({ tableData: newList });
   }
@@ -49,7 +45,7 @@ class Attendance extends React.Component {
       <div
         className={ClassSet({
           l_attendance_container: true,
-          is_open_menu: this.state.ShowMenu,
+          is_open_menu: this.props.ShowSideMenu,
         })}
       >
         <div className={'l_attendance_content'}>
@@ -196,6 +192,7 @@ class Attendance extends React.Component {
             </ul>
           </Paper>
           <div className={'l_tablebody'}>
+
             <ul className={'md_tablebody'}>
               {this.state.tableData.map((row, index) => (
                 <li key={index}>
@@ -244,6 +241,7 @@ class Attendance extends React.Component {
                 </li>
               ))}
             </ul>
+
           </div>
         </div>
       </div>
@@ -251,11 +249,15 @@ class Attendance extends React.Component {
   }
 }
 
+Attendance.propTypes = {
+  ShowSideMenu: PropTypes.bool.isRequired,
+};
+
 function mapStateToProps(state) {
   const { tableData } = state.Attendance;
-  const { ShowMenu } = state.Base;
+  const { ShowSideMenu } = state.Base;
   return {
-    tableData, ShowMenu,
+    tableData, ShowSideMenu,
   };
 }
 

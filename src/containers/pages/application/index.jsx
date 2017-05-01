@@ -1,24 +1,20 @@
-import * as React from 'react';
+import React, { PropTypes } from 'react';
 import ClassSet from 'react-classset';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+// import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 // material-ui component
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import { List } from 'material-ui/List';
+// import { List } from 'material-ui/List';
 // component
-import Card from '../../../components/common/card';
-import CardDetail from '../../../components/common/carddetail';
-import Snackbar from '../../../components/common/snackbar';
+import ApplicationList from '../../../components/applicationlist/list';
+// import Card from '../../../components/common/card';
+// import CardDetail from '../../../components/common/carddetail';
+import FloatingActionButton from '../../../components/floatingactionbutton';
 import OvertimeForm from '../../../components/applicationform/overtime';
-// svg-icon
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import Snackbar from '../../../components/common/snackbar';
 // actions
 import * as applyActions from '../../../actions/Application';
-// enum
-import { APPL_CD } from '../../../const/Enum';
-
 // style
 import './application.styl';
 
@@ -29,9 +25,7 @@ class Application extends React.Component {
     super(props);
     this.state = this.props;
 
-    this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.ShowForm = this.ShowForm.bind(this);
     this.ShowDetail = this.ShowDetail.bind(this);
     this.CloseDetail = this.CloseDetail.bind(this);
   }
@@ -46,26 +40,10 @@ class Application extends React.Component {
     this.setState({ ApplicationList: nextProps.ApplicationList });
   }
 
-  onSubmit(applicationCd, form) {
-    switch (applicationCd) {
-
-      case APPL_CD.OVERTIME:
-        this.props.actions.OvertimeSubmit(form);
-        break;
-
-      default:
-        break;
-    }
-  }
-
   onDelete(applicationId) {
     // TODO: モーダルダイアログ処理実装予定
     // TODO: サーバー通信処理実装予定
     this.props.actions.DeleteApplication(this.props.ApplicationList, applicationId);
-  }
-
-  ShowForm() {
-    this.setState({ ShowForm: !this.state.ShowForm });
   }
 
   ShowDetail(applicationId) {
@@ -93,30 +71,6 @@ class Application extends React.Component {
   }
 
   render() {
-    const applicationList = this.props.ApplicationList.map((item) => {
-      if (item.ShowDetail) {
-        return (
-          <CardDetail
-            key={item.ApplicationId}
-            className={'example'}
-            ApplicationItem={item}
-            handleDelete={this.onDelete}
-            handleCloseDetail={this.CloseDetail}
-          />
-        );
-      }
-
-      return (
-        <Card
-          key={item.ApplicationId}
-          className={'example'}
-          ApplicationItem={item}
-          handleDelete={this.onDelete}
-          handleOpenDetail={this.ShowDetail}
-        />
-      );
-    });
-
     return (
       <div
         className={ClassSet({
@@ -124,46 +78,25 @@ class Application extends React.Component {
           is_open_menu: this.props.ShowSideMenu,
         })}
       >
-        <div className="l_apply_header">
-          <span>ヘッダー</span>
-        </div>
 
-        <div className={'l_list_container'}>
-          <List>
-            <div className={'l_week_item'}>
-              <div>今月</div>
-            </div>
+        <ApplicationList
+          ApplicationList={this.props.ApplicationList}
+          handleDelete={this.porps.actions.DeleteApplication}
+        />
 
-            <CSSTransitionGroup
-              transitionName={'example'}
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={500}
-            >
-              {applicationList}
-            </CSSTransitionGroup>
-          </List>
-        </div>
-
-        <div className={'l_floating_button'}>
-          <FloatingActionButton
-            zDepth={3}
-            secondary
-            style={{ marginRight: 8 }}
-            onClick={this.ShowForm}
-          >
-            <ContentAdd />
-          </FloatingActionButton>
-        </div>
+        <FloatingActionButton
+          handleShowForm={this.props.actions.ShowForm}
+        />
 
         <div
           className={ClassSet({
             l_form_container: true,
-            is_open_form: this.state.ShowForm,
+            is_open_form: this.props.ShowForm,
           })}
         >
           <OvertimeForm
             applicationForm={this.props.ApplicationForm}
-            handleSubmit={this.onSubmit}
+            onSubmit={this.props.actions.OvertimeSubmit}
           />
         </div>
 
@@ -177,12 +110,13 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
-  ApplicationList: React.PropTypes.array,
-  ApplicationForm: React.PropTypes.object,
-  actions: React.PropTypes.object.isRequired,
-  EmpId: React.PropTypes.number.isRequired,
-  ShowSideMenu: React.PropTypes.bool.isRequired,
-  SnackbarOpen: React.PropTypes.bool.isRequired,
+  ApplicationList: PropTypes.array,
+  ApplicationForm: PropTypes.object,
+  actions: PropTypes.object.isRequired,
+  EmpId: PropTypes.number.isRequired,
+  ShowForm: PropTypes.bool.isRequired,
+  ShowSideMenu: PropTypes.bool.isRequired,
+  SnackbarOpen: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {

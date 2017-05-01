@@ -103,6 +103,12 @@ export const DeleteApplication = (list, applicationId) => {
   };
 };
 
+export const ShowForm = () =>
+  dispatch =>
+    dispatch({
+      type: CONST.SHOW_FORM,
+    });
+
 export const Snackbar = isOpen =>
   dispatch =>
     dispatch({

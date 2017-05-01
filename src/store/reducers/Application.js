@@ -75,8 +75,8 @@ export default function Application(state = initialState, action = {}) {
       return { ...state, ApplicationList };
     }
 
-    case CONST.ACTION_FORM:
-      return { ...state, ShowForm: action.showForm };
+    case CONST.SHOW_FORM:
+      return { ...state, ShowForm: !state.ShowForm };
 
     case CONST.ACTION_SUBMIT:
       return { ...state, ApplicationList: AddListItem(state, action) };
@@ -94,12 +94,8 @@ export default function Application(state = initialState, action = {}) {
 
 export function AddListItem(state, action) {
   const newlist = state.ApplicationList.slice();
-  return [action.applicationForm].concat(newlist);
 
-  // if (state.ApplicationList) {
-  //   return [action.applicationForm].concat(state.ApplicationList);
-  // }
-  // return [action.applicationForm];
+  return [action.applicationForm].concat(newlist);
 }
 
 export function RempveListItem(state, action) {
