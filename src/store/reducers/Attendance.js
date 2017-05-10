@@ -1,10 +1,10 @@
 const initialState = {
-  showMenu: true,
+  EmpId: 42015,
 };
 
 export default function Attendance(state = initialState, action = {}) {
   switch (action.type) {
-    case 'SHOW_MENU':
+    case 'INIT':
       return { ...state, showMenu: action.showMenu };
 
     default:

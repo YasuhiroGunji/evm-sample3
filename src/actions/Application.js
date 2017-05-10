@@ -1,9 +1,32 @@
+// action
 import * as API from './Api';
 import * as Util from './Util';
 // const
 import * as CONST from '../const/Application';
 // enum
 import { APPL_CD } from '../const/Enum';
+
+const SetApplList = response =>
+  response.ApplList.map(item => ({
+    ApplicationId: item.ApplId,
+    ApplicationCd: item.ApplCd,
+    ScheduledDate: Util.DateToStringYYYYMMDD(item.ApplDate),
+    CustomerCd: item.CustomerCd,
+    ProjectCd: item.ProjectCd,
+    OvertimeStart: item.OvertimeStart,
+    OvertimeEnd: item.OvertimeEnd,
+    OvertimeActualStart: item.OvertimeActualStart,
+    OvertimeActualEnd: item.OvertimeActualEnd,
+    NomalOvertimeHrs: item.NomalOvertimeHrs,
+    LateOvertimeHrs: item.LateOvertimeHrs,
+    IrregularStart: item.IrregularStart,
+    IrregularEnd: item.IrregularEnd,
+    IrregularActualStart: item.IrregularActualStart,
+    IrregularActualEnd: item.IrregularActualEnd,
+    IrregularHrs: item.IrregularHrs,
+    WorkContent: item.WorkContent,
+    ShowDetail: false,
+  }));
 
 export const Init = (empId) => {
   const yyyymm = Util.GetCurrentTimeStringYYYYMM();
@@ -12,10 +35,12 @@ export const Init = (empId) => {
     API.Get('Appl/GetApplList', empId, yyyymm)
     .then(
       (obj) => {
-        console.debug(obj);
+        // console.debug(obj);
+        const applicationList = SetApplList(obj);
+
         dispatch({
-          type: CONST.ACTION_INIT,
-          applicationList: obj.ApplList,
+          type: CONST.INIT,
+          applicationList,
         });
       },
     ).catch(
@@ -23,11 +48,13 @@ export const Init = (empId) => {
     );
 
     // dispatch({
-    //   type: CONST.ACTION_INIT,
+    //   type: CONST.INIT,
     //   applyList: [],
     // });
   };
 };
+
+
 
 export const OvertimeSubmit = (formData) => {
   const postData = {};
@@ -65,7 +92,7 @@ export const OvertimeSubmit = (formData) => {
 
   return (dispatch) => {
     dispatch({
-      type: CONST.ACTION_SUBMIT,
+      type: CONST.SUBMIT,
       applicationForm: postData,
     });
 
@@ -74,7 +101,7 @@ export const OvertimeSubmit = (formData) => {
     //   (obj) => {
     //     console.debug(obj);
     //     dispatch({
-    //       type: CONST.ACTION_SNACKBAR,
+    //       type: CONST.SNACKBAR,
     //       snackbarOpen: true,
     //     });
     //   },
@@ -84,24 +111,20 @@ export const OvertimeSubmit = (formData) => {
 
     setTimeout(() => {
       dispatch({
-        type: CONST.ACTION_SNACKBAR,
+        type: CONST.SNACKBAR,
         snackbarOpen: true,
       });
     }, 2000);
   };
 };
 
-export const DeleteApplication = (list, applicationId) => {
-  const i = list.findIndex(item => item.ApplicationId === applicationId);
-  const applicationList = list.filter((item, index) => index !== i);
-
-  return (dispatch) => {
+export const DeleteApplication = id =>
+  (dispatch) => {
     dispatch({
-      type: CONST.ACTION_DELETE,
-      applicationList,
+      type: CONST.DELETE,
+      applcationId: id,
     });
   };
-};
 
 export const ShowForm = () =>
   dispatch =>
@@ -109,10 +132,28 @@ export const ShowForm = () =>
       type: CONST.SHOW_FORM,
     });
 
+export const OpenListItem = id =>
+  (dispatch) => {
+    dispatch({
+      type: CONST.OPEN_APPLDETAIL,
+      applcationId: id,
+    });
+  };
+
+export const CloseListItem = id =>
+  (dispatch) => {
+    dispatch({
+      type: CONST.CLOSE_APPLDETAIL,
+      applcationId: id,
+    });
+  };
+
+
+
 export const Snackbar = isOpen =>
   dispatch =>
     dispatch({
-      type: CONST.ACTION_SNACKBAR,
+      type: CONST.SNACKBAR,
       snackbarOpen: isOpen,
     });
 
