@@ -15,7 +15,6 @@ import TableData from './data';
 class Attendance extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = this.props;
     this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
   }
@@ -25,13 +24,7 @@ class Attendance extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll, false);
-  }
-
-  onScroll() {
-    const header = document.getElementsByClassName('l_header')[0];
-    header.style.left = header.style.left - window.scrollX + 'px';
-    console.debug('scroll');
+    this.state.actions.Init(this.state.EmpId);
   }
 
   onChangeCheckbox(e, isInputChecked) {

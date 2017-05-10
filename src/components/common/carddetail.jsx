@@ -22,13 +22,13 @@ export default class CardDetail extends React.Component {
   }
 
   render() {
-    const item = this.props.ApplicationItem;
+    const item = this.props.Item;
 
     return (
       <div>
         <Paper zDepth={2} style={style.expand}>
           <ListItem
-            onClick={() => this.props.handleCloseDetail(item.ApplicationId)}
+            onClick={() => this.props.handleClose(item.ApplicationId)}
           >
             <div className={'md_card_content'}>
               <div className={'md_card_title'}>
@@ -57,8 +57,8 @@ export default class CardDetail extends React.Component {
 }
 
 CardDetail.propTypes = {
-  ApplicationItem: PropTypes.shape({
-    ApplicationId: PropTypes.string.isRequired,
+  Item: PropTypes.shape({
+    ApplicationId: PropTypes.number.isRequired,
     ApplicationCd: PropTypes.number.isRequired,
     ScheduledDate: PropTypes.string.isRequired,
     CustomerCd: PropTypes.string.isRequired,
@@ -76,6 +76,6 @@ CardDetail.propTypes = {
     WorkContent: PropTypes.string.isRequired,
     ShowDetail: PropTypes.bool,
   }).isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  handleCloseDetail: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };

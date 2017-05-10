@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-// control
+// material-ui component
 import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -9,8 +9,12 @@ import IconButton from 'material-ui/IconButton';
 // svg-icon
 import Delete from 'material-ui/svg-icons/action/delete';
 import FileFolder from 'material-ui/svg-icons/file/folder';
+import Zangyo from './zangyo';
+
 // color
-import { grey400, yellow600, grey500, darkBlack, lightBlack } from 'material-ui/styles/colors';
+import { grey400, yellow600 } from 'material-ui/styles/colors';
+
+
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -19,7 +23,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const item = this.props.ApplicationItem;
+    const item = this.props.Item;
 
     return (
       <div>
@@ -29,14 +33,14 @@ export default class Card extends React.Component {
             <IconButton
               tooltip={'delete'}
               tooltipPosition={'bottom-left'}
-              onClick={() => this.props.handleDelete(item.ApplicationId)}
+              onClick={() => this.props.onDelete(item.ApplicationId)}
             >
               <Delete color={grey400} />
             </IconButton>
           </div>
 
           <ListItem
-            onClick={() => this.props.handleOpenDetail(item.ApplicationId)}
+            onClick={() => this.props.handleOpen(item.ApplicationId)}
             leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
             primaryText={
               <div className={'md_card_content'}>
@@ -68,8 +72,8 @@ export default class Card extends React.Component {
 }
 
 Card.propTypes = {
-  ApplicationItem: PropTypes.shape({
-    ApplicationId: PropTypes.string.isRequired,
+  Item: PropTypes.shape({
+    ApplicationId: PropTypes.number.isRequired,
     ApplicationCd: PropTypes.number.isRequired,
     ScheduledDate: PropTypes.string.isRequired,
     CustomerCd: PropTypes.string.isRequired,
@@ -87,6 +91,6 @@ Card.propTypes = {
     WorkContent: PropTypes.string.isRequired,
     ShowDetail: PropTypes.bool,
   }).isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  handleOpenDetail: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  handleOpen: PropTypes.func.isRequired,
 };

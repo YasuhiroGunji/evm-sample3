@@ -47,44 +47,29 @@ const initialState = {
 export default function Application(state = initialState, action = {}) {
   switch (action.type) {
 
-    case CONST.ACTION_INIT: {
+    case CONST.INIT: {
       if (!action.applicationList || action.applicationList === undefined) {
         return state;
       }
-      const ApplicationList = action.applicationList.map(item => ({
-        ApplicationId: item.ApplId,
-        ApplicationCd: item.ApplCd,
-        ScheduledDate: Util.DateToStringYYYYMMDD(item.ApplDate),
-        CustomerCd: item.CustomerCd,
-        ProjectCd: item.ProjectCd,
-        OvertimeStart: item.OvertimeStart,
-        OvertimeEnd: item.OvertimeEnd,
-        OvertimeActualStart: item.OvertimeActualStart,
-        OvertimeActualEnd: item.OvertimeActualEnd,
-        NomalOvertimeHrs: item.NomalOvertimeHrs,
-        LateOvertimeHrs: item.LateOvertimeHrs,
-        IrregularStart: item.IrregularStart,
-        IrregularEnd: item.IrregularEnd,
-        IrregularActualStart: item.IrregularActualStart,
-        IrregularActualEnd: item.IrregularActualEnd,
-        IrregularHrs: item.IrregularHrs,
-        WorkContent: item.WorkContent,
-        ShowDetail: false,
-      }));
-
-      return { ...state, ApplicationList };
+      return { ...state, ApplicationList: action.applicationList };
     }
+
+    case CONST.OPEN_APPLDETAIL:
+      return { ...state, ApplicationList: OpenApplDetail(state, action.applcationId) };
+
+    case CONST.CLOSE_APPLDETAIL:
+      return { ...state, ApplicationList: CloseApplDetail(state, action.applcationId) };
 
     case CONST.SHOW_FORM:
       return { ...state, ShowForm: !state.ShowForm };
 
-    case CONST.ACTION_SUBMIT:
+    case CONST.SUBMIT:
       return { ...state, ApplicationList: AddListItem(state, action) };
 
-    case CONST.ACTION_DELETE:
-      return { ...state, ApplicationList: action.applicationList };
+    case CONST.DELETE:
+      return { ...state, ApplicationList: RemoveListItem(state, action.applcationId) };
 
-    case CONST.ACTION_SNACKBAR:
+    case CONST.SNACKBAR:
       return { ...state, SnackbarOpen: action.snackbarOpen };
 
     default:
@@ -92,14 +77,31 @@ export default function Application(state = initialState, action = {}) {
   }
 }
 
+export function OpenApplDetail(state, id) {
+  const newList = state.ApplicationList.slice();
+  const i = newList.findIndex(item => item.ShowDetail === true);
+  if (i > 0) {
+    newList[i].ShowDetail = false;
+  }
+  const j = newList.findIndex(item => item.ApplicationId === id);
+  newList[j].ShowDetail = true;
+  return newList;
+}
+
+export function CloseApplDetail(state, id) {
+  const newList = state.ApplicationList.slice();
+  const i = newList.findIndex(item => item.ApplicationId === id);
+  newList[i].ShowDetail = false;
+  return newList;
+}
+
 export function AddListItem(state, action) {
   const newlist = state.ApplicationList.slice();
-
   return [action.applicationForm].concat(newlist);
 }
 
-export function RempveListItem(state, action) {
-  const i = state.ApplicationList.findIndex(item => item.ApplicationId === action.applicationId);
-  state.ApplicationList.splice(i, 1);
-  return state.ApplicationList;
+export function RemoveListItem(state, id) {
+  const i = state.ApplicationList.findIndex(item => item.ApplicationId === id);
+  const newList = state.ApplicationList.filter((item, index) => index !== i);
+  return newList;
 }
