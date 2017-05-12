@@ -25,7 +25,7 @@ export const Post = (apiName, postData) => {
   return new Promise(
     (resolve, reject) => {
       request
-        .post(url + apiName)
+        .post(`${url}/${apiName}`)
         .send({ postData })
         .type('application/json')
         .accept('application/json')
