@@ -30,7 +30,7 @@ export const Init = (empId) => {
   const yyyymm = Util.GetCurrentTimeStringYYYYMM();
 
   return (dispatch) => {
-    API.Get('Attendance/GetAttendance', empId, yyyymm)
+    API.Get('Attendance/GetAttendList', empId, yyyymm)
     .then(
       (obj) => {
         // console.debug(obj);
@@ -44,10 +44,55 @@ export const Init = (empId) => {
     ).catch(
       err => console.error(err),
     );
-
-    // dispatch({
-    //   type: CONST.INIT,
-    //   applyList: [],
-    // });
   };
 };
+
+const ConvertPostData = tableData =>
+  tableData.map((item) => {
+    const obj = {};
+    obj.AttendDate = item.date;
+    obj.GoDirectly = item.tyokkou;
+    obj.ReturnDirectly = item.tyokki;
+    return obj;
+  });
+
+export const ApplyAttendance = (tableData) => {
+  const AttendRequest = ConvertPostData(tableData);
+
+  return (dispatch) => {
+    API.Post('Attendance/PostAttendApplication', AttendRequest)
+    .then(
+      (obj) => {
+        const response = obj;
+
+        dispatch({
+          type: CONST.APPLY,
+
+        });
+      },
+    ).catch(
+      err => console.error(err),
+    );
+  };
+};
+
+export const DeleteAttendance = (empId) => {
+
+  const yyyymm = Util.GetCurrentTimeStringYYYYMM();
+
+  return (dispatch) => {
+    API.Get('Attendance/DeleteAttendApplication', empId, yyyymm)
+    .then(
+      (obj) => {
+        const response = obj;
+
+        dispatch({
+          type: CONST.DELETE,
+        });
+      },
+    ).catch(
+      err => console.error(err),
+    );
+
+  }
+}

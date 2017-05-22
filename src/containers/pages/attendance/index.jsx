@@ -17,6 +17,9 @@ class Attendance extends React.Component {
     super(props);
     this.state = this.props;
     this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
+    this.onChangeCheckbox2 = this.onChangeCheckbox2.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentWillMount() {
@@ -27,10 +30,25 @@ class Attendance extends React.Component {
     this.state.actions.Init(this.state.EmpId);
   }
 
-  onChangeCheckbox(e, isInputChecked) {
+  onChangeCheckbox(e, isChecked) {
     const newList = this.state.tableData.slice();
-    newList[e.target.id].tyokkou = isInputChecked;
+    newList[e.target.id].tyokkou = isChecked;
+
     this.setState({ tableData: newList });
+  }
+  onChangeCheckbox2(e, isChecked) {
+    const newList = this.state.tableData.slice();
+    newList[e.target.id].tyokki = isChecked;
+
+    this.setState({ tableData: newList });
+  }
+
+  onSubmit() {
+    this.state.actions.ApplyAttendance(this.state.tableData);
+  }
+
+  onDelete() {
+    this.state.actions.DeleteAttendance(this.state.EmpId);
   }
 
   render() {
@@ -152,13 +170,14 @@ class Attendance extends React.Component {
                     label={'申請'}
                     primary
                     style={{ width: 75, height: 30 }}
+                    onTouchTap={this.onSubmit}
                   />
                 </div>
                 <div>
                   <RaisedButton
                     label={'取消'}
-                    disabled
                     style={{ width: 75, height: 30, marginTop: 5 }}
+                    onTouchTap={this.onDelete}
                   />
                 </div>
               </div>
@@ -218,7 +237,13 @@ class Attendance extends React.Component {
                           if (row.dayOfWeek === '土' || row.dayOfWeek === '日') {
                             return <Checkbox checked={row.tyokki} disabled />;
                           }
-                          return <Checkbox checked={row.tyokki} />;
+                          return (
+                            <Checkbox
+                              id={index}
+                              checked={row.tyokki}
+                              onCheck={this.onChangeCheckbox2}
+                            />
+                          );
                         })()}
                       </div>
                     </li>
@@ -247,16 +272,16 @@ Attendance.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { tableData } = state.Attendance;
+  const { tableData, EmpId } = state.Attendance;
   const { ShowSideMenu } = state.Base;
   return {
-    tableData, ShowSideMenu,
+    tableData, EmpId, ShowSideMenu,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    attendanceActionBind: bindActionCreators(attendanceActions, dispatch),
+    actions: bindActionCreators(attendanceActions, dispatch),
   };
 }
 
