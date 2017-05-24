@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // material-ui component
 import Paper from 'material-ui/Paper';
@@ -36,6 +37,12 @@ export default class OvertimeForm extends React.Component {
     const newForm = this.state.applicationForm;
     newForm[propertyName] = event.target.value;
     this.setState({ applicationForm: newForm });
+
+    if (event.target.value === '') {
+      this.setState({ requiredError: '必須入力です' });
+    } else {
+      this.setState({ requiredError: '' });
+    }
   }
 
   handleSubmit(e) {
@@ -155,7 +162,7 @@ export default class OvertimeForm extends React.Component {
               disabled={true}
             />
             <DropDown
-              label="残業実績時間"
+              label=" "
               propertyName="OvertimeActualEnd"
               selectValue={this.state.applicationForm.OvertimeActualEnd}
               data={timeData}

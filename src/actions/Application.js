@@ -54,6 +54,14 @@ export const Init = (empId) => {
   };
 };
 
+export const onSubmit = (value) => {
+  (dispatch) => {
+    dispatch({
+      type: CONST.DELETE,
+      applcationId: id,
+    });
+  };
+}
 
 
 export const OvertimeSubmit = (formData) => {

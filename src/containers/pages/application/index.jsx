@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ClassSet from 'react-classset';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,6 +13,8 @@ import Snackbar from '../../../components/common/snackbar';
 import * as applyActions from '../../../actions/Application';
 // style
 import './application.styl';
+
+import Form from './test';
 
 class Application extends React.Component {
   constructor(props) {
@@ -51,8 +54,7 @@ class Application extends React.Component {
             is_open_form: this.props.ShowForm,
           })}
         >
-          <OvertimeForm
-            applicationForm={this.state.ApplicationForm}
+          <Form
             onSubmit={this.state.actions.OvertimeSubmit}
           />
         </div>
@@ -67,7 +69,7 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
-  ApplicationList: PropTypes.arrayOf({}).isRequired,
+  ApplicationList: PropTypes.arrayOf(PropTypes.object).isRequired,
   ShowForm: PropTypes.bool.isRequired,
   ShowSideMenu: PropTypes.bool.isRequired,
   SnackbarOpen: PropTypes.bool.isRequired,
