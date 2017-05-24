@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import asyncValidate from './asyncValidate';
 import validate from './validate';
 
+
+
 const renderTextField = (
   { input, label, meta: { touched, error }, ...custom },
 ) => (
@@ -53,7 +55,7 @@ const renderSelectField = (
 const MaterialUiForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={e => handleSubmit(e)}>
       <div>
         <Field
           name="firstName"
@@ -104,7 +106,6 @@ const MaterialUiForm = (props) => {
           name="notes"
           component={renderTextField}
           label="Notes"
-          multiLine={true}
           rows={2}
         />
       </div>
@@ -121,6 +122,6 @@ const MaterialUiForm = (props) => {
 export default reduxForm({
   form: 'MaterialUiForm', // a unique identifier for this form
   validate,
-  asyncValidate,
+  // asyncValidate,
 },
 )(MaterialUiForm);

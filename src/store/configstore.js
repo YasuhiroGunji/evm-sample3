@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 // import createLogger from 'redux-logger';
 import { createLogger } from 'redux-logger';
-import { reducer as MaterialUiForm } from 'redux-form';
+import { reducer as reduxFormReducer } from 'redux-form';
 
 import Application from './reducers/Application';
 import Attendance from './reducers/Attendance';
@@ -15,6 +15,7 @@ const reducers = combineReducers({
   Application,
   Attendance,
   Base,
+  form: reduxFormReducer,
 });
 
 export default createStore(reducers, {}, store);

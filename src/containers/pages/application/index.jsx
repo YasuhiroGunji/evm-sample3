@@ -54,8 +54,7 @@ class Application extends React.Component {
             is_open_form: this.props.ShowForm,
           })}
         >
-          <OvertimeForm
-            applicationForm={this.state.ApplicationForm}
+          <Form
             onSubmit={this.state.actions.OvertimeSubmit}
           />
         </div>
