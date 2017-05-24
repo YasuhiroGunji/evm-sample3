@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 // Material-UI Components
 import Drawer from 'material-ui/Drawer';
@@ -22,35 +23,34 @@ const SideMenu = props =>
   >
     <List>
       <Subheader>勤怠管理</Subheader>
-      <Link to="/attendance">
+      <NavLink to="/attendance">
         <ListItem
-          id={'link_attendance'}
           primaryText={'勤務明細'}
           onClick={() => props.handlePageTransition('勤務明細')}
           leftIcon={<ActionGrade />}
         />
-      </Link>
-      <Link to="/apply">
+      </NavLink>
+      <NavLink to="/apply">
         <ListItem
           primaryText={'申請一覧'}
           onClick={() => props.handlePageTransition('申請一覧')}
           leftIcon={<ContentSend />}
         />
-      </Link>
+      </NavLink>
       <Divider />
       <Subheader>承認</Subheader>
-      <Link to="/apply">
+      <NavLink to="/apply">
         <ListItem
           primaryText={'承認一覧'}
           onClick={() => props.handlePageTransition('承認一覧')}
           leftIcon={<ContentInbox />}
         />
-      </Link>
+      </NavLink>
       <Divider />
       <Subheader>マスタメンテ</Subheader>
-      <Link to="/apply">
+      <NavLink to="/apply">
         <ListItem primaryText="Maintainance" leftIcon={<ContentDrafts />} />
-      </Link>
+      </NavLink>
     </List>
   </Drawer>
 ;

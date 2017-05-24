@@ -1,11 +1,15 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Route, Switch } from 'react-router-dom';
 
-// custom control
+// custom components
 import GroupDialog from './dialog';
 import Header from './header';
 import SideMenu from './sidemenu';
+import Attendance from '../pages/attendance/index';
+import Application from '../pages/application/index';
 // ActionCreator
 import * as baseActions from '../../actions/Base';
 // stylus
@@ -38,7 +42,10 @@ class Base extends React.Component {
           handleShowDialog={this.props.actions.ShowGroupDialog}
         />
 
-        {this.props.children}
+        <Switch>
+          <Route path='/attendance' component={Attendance} />
+          <Route path='/apply' component={Application} />
+        </Switch>
 
       </div>
     );
@@ -46,10 +53,10 @@ class Base extends React.Component {
 }
 
 Base.propTypes = {
-  actions: React.PropTypes.object.isRequired,
-  ShowSideMenu: React.PropTypes.bool.isRequired,
-  PageTitle: React.PropTypes.string.isRequired,
-  ShowGroupDialog: React.PropTypes.bool.isRequired,
+  actions: PropTypes.object.isRequired,
+  ShowSideMenu: PropTypes.bool.isRequired,
+  PageTitle: PropTypes.string.isRequired,
+  ShowGroupDialog: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -56,7 +57,7 @@ export default class ComDialog extends React.Component {
 }
 
 ComDialog.propTypes = {
-  isOpen: React.PropTypes.bool.isRequired,
-  hsndleSubmit: React.PropTypes.func.isRequired,
-  handleShowDialog: React.PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  hsndleSubmit: PropTypes.func.isRequired,
+  handleShowDialog: PropTypes.func.isRequired,
 };

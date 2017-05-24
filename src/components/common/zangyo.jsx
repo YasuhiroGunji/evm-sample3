@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 const styles = {
   active: '#ffffff',
@@ -41,12 +41,5 @@ const ZangyoIcon = () =>
     </g>
   </svg>
 ;
-
-// ZangyoIcon.propTypes = {
-//   label: PropTypes.string.isRequired,
-//   propertyName: PropTypes.string.isRequired,
-//   value: PropTypes.string.isRequired,
-//   handleTextChange: PropTypes.func.isRequired,
-// };
 
 export default ZangyoIcon;
