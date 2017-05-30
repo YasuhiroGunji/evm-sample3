@@ -1,13 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
-// import createLogger from 'redux-logger';
 import { createLogger } from 'redux-logger';
 import { reducer as reduxFormReducer } from 'redux-form';
 
-import Application from './reducers/Application';
-import Attendance from './reducers/Attendance';
-import Base from './reducers/Base';
+import Application from './appl/ApplReducer';
+import Attendance from './atnd/AtndReducer';
+import Base from './base/BaseReducer';
 
 const store = applyMiddleware(thunkMiddleware, createLogger());
 

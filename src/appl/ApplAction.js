@@ -1,10 +1,10 @@
 // action
-import * as API from './Api';
-import * as Util from './Util';
+import * as API from '../util/Api';
+import * as Util from '../util/Util';
 // const
-import * as CONST from '../const/Application';
+import * as CONST from './ApplConst';
 // enum
-import { APPL_CD } from '../const/Enum';
+import { APPL_CD } from '../util/Enum';
 
 const SetApplList = response =>
   response.ApplList.map(item => ({

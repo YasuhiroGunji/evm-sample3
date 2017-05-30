@@ -11,7 +11,7 @@ export default class FieldInput extends React.Component {
       <div className="c-container--full">
         <label>{label}</label>
         <div>
-          <input {...input} placeholder={label} type={type}/>
+          <input {...input} placeholder={label} type={type} />
           {touched && error && <span className="c-text--highlight">{error}</span>}
         </div>
       </div>

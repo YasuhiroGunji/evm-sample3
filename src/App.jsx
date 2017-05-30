@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Base from '../base/index';
+import Base from './base/BaseContainer';
 
 export default class App extends React.Component {
   constructor(props) {

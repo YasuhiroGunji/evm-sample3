@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 // component
-import DropDown from '../common/dropdown';
-import TextBox from '../common/textbox';
-import TextArea from '../common/textarea';
+import DropDown from '../../components/dropdown';
+import TextBox from '../../components/textbox';
+import TextArea from '../../components/textarea';
 // actions
-import * as Util from '../../actions/Util';
+import * as Util from '../../util/Util';
 
 import './form.styl';
 
-export default class OvertimeForm extends React.Component {
+export default class FormOvertime extends React.Component {
 
   constructor(props) {
     super(props);
@@ -194,6 +194,7 @@ export default class OvertimeForm extends React.Component {
   }
 }
 
-OvertimeForm.propTypes = {
+FormOvertime.propTypes = {
+  applicationForm: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };

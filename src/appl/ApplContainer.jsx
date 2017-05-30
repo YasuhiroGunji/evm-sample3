@@ -5,16 +5,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // custom component
-import ApplList from '../../../components/applicationlist/list';
-import FloatingActionButton from '../../../components/floatingactionbutton';
-import OvertimeForm from '../../../components/applicationform/overtime';
-import Snackbar from '../../../components/common/snackbar';
+import ApplList from './ApplList';
+import FloatingActionButton from './ApplFloatingActionButton';
+import FormOvertime from './form/FormOvertime';
+import Snackbar from '../components/snackbar';
 // actions
-import * as applyActions from '../../../actions/Application';
+import * as applyActions from './ApplAction';
 // style
-import './application.styl';
-
-import Form from './test';
+import './appl.styl';
 
 class Application extends React.Component {
   constructor(props) {
@@ -54,7 +52,8 @@ class Application extends React.Component {
             is_open_form: this.props.ShowForm,
           })}
         >
-          <Form
+          <FormOvertime
+            applicationForm={this.state.ApplicationForm}
             onSubmit={this.state.actions.OvertimeSubmit}
           />
         </div>

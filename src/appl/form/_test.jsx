@@ -5,8 +5,8 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import asyncValidate from './asyncValidate';
-import validate from './validate';
+import asyncValidate from './_asyncValidate';
+import validate from './_validate';
 
 
 

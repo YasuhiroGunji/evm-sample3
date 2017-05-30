@@ -6,16 +6,12 @@ import Paper from 'material-ui/Paper';
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-
+// color
+import { grey400, yellow600 } from 'material-ui/styles/colors';
 // svg-icon
 import Delete from 'material-ui/svg-icons/action/delete';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import Zangyo from './zangyo';
-
-// color
-import { grey400, yellow600 } from 'material-ui/styles/colors';
-
-
 
 export default class Card extends React.Component {
   constructor(props) {

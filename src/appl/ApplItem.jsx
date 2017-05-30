@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../common/card';
-import CardDetail from '../common/carddetail';
+import Card from '../components/card';
+import CardDetail from '../components/carddetail';
 
 const ApplItem = (props) => {
   if (props.Item.ShowDetail) {

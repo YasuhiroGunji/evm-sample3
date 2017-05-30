@@ -8,9 +8,9 @@ import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import * as attendanceActions from '../../../actions/Attendance';
+import * as attendanceActions from './AtndAction';
 
-import './attendancestyle.styl';
+import './Atnd.styl';
 import TableData from './data';
 
 class Attendance extends React.Component {

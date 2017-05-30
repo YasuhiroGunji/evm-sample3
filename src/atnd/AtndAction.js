@@ -1,8 +1,8 @@
 // action
-import * as API from './Api';
-import * as Util from './Util';
+import * as API from '../util/Api';
+import * as Util from '../util/Util';
 // const
-import * as CONST from '../const/Application';
+import * as CONST from './AtndConst';
 
 const SetAtendList = response =>
   response.ApplList.map(item => ({

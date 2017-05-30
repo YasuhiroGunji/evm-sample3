@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Routes from './routes';
-import Store from './store/configstore';
+import Store from './configstore';
 import './reset.css';
 
 injectTapEventPlugin();

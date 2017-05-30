@@ -13,7 +13,7 @@ const Style = {
   zIndex: 100,
 };
 
-const ActionButton = props =>
+const ActionButton = props => (
   <div style={Style}>
     <FloatingActionButton
       zDepth={3}
@@ -24,7 +24,7 @@ const ActionButton = props =>
       <ContentAdd />
     </FloatingActionButton>
   </div>
-;
+);
 
 ActionButton.propTypes = {
   handleShowForm: PropTypes.func.isRequired,

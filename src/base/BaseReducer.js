@@ -1,4 +1,4 @@
-import * as CONST from '../../const/Base';
+import * as CONST from './BaseConst';
 
 const initialState = {
   ShowSideMenu: true,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 
-import FieldInput from './FieldInput';
+import FieldInput from './_FieldInput';
 
 class SubmitValidationForm extends Component {
 

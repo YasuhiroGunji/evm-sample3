@@ -12,10 +12,8 @@ import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentSend from 'material-ui/svg-icons/content/send';
-// stylus
-import './base.styl';
 
-const SideMenu = props =>
+const SideMenu = props => (
   <Drawer
     open={props.isOpen}
     width={232}
@@ -53,7 +51,7 @@ const SideMenu = props =>
       </NavLink>
     </List>
   </Drawer>
-;
+);
 
 SideMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,

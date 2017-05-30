@@ -8,12 +8,12 @@ import { Route, Switch } from 'react-router-dom';
 import GroupDialog from './dialog';
 import Header from './header';
 import SideMenu from './sidemenu';
-import Attendance from '../pages/attendance/index';
-import Application from '../pages/application/index';
+import Attendance from '../atnd/AtndContainer';
+import Application from '../appl/ApplContainer';
 // ActionCreator
-import * as baseActions from '../../actions/Base';
-// stylus
-import './base.styl';
+import * as baseActions from './BaseAction';
+
+import './Base.styl';
 
 class Base extends React.Component {
   constructor(props) {
@@ -27,24 +27,24 @@ class Base extends React.Component {
 
         <Header
           pageTitle={this.props.PageTitle}
-          handleShowSideMenu={this.props.actions.ShowSideMenu}
-          handleShowDialog={this.props.actions.ShowGroupDialog}
+          handleShowSideMenu={this.state.actions.ShowSideMenu}
+          handleShowDialog={this.state.actions.ShowGroupDialog}
         />
 
         <SideMenu
           isOpen={this.props.ShowSideMenu}
-          handlePageTransition={this.props.actions.PageTransition}
+          handlePageTransition={this.state.actions.PageTransition}
         />
 
         <GroupDialog
           isOpen={this.props.ShowGroupDialog}
-          hsndleSubmit={this.props.actions.GroupSubmit}
-          handleShowDialog={this.props.actions.ShowGroupDialog}
+          hsndleSubmit={this.state.actions.GroupSubmit}
+          handleShowDialog={this.state.actions.ShowGroupDialog}
         />
 
         <Switch>
-          <Route path='/attendance' component={Attendance} />
-          <Route path='/apply' component={Application} />
+          <Route path="/attendance" component={Attendance} />
+          <Route path="/apply" component={Application} />
         </Switch>
 
       </div>
@@ -53,7 +53,6 @@ class Base extends React.Component {
 }
 
 Base.propTypes = {
-  actions: PropTypes.object.isRequired,
   ShowSideMenu: PropTypes.bool.isRequired,
   PageTitle: PropTypes.string.isRequired,
   ShowGroupDialog: PropTypes.bool.isRequired,

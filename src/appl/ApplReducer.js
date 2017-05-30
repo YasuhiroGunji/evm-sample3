@@ -1,5 +1,5 @@
-import * as CONST from '../../const/Application';
-import * as Util from '../../actions/Util';
+import * as CONST from './ApplConst';
+import * as Util from '../util/Util';
 
 export const ListItemTemplate = {
   ApplicationId: -1,

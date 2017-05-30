@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { List } from 'material-ui/List';
 
-import ApplItem from './item';
+import ApplItem from './ApplItem';
 
 export default class ApplList extends Component {
   constructor(props) {
