@@ -1,65 +1,44 @@
 // 共通関数クラス
 
 // 9 --> '09'
-export const ZeroFill = (targetInt) => {
-  let filledStr = targetInt;
-  if (filledStr < 10) {
-    filledStr = `0${filledStr}`;
-  }
-  return `${filledStr}`;
-};
+export const ZeroFill = targetInt => `0${targetInt}`.slice(-2);
 
 // CurrentTime → string(yyyy/MM/dd)
 export const GetCurrentTimeString = () => {
   const date = new Date();
   const year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  const month = ZeroFill(date.getMonth() + 1);
+  const day = ZeroFill(date.getDate());
 
-  month = ZeroFill(month);
-  day = ZeroFill(day);
-
-  const strDate = `${year}/${month}/${day}`;
-  return strDate;
+  return `${year}/${month}/${day}`;
 };
 
 // CurrentTime → string(yyyyMM)
 export const GetCurrentTimeStringYYYYMM = () => {
   const date = new Date();
   const year = date.getFullYear();
-  let month = date.getMonth() + 1;
+  const month = ZeroFill(date.getMonth() + 1);
 
-  month = ZeroFill(month);
-
-  const yyyymm = `${year}${month}`;
-  return yyyymm;
+  return `${year}${month}`;
 };
 
 // date → string(yyyy/MM/dd)
 export const DateToStringYYYYMMDD = (targetDate) => {
   const date = new Date(targetDate);
   const year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  const month = ZeroFill(date.getMonth() + 1);
+  const day = ZeroFill(date.getDate());
 
-  month = ZeroFill(month);
-  day = ZeroFill(day);
-
-  const strDate = `${year}/${month}/${day}`;
-  return strDate;
+  return `${year}/${month}/${day}`;
 };
 
 // date → string(MM/dd)
 export const DateToStringMMDD = (targetDate) => {
   const date = new Date(targetDate);
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  const month = ZeroFill(date.getMonth() + 1);
+  const day = ZeroFill(date.getDate());
 
-  month = ZeroFill(month);
-  day = ZeroFill(day);
-
-  const strDate = `${month}/${day}`;
-  return strDate;
+  return `${month}/${day}`;
 };
 
 // yyyyMM --> 'yyyy/MM'

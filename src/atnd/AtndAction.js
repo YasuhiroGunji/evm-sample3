@@ -1,6 +1,6 @@
 // action
-import * as API from '../util/Api';
-import * as Util from '../util/Util';
+import * as API from '../utils/Api';
+import * as Util from '../utils/Common';
 // const
 import * as CONST from './AtndConst';
 
