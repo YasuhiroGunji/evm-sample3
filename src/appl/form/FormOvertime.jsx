@@ -125,7 +125,7 @@ const FormOvertime = (props) => {
 
 export default reduxForm({
   form: 'Overtime', // a unique identifier for this form
-  validate,
+  // validate,
   // asyncValidate,
 },
 )(FormOvertime);
