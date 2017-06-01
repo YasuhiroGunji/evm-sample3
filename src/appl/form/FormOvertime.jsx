@@ -15,7 +15,7 @@ import { renderTextField, renderSelectField, renderTextAreaField } from './FormF
 // actions
 import * as Util from '../../utils/Common';
 import * as validate from '../../utils/Validate';
-import * as nomalize from '../../utils/Nomalize';
+import * as normalize from '../../utils/Normalize';
 
 import './form.styl';
 
@@ -23,9 +23,9 @@ const FormOvertime = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
 
   const monthData = [
-    { text: '2017/02', value: 201702 },
-    { text: '2017/03', value: 201703 },
-    { text: '2017/04', value: 201704 },
+    { text: '2017/02', value: '201702' },
+    { text: '2017/03', value: '201703' },
+    { text: '2017/04', value: '201704' },
   ];
   const monthItems = monthData.map(item => (
     <MenuItem key={item.value} value={item.value} primaryText={item.text} />
@@ -63,6 +63,7 @@ const FormOvertime = (props) => {
               name="DayValue"
               component={renderSelectField}
               label="申請日"
+              validate={[validate.required]}
             >
               {dayItems}
             </Field>
@@ -72,10 +73,7 @@ const FormOvertime = (props) => {
               name="CustomerCd"
               component={renderTextField}
               label="顧客コード"
-              validate={[validate.required]}
             />
-          </div>
-          <div className="l_form_row">
             <Field
               name="ProjectCd"
               component={renderTextField}
@@ -87,19 +85,40 @@ const FormOvertime = (props) => {
               name="WorkContent"
               component={renderTextAreaField}
               label="作業内容"
+              validate={[validate.required]}
             />
           </div>
           <div className="l_form_row">
             <Field
               name="OvertimeStart"
               component={renderTextField}
-              label="残業予定時間"
-              nomalize={[nomalize.Time, nomalize.MaxLength(4)]}
+              label="残業予定From"
+              validate={[validate.required]}
+              format={normalize.Time}
+              normalize={normalize.Time}
             />
             <Field
               name="OvertimeEnd"
               component={renderTextField}
-              label="残業予定時間"
+              label="残業予定To"
+              validate={[validate.required]}
+              normalize={normalize.Time}
+            />
+          </div>
+          <div className="l_form_row">
+            <Field
+              name="OvertimeStart"
+              component={renderTextField}
+              label="残業実績From"
+              disabled
+              normalize={normalize.Time}
+            />
+            <Field
+              name="OvertimeEnd"
+              component={renderTextField}
+              label="残業実績To"
+              disabled
+              normalize={normalize.Time}
             />
           </div>
         </div>
@@ -124,7 +143,8 @@ const FormOvertime = (props) => {
 };
 
 export default reduxForm({
-  form: 'Overtime', // a unique identifier for this form
+  form: 'Overtime',
+  initialValues: { MonthValue: '201704', OvertimeStart: '1800' },
   // validate,
   // asyncValidate,
 },

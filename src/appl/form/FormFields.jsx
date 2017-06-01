@@ -7,7 +7,15 @@ import SelectField from 'material-ui/SelectField';
 const styles = {
   textbox: {
     marginRight: 20,
-    width: 300,
+    width: 150,
+  },
+  textarea: {
+    marginRight: 20,
+    width: 320,
+  },
+  dropdown: {
+    marginRight: 20,
+    width: 150,
   },
   layout: {
     display: 'inline-block',
@@ -33,12 +41,11 @@ export const renderTextAreaField = (
     multiLine
     rows={1}
     rowsMax={5}
-    hintText={label}
     floatingLabelText={label}
     errorText={touched && error}
     {...input}
     {...custom}
-    style={styles.textbox}
+    style={styles.textarea}
   />
 );
 
@@ -69,5 +76,6 @@ export const renderSelectField = (
     onChange={(event, index, value) => input.onChange(value)}
     children={children}
     {...custom}
+    style={styles.dropdown}
   />
 );
