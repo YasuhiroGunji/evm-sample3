@@ -2,8 +2,8 @@ import * as CONST from './ApplConst';
 import * as Util from '../utils/Common';
 
 export const ListItemTemplate = {
-  ApplicationId: -1,
-  ApplicationCd: 1,
+  ApplId: -1,
+  ApplCd: 1,
   ScheduledDate: Util.GetCurrentTimeString(),
   CustomerCd: '',
   ProjectCd: '',
@@ -83,14 +83,14 @@ export function OpenApplDetail(state, id) {
   if (i > 0) {
     newList[i].ShowDetail = false;
   }
-  const j = newList.findIndex(item => item.ApplicationId === id);
+  const j = newList.findIndex(item => item.ApplId === id);
   newList[j].ShowDetail = true;
   return newList;
 }
 
 export function CloseApplDetail(state, id) {
   const newList = state.ApplicationList.slice();
-  const i = newList.findIndex(item => item.ApplicationId === id);
+  const i = newList.findIndex(item => item.ApplId === id);
   newList[i].ShowDetail = false;
   return newList;
 }
@@ -101,7 +101,7 @@ export function AddListItem(state, action) {
 }
 
 export function RemoveListItem(state, id) {
-  const i = state.ApplicationList.findIndex(item => item.ApplicationId === id);
+  const i = state.ApplicationList.findIndex(item => item.ApplId === id);
   const newList = state.ApplicationList.filter((item, index) => index !== i);
   return newList;
 }

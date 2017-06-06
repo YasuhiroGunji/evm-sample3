@@ -11,7 +11,7 @@ import { grey400, yellow600 } from 'material-ui/styles/colors';
 // svg-icon
 import Delete from 'material-ui/svg-icons/action/delete';
 import FileFolder from 'material-ui/svg-icons/file/folder';
-import Zangyo from './zangyo';
+import Zangyo from '../images/zangyo';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -30,14 +30,14 @@ export default class Card extends React.Component {
             <IconButton
               tooltip={'delete'}
               tooltipPosition={'bottom-left'}
-              onClick={() => this.props.onDelete(item.ApplicationId)}
+              onClick={() => this.props.onDelete(item.ApplId)}
             >
               <Delete color={grey400} />
             </IconButton>
           </div>
 
           <ListItem
-            onClick={() => this.props.handleOpen(item.ApplicationId)}
+            onClick={() => this.props.handleOpen(item.ApplId)}
             leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow600} />}
             primaryText={
               <div className={'md_card_content'}>
@@ -70,8 +70,8 @@ export default class Card extends React.Component {
 
 Card.propTypes = {
   Item: PropTypes.shape({
-    ApplicationId: PropTypes.number.isRequired,
-    ApplicationCd: PropTypes.number.isRequired,
+    ApplId: PropTypes.number.isRequired,
+    ApplCd: PropTypes.number.isRequired,
     ScheduledDate: PropTypes.string.isRequired,
     CustomerCd: PropTypes.string.isRequired,
     ProjectCd: PropTypes.string.isRequired,

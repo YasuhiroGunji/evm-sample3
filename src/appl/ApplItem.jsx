@@ -3,27 +3,28 @@ import PropTypes from 'prop-types';
 import Card from '../components/card';
 import CardDetail from '../components/carddetail';
 
+import Overtime from './item/Overtime';
+import { APPL_CD } from '../utils/Enum';
+
 const ApplItem = (props) => {
-  if (props.Item.ShowDetail) {
-    return (
-      <CardDetail
-        Item={props.Item}
-        onDelete={props.onDelete}
-        handleClose={props.handleClose}
-      />
-    );
+  switch (props.item.ApplCd) {
+    case APPL_CD.OVERTIME:
+      return (
+        <Overtime {...props} />
+      );
+    default:
+      return (
+        <Card
+          Item={props.item}
+          onDelete={props.onDelete}
+          handleOpen={props.handleOpen}
+        />
+      );
   }
-  return (
-    <Card
-      Item={props.Item}
-      onDelete={props.onDelete}
-      handleOpen={props.handleOpen}
-    />
-  );
 };
 
 ApplItem.propTypes = {
-  Item: PropTypes.object,
+  item: PropTypes.objectOf(PropTypes.any).isRequired,
   onDelete: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,

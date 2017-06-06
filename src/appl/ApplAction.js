@@ -8,8 +8,8 @@ import { APPL_CD } from '../utils/Enum';
 
 const SetApplList = response =>
   response.ApplList.map(item => ({
-    ApplicationId: item.ApplId,
-    ApplicationCd: item.ApplCd,
+    ApplId: item.ApplId,
+    ApplCd: item.ApplCd,
     ScheduledDate: Util.DateToStringYYYYMMDD(item.ApplDate),
     CustomerCd: item.CustomerCd,
     ProjectCd: item.ProjectCd,
@@ -54,24 +54,14 @@ export const Init = (empId) => {
   };
 };
 
-export const onSubmit = (value) => {
-  (dispatch) => {
-    dispatch({
-      type: CONST.DELETE,
-      applcationId: id,
-    });
-  };
-}
-
-
 export const OvertimeSubmit = (formData) => {
   const postData = {};
   const yyyyMM = Util.SpliceSlashYYYYMM(`${formData.MonthValue}`);
   const dd = Util.ZeroFill(formData.DayValue);
 
   // TODO：社員番号はLocalStorageに保存
-  postData.ApplicationId = Util.GenerateKey();
-  postData.ApplicationCd = APPL_CD.OVERTIME;
+  postData.ApplId = Util.GenerateKey();
+  postData.ApplCd = APPL_CD.OVERTIME;
   postData.ScheduledDate = `${yyyyMM}/${dd}`;
   postData.CustomerCd = formData.CustomerCd;
   postData.ProjectCd = formData.ProjectCd;

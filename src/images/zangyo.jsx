@@ -8,7 +8,7 @@ const styles = {
 const ZangyoIcon = () =>
   <svg
     version="1.0" xmlns="http://www.w3.org/2000/svg"
-    width="120.000000pt" height="120.000000pt" viewBox="0 0 120.000000 120.000000"
+    width="120.000000pt" height="30.000000pt" viewBox="0 0 120.000000 120.000000"
     preserveAspectRatio="xMidYMid meet"
   >
     <g
