@@ -6,8 +6,8 @@ import * as CONST from './AtndConst';
 
 const SetAtendList = response =>
   response.ApplList.map(item => ({
-    ApplicationId: item.ApplId,
-    ApplicationCd: item.ApplCd,
+    ApplId: item.ApplId,
+    ApplCd: item.ApplCd,
     ScheduledDate: Util.DateToStringYYYYMMDD(item.ApplDate),
     CustomerCd: item.CustomerCd,
     ProjectCd: item.ProjectCd,

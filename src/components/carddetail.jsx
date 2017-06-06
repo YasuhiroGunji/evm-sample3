@@ -29,7 +29,7 @@ export default class CardDetail extends React.Component {
       <div>
         <Paper zDepth={2} style={style.expand}>
           <ListItem
-            onClick={() => this.props.handleClose(item.ApplicationId)}
+            onClick={() => this.props.handleClose(item.ApplId)}
           >
             <div className={'md_card_content'}>
               <div className={'md_card_title'}>
@@ -59,8 +59,8 @@ export default class CardDetail extends React.Component {
 
 CardDetail.propTypes = {
   Item: PropTypes.shape({
-    ApplicationId: PropTypes.number.isRequired,
-    ApplicationCd: PropTypes.number.isRequired,
+    ApplId: PropTypes.number.isRequired,
+    ApplCd: PropTypes.number.isRequired,
     ScheduledDate: PropTypes.string.isRequired,
     CustomerCd: PropTypes.string.isRequired,
     ProjectCd: PropTypes.string.isRequired,

@@ -1,15 +1,20 @@
 import React from 'react';
 
+const styles = {
+  active: '#ffffff',
+  disable: '#000000',
+};
+
 const HensokuIcon = () =>
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="100.000000pt" height="91.000000pt" viewBox="0 0 100.000000 91.000000"
+    width="100.000000pt" height="30.000000pt" viewBox="0 0 100.000000 90.000000"
     preserveAspectRatio="xMidYMid meet"
   >
     <g
       transform="translate(0.000000,91.000000) scale(0.100000,-0.100000)"
-      fill="#000000" stroke="none"
+      fill={styles.active} stroke="none"
     >
       <path
         d="M450 830 l0 -40 -200 0 -200 0 0 -25 0 -25 156 0 156 0 -7 -32 c-18

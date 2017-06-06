@@ -12,7 +12,7 @@ import Snackbar from '../components/snackbar';
 // actions
 import * as applyActions from './ApplAction';
 // style
-import './appl.styl';
+import './Appl.styl';
 
 class Application extends React.Component {
   constructor(props) {

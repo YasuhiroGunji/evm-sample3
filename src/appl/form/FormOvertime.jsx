@@ -8,9 +8,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 
 // component
-import DropDown from '../../components/dropdown';
-import TextBox from '../../components/textbox';
-import TextArea from '../../components/textarea';
 import { renderTextField, renderSelectField, renderTextAreaField } from './FormFields';
 // actions
 import * as Util from '../../utils/Common';
@@ -19,8 +16,14 @@ import * as normalize from '../../utils/Normalize';
 
 import './form.styl';
 
+
 const FormOvertime = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
+
+  const handleBlur = (e) => {
+    const aaa = this.refs.getRenderedComponent();
+    Util.CalcOvertimeHrs(aaa, e.targeet.value);
+  };
 
   const monthData = [
     { text: '2017/02', value: '201702' },
@@ -107,16 +110,33 @@ const FormOvertime = (props) => {
           </div>
           <div className="l_form_row">
             <Field
-              name="OvertimeStart"
+              name="OvertimeActualStart"
+              ref="OvertimeActualStartRef"
               component={renderTextField}
               label="残業実績From"
+              normalize={normalize.Time}
+              withRef
+            />
+            <Field
+              name="OvertimeActualEnd"
+              component={renderTextField}
+              label="残業実績To"
+              normalize={normalize.Time}
+              onBlur={e => this.handleBlur(e)}
+            />
+          </div>
+          <div className="l_form_row">
+            <Field
+              name="NomalOvertimeHrs"
+              component={renderTextField}
+              label="普通残業"
               disabled
               normalize={normalize.Time}
             />
             <Field
-              name="OvertimeEnd"
+              name="LateOvertimeHrs"
               component={renderTextField}
-              label="残業実績To"
+              label="深夜残業"
               disabled
               normalize={normalize.Time}
             />
@@ -140,6 +160,13 @@ const FormOvertime = (props) => {
       </form>
     </Paper>
   );
+};
+
+FormOvertime.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default reduxForm({
