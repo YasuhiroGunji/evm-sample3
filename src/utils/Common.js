@@ -55,7 +55,18 @@ export const GenerateKey = (empId) => {
   return new Date().getTime().toString(16) + Math.floor(id * Math.random()).toString(16);
 };
 
-// 1930 --> 1950
+
+// "18:00" --> "1800"
+// "21:30" --> "2030"
+const RemoveTimeColon = (str) => {
+  if (str.indexOf(':') === -1) {
+    return `${str}0000`.slice(4);
+  }
+
+  return str.replace(/:/g, '');
+};
+
+// 1800 --> 1800
 // 2130 --> 2050
 const ConvertTnesPlace = (num) => {
   const numStr = num.toString();
@@ -67,7 +78,9 @@ const ConvertTnesPlace = (num) => {
 };
 
 export const CalcOvertimeHrs = (startTime, endTime) => {
-  const diffHrs = ConvertTnesPlace(endTime) - ConvertTnesPlace(startTime);
+  const start = RemoveTimeColon(startTime);
+  const end = RemoveTimeColon(endTime);
+  const diffHrs = ConvertTnesPlace(end) - ConvertTnesPlace(start);
   if (diffHrs < 0) return 0;
 
   let breakTime = 0;
