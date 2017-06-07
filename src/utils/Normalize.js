@@ -17,3 +17,10 @@ export const Time = (value) => {
 
   return `${hour}:${min}`;
 };
+
+export const Hrs = (value) => {
+  if (!value) {
+    return value;
+  }
+  return value.toFixed(1);
+};

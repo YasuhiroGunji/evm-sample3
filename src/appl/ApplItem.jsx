@@ -9,16 +9,10 @@ import { APPL_CD } from '../utils/Enum';
 const ApplItem = (props) => {
   switch (props.item.ApplCd) {
     case APPL_CD.OVERTIME:
-      return (
-        <Overtime {...props} />
-      );
+      return <Overtime {...props} />;
     default:
       return (
-        <Card
-          Item={props.item}
-          onDelete={props.onDelete}
-          handleOpen={props.handleOpen}
-        />
+        <Card {...props} />
       );
   }
 };

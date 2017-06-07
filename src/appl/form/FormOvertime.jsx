@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, change } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 // material-ui component
 import Paper from 'material-ui/Paper';
@@ -25,8 +25,9 @@ class FormOvertime extends React.Component {
 
   handleBlur(e) {
     const fromtime = this.OvertimeActualStartRef.value;
-    const hrs = common.CalcOvertimeHrs(fromtime, e.target.value);
-    this.props.change('NomalOvertimeHrs', hrs);
+    const { nomalHrs, lateHrs } = common.CalcOvertimeHrs(fromtime, e.target.value);
+    this.props.change('NomalOvertimeHrs', nomalHrs);
+    this.props.change('LateOvertimeHrs', lateHrs);
   }
 
   render() {
@@ -138,16 +139,15 @@ class FormOvertime extends React.Component {
                 name="NomalOvertimeHrs"
                 component={renderTextField}
                 label="普通残業"
+                format={normalize.Hrs}
                 disabled
-                normalize={normalize.Time}
-                withRef
               />
               <Field
                 name="LateOvertimeHrs"
                 component={renderTextField}
                 label="深夜残業"
+                format={normalize.Hrs}
                 disabled
-                normalize={normalize.Time}
               />
             </div>
           </div>
