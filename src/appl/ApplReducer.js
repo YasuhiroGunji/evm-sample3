@@ -25,7 +25,7 @@ export const ListItemTemplate = {
 const initialState = {
   EmpId: 42015,
   ShowForm: true,
-  ApplicationList: [],
+  ApplList: [],
   ApplicationForm: {
     MonthValue: 201703,
     DayValue: 6,
@@ -48,26 +48,26 @@ export default function Application(state = initialState, action = {}) {
   switch (action.type) {
 
     case CONST.INIT: {
-      if (!action.applicationList || action.applicationList === undefined) {
+      if (!action.ApplList || action.ApplList === undefined) {
         return state;
       }
-      return { ...state, ApplicationList: action.applicationList };
+      return { ...state, ApplList: action.ApplList };
     }
 
     case CONST.OPEN_APPLDETAIL:
-      return { ...state, ApplicationList: OpenApplDetail(state, action.applcationId) };
+      return { ...state, ApplList: OpenApplDetail(state, action.applId) };
 
     case CONST.CLOSE_APPLDETAIL:
-      return { ...state, ApplicationList: CloseApplDetail(state, action.applcationId) };
+      return { ...state, ApplList: CloseApplDetail(state, action.applId) };
 
     case CONST.SHOW_FORM:
       return { ...state, ShowForm: !state.ShowForm };
 
     case CONST.SUBMIT:
-      return { ...state, ApplicationList: AddListItem(state, action) };
+      return { ...state, ApplList: AddListItem(state, action) };
 
     case CONST.DELETE:
-      return { ...state, ApplicationList: RemoveListItem(state, action.applcationId) };
+      return { ...state, ApplList: RemoveListItem(state, action.applId) };
 
     case CONST.SNACKBAR:
       return { ...state, SnackbarOpen: action.snackbarOpen };
@@ -78,7 +78,7 @@ export default function Application(state = initialState, action = {}) {
 }
 
 export function OpenApplDetail(state, id) {
-  const newList = state.ApplicationList.slice();
+  const newList = state.ApplList.slice();
   const i = newList.findIndex(item => item.ShowDetail === true);
   if (i > 0) {
     newList[i].ShowDetail = false;
@@ -89,19 +89,19 @@ export function OpenApplDetail(state, id) {
 }
 
 export function CloseApplDetail(state, id) {
-  const newList = state.ApplicationList.slice();
+  const newList = state.ApplList.slice();
   const i = newList.findIndex(item => item.ApplId === id);
   newList[i].ShowDetail = false;
   return newList;
 }
 
 export function AddListItem(state, action) {
-  const newlist = state.ApplicationList.slice();
+  const newlist = state.ApplList.slice();
   return [action.applicationForm].concat(newlist);
 }
 
 export function RemoveListItem(state, id) {
-  const i = state.ApplicationList.findIndex(item => item.ApplId === id);
-  const newList = state.ApplicationList.filter((item, index) => index !== i);
+  const i = state.ApplList.findIndex(item => item.ApplId === id);
+  const newList = state.ApplList.filter((item, index) => index !== i);
   return newList;
 }

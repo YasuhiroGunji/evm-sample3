@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // custom component
-import ApplList from './ApplList';
+import List from './ApplList';
 import FloatingActionButton from './ApplFloatingActionButton';
 import FormOvertime from './form/FormOvertime';
 import Snackbar from '../components/snackbar';
@@ -21,7 +21,7 @@ class Application extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.ApplicationList == null || this.props.ApplicationList.length === 0) {
+    if (this.props.ApplList == null || this.props.ApplList.length === 0) {
       this.state.actions.Init(this.state.EmpId);
     }
   }
@@ -35,8 +35,8 @@ class Application extends React.Component {
         })}
       >
 
-        <ApplList
-          ApplicationList={this.props.ApplicationList}
+        <List
+          applList={this.props.ApplList}
           onDelete={this.state.actions.DeleteApplication}
           handleOpen={this.state.actions.OpenListItem}
           handleClose={this.state.actions.CloseListItem}
@@ -68,17 +68,17 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
-  ApplicationList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ApplList: PropTypes.arrayOf(PropTypes.object).isRequired,
   ShowForm: PropTypes.bool.isRequired,
   ShowSideMenu: PropTypes.bool.isRequired,
   SnackbarOpen: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
-  const { ApplicationForm, ApplicationList, EmpId, ShowForm, SnackbarOpen } = state.Application;
+  const { ApplicationForm, ApplList, EmpId, ShowForm, SnackbarOpen } = state.Application;
   const { ShowSideMenu } = state.Base;
   return {
-    ApplicationForm, ApplicationList, EmpId, ShowForm, SnackbarOpen, ShowSideMenu,
+    ApplicationForm, ApplList, EmpId, ShowForm, SnackbarOpen, ShowSideMenu,
   };
 }
 

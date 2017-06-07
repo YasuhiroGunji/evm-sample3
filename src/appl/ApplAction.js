@@ -36,21 +36,16 @@ export const Init = (empId) => {
     .then(
       (obj) => {
         // console.debug(obj);
-        const applicationList = SetApplList(obj);
+        const applList = SetApplList(obj);
 
         dispatch({
           type: CONST.INIT,
-          applicationList,
+          applList,
         });
       },
     ).catch(
       err => console.error(err),
     );
-
-    // dispatch({
-    //   type: CONST.INIT,
-    //   applyList: [],
-    // });
   };
 };
 
@@ -120,7 +115,7 @@ export const DeleteApplication = id =>
   (dispatch) => {
     dispatch({
       type: CONST.DELETE,
-      applcationId: id,
+      applId: id,
     });
   };
 
@@ -134,7 +129,7 @@ export const OpenListItem = id =>
   (dispatch) => {
     dispatch({
       type: CONST.OPEN_APPLDETAIL,
-      applcationId: id,
+      applId: id,
     });
   };
 
@@ -142,7 +137,7 @@ export const CloseListItem = id =>
   (dispatch) => {
     dispatch({
       type: CONST.CLOSE_APPLDETAIL,
-      applcationId: id,
+      applId: id,
     });
   };
 

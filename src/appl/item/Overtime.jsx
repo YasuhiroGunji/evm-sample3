@@ -43,13 +43,12 @@ const OvertimeItem = (props) => {
             <div>
               <span>予定：</span>
               <span>{item.OvertimeStart}～{item.OvertimeEnd}</span>
-              <span>普通：</span>
-              <span>{item.NomalOvertimeHrs} 深夜：</span>
-              <span>{item.LateOvertimeHrs}</span>
-            </div>
-            <div>
               <span>実績：</span>
               <span>{item.OvertimeActualStart}～{item.OvertimeActualEnd}</span>
+              <span>普通：</span>
+              <span>{item.NomalOvertimeHrs}</span>
+              <span>深夜：</span>
+              <span>{item.LateOvertimeHrs}</span>
             </div>
           </div>
         }

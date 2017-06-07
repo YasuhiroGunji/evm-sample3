@@ -87,5 +87,11 @@ export const CalcOvertimeHrs = (startTime, endTime) => {
   if (diffHrs >= 1.5) breakTime += 0.5;
   if (diffHrs >= 8) breakTime += 0.5;
 
-  return diffHrs - breakTime;
+  const overtime = diffHrs - breakTime;
+  if (end >= 2200) {
+    const latetime = ConvertTnesPlace(end) - 22;
+    return { nomalHrs: (overtime - latetime), lateHrs: latetime };
+  }
+
+  return { nomalHrs: overtime, lateHrs: 0 };
 };
