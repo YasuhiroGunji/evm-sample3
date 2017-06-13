@@ -42,13 +42,13 @@ class FormOvertime extends React.Component {
       <MenuItem key={item.value} value={item.value} primaryText={item.text} />
     ));
     const dayData = [
-      { text: '6(月)', value: 6 },
-      { text: '7(火)', value: 7 },
-      { text: '8(水)', value: 8 },
-      { text: '9(木)', value: 9 },
-      { text: '10(金)', value: 10 },
-      { text: '11(土)', value: 11 },
-      { text: '12(日)', value: 12 },
+      { text: '6(月)', value: '06' },
+      { text: '7(火)', value: '07' },
+      { text: '8(水)', value: '08' },
+      { text: '9(木)', value: '09' },
+      { text: '10(金)', value: '10' },
+      { text: '11(土)', value: '11' },
+      { text: '12(日)', value: '12' },
     ];
     const dayItems = dayData.map(item => (
       <MenuItem key={item.value} value={item.value} primaryText={item.text} />
@@ -114,6 +114,7 @@ class FormOvertime extends React.Component {
                 component={renderTextField}
                 label="残業予定To"
                 validate={[validate.required]}
+                format={normalize.Time}
                 normalize={normalize.Time}
               />
             </div>
@@ -182,7 +183,15 @@ FormOvertime.propTypes = {
 
 export default reduxForm({
   form: 'Overtime',
-  initialValues: { MonthValue: '201704', OvertimeStart: '1800' },
+  initialValues: {
+    MonthValue: '201704',
+    DayValue: '06',
+    WorkContent: '画面開発',
+    OvertimeStart: '1800',
+    OvertimeEnd: '2000',
+    NomalOvertimeHrs: 0,
+    LateOvertimeHrs: 0,
+  },
   // validate,
   // asyncValidate,
 },
