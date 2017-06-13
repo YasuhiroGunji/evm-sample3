@@ -7373,7 +7373,7 @@ Object.defineProperty(exports, "__esModule", {
 
 // 9 --> '09'
 var ZeroFill = exports.ZeroFill = function ZeroFill(targetInt) {
-  return ("0" + targetInt).slice(-2);
+  return ('0' + targetInt).slice(-2);
 };
 
 // CurrentTime → string(yyyy/MM/dd)
@@ -7383,7 +7383,7 @@ var GetCurrentTimeString = exports.GetCurrentTimeString = function GetCurrentTim
   var month = ZeroFill(date.getMonth() + 1);
   var day = ZeroFill(date.getDate());
 
-  return year + "/" + month + "/" + day;
+  return year + '/' + month + '/' + day;
 };
 
 // CurrentTime → string(yyyyMM)
@@ -7392,7 +7392,7 @@ var GetCurrentTimeStringYYYYMM = exports.GetCurrentTimeStringYYYYMM = function G
   var year = date.getFullYear();
   var month = ZeroFill(date.getMonth() + 1);
 
-  return "" + year + month;
+  return '' + year + month;
 };
 
 // date → string(yyyy/MM/dd)
@@ -7402,7 +7402,7 @@ var DateToStringYYYYMMDD = exports.DateToStringYYYYMMDD = function DateToStringY
   var month = ZeroFill(date.getMonth() + 1);
   var day = ZeroFill(date.getDate());
 
-  return year + "/" + month + "/" + day;
+  return year + '/' + month + '/' + day;
 };
 
 // date → string(MM/dd)
@@ -7411,14 +7411,14 @@ var DateToStringMMDD = exports.DateToStringMMDD = function DateToStringMMDD(targ
   var month = ZeroFill(date.getMonth() + 1);
   var day = ZeroFill(date.getDate());
 
-  return month + "/" + day;
+  return month + '/' + day;
 };
 
 // yyyyMM --> 'yyyy/MM'
 var SpliceSlashYYYYMM = exports.SpliceSlashYYYYMM = function SpliceSlashYYYYMM(targetString) {
   var year = targetString.substr(0, 4);
   var month = targetString.substr(4, 2);
-  var strDate = year + "/" + month;
+  var strDate = year + '/' + month;
   return strDate;
 };
 
@@ -7428,7 +7428,17 @@ var GenerateKey = exports.GenerateKey = function GenerateKey(empId) {
   return new Date().getTime().toString(16) + Math.floor(id * Math.random()).toString(16);
 };
 
-// 1930 --> 1950
+// "18:00" --> "1800"
+// "21:30" --> "2030"
+var RemoveTimeColon = function RemoveTimeColon(str) {
+  if (str.indexOf(':') === -1) {
+    return (str + '0000').slice(4);
+  }
+
+  return str.replace(/:/g, '');
+};
+
+// 1800 --> 1800
 // 2130 --> 2050
 var ConvertTnesPlace = function ConvertTnesPlace(num) {
   var numStr = num.toString();
@@ -7440,14 +7450,22 @@ var ConvertTnesPlace = function ConvertTnesPlace(num) {
 };
 
 var CalcOvertimeHrs = exports.CalcOvertimeHrs = function CalcOvertimeHrs(startTime, endTime) {
-  var diffHrs = ConvertTnesPlace(endTime) - ConvertTnesPlace(startTime);
+  var start = RemoveTimeColon(startTime);
+  var end = RemoveTimeColon(endTime);
+  var diffHrs = ConvertTnesPlace(end) - ConvertTnesPlace(start);
   if (diffHrs < 0) return 0;
 
   var breakTime = 0;
   if (diffHrs >= 1.5) breakTime += 0.5;
   if (diffHrs >= 8) breakTime += 0.5;
 
-  return diffHrs - breakTime;
+  var overtime = diffHrs - breakTime;
+  if (end >= 2200) {
+    var latetime = ConvertTnesPlace(end) - 22;
+    return { nomalHrs: overtime - latetime, lateHrs: latetime };
+  }
+
+  return { nomalHrs: overtime, lateHrs: 0 };
 };
 
 /***/ }),
@@ -26503,20 +26521,15 @@ var Init = exports.Init = function Init(empId) {
   return function (dispatch) {
     API.Get('Appl/GetApplList', empId, yyyymm).then(function (obj) {
       // console.debug(obj);
-      var applicationList = SetApplList(obj);
+      var applList = SetApplList(obj);
 
       dispatch({
         type: CONST.INIT,
-        applicationList: applicationList
+        applList: applList
       });
     }).catch(function (err) {
       return console.error(err);
     });
-
-    // dispatch({
-    //   type: CONST.INIT,
-    //   applyList: [],
-    // });
   };
 };
 
@@ -26586,7 +26599,7 @@ var DeleteApplication = exports.DeleteApplication = function DeleteApplication(i
   return function (dispatch) {
     dispatch({
       type: CONST.DELETE,
-      applcationId: id
+      applId: id
     });
   };
 };
@@ -26603,7 +26616,7 @@ var OpenListItem = exports.OpenListItem = function OpenListItem(id) {
   return function (dispatch) {
     dispatch({
       type: CONST.OPEN_APPLDETAIL,
-      applcationId: id
+      applId: id
     });
   };
 };
@@ -26612,7 +26625,7 @@ var CloseListItem = exports.CloseListItem = function CloseListItem(id) {
   return function (dispatch) {
     dispatch({
       type: CONST.CLOSE_APPLDETAIL,
-      applcationId: id
+      applId: id
     });
   };
 };
@@ -26709,7 +26722,7 @@ var Application = function (_React$Component) {
   _createClass(Application, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (this.props.ApplicationList == null || this.props.ApplicationList.length === 0) {
+      if (this.props.ApplList == null || this.props.ApplList.length === 0) {
         this.state.actions.Init(this.state.EmpId);
       }
     }
@@ -26725,7 +26738,7 @@ var Application = function (_React$Component) {
           })
         },
         _react2.default.createElement(_ApplList2.default, {
-          ApplicationList: this.props.ApplicationList,
+          applList: this.props.ApplList,
           onDelete: this.state.actions.DeleteApplication,
           handleOpen: this.state.actions.OpenListItem,
           handleClose: this.state.actions.CloseListItem
@@ -26758,7 +26771,7 @@ var Application = function (_React$Component) {
 }(_react2.default.Component);
 
 Application.propTypes = {
-  ApplicationList: _propTypes2.default.arrayOf(_propTypes2.default.object).isRequired,
+  ApplList: _propTypes2.default.arrayOf(_propTypes2.default.object).isRequired,
   ShowForm: _propTypes2.default.bool.isRequired,
   ShowSideMenu: _propTypes2.default.bool.isRequired,
   SnackbarOpen: _propTypes2.default.bool.isRequired
@@ -26767,14 +26780,14 @@ Application.propTypes = {
 function mapStateToProps(state) {
   var _state$Application = state.Application,
       ApplicationForm = _state$Application.ApplicationForm,
-      ApplicationList = _state$Application.ApplicationList,
+      ApplList = _state$Application.ApplList,
       EmpId = _state$Application.EmpId,
       ShowForm = _state$Application.ShowForm,
       SnackbarOpen = _state$Application.SnackbarOpen;
   var ShowSideMenu = state.Base.ShowSideMenu;
 
   return {
-    ApplicationForm: ApplicationForm, ApplicationList: ApplicationList, EmpId: EmpId, ShowForm: ShowForm, SnackbarOpen: SnackbarOpen, ShowSideMenu: ShowSideMenu
+    ApplicationForm: ApplicationForm, ApplList: ApplList, EmpId: EmpId, ShowForm: ShowForm, SnackbarOpen: SnackbarOpen, ShowSideMenu: ShowSideMenu
   };
 }
 
@@ -26888,11 +26901,7 @@ var ApplItem = function ApplItem(props) {
     case _Enum.APPL_CD.OVERTIME:
       return _react2.default.createElement(_Overtime2.default, props);
     default:
-      return _react2.default.createElement(_card2.default, {
-        Item: props.item,
-        onDelete: props.onDelete,
-        handleOpen: props.handleOpen
-      });
+      return _react2.default.createElement(_card2.default, props);
   }
 };
 
@@ -26916,17 +26925,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactAddonsCssTransitionGroup = __webpack_require__(532);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-
-var _List = __webpack_require__(68);
 
 var _Avatar = __webpack_require__(133);
 
@@ -26935,6 +26944,8 @@ var _Avatar2 = _interopRequireDefault(_Avatar);
 var _IconButton = __webpack_require__(67);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _List = __webpack_require__(68);
 
 var _colors = __webpack_require__(43);
 
@@ -26952,87 +26963,64 @@ var _ApplItem2 = _interopRequireDefault(_ApplItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var ApplList = function ApplList(props) {
+  var applList = props.applList,
+      onDelete = props.onDelete,
+      handleOpen = props.handleOpen,
+      handleClose = props.handleClose;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ApplList = function (_Component) {
-  _inherits(ApplList, _Component);
-
-  function ApplList(props) {
-    _classCallCheck(this, ApplList);
-
-    var _this = _possibleConstructorReturn(this, (ApplList.__proto__ || Object.getPrototypeOf(ApplList)).call(this, props));
-
-    _this.state = _this.props;
-    return _this;
-  }
-
-  _createClass(ApplList, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({ ApplicationList: nextProps.ApplicationList });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var applicationList = [];
-      if (this.state.ApplicationList) {
-        applicationList = this.state.ApplicationList.map(function (item) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'l_list_container' },
+    _react2.default.createElement(
+      'div',
+      { className: 'l_list_header' },
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          _IconButton2.default,
+          { style: { padding: 0 } },
+          _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(_zangyo2.default, null), backgroundColor: _colors.yellow600 })
+        ),
+        _react2.default.createElement(
+          _IconButton2.default,
+          { style: { padding: 0 } },
+          _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(_hensoku2.default, null), backgroundColor: _colors.green500 })
+        )
+      )
+    ),
+    _react2.default.createElement(
+      _List.List,
+      null,
+      _react2.default.createElement(
+        _reactAddonsCssTransitionGroup2.default,
+        {
+          transitionName: 'example',
+          transitionEnterTimeout: 500,
+          transitionLeaveTimeout: 500
+        },
+        applList.map(function (item) {
           return _react2.default.createElement(_ApplItem2.default, {
             key: item.ApplId,
             item: item,
-            onDelete: _this2.state.onDelete,
-            handleOpen: _this2.state.handleOpen,
-            handleClose: _this2.state.handleClose
+            onDelete: onDelete,
+            handleOpen: handleOpen,
+            handleClose: handleClose
           });
-        });
-      }
+        })
+      )
+    )
+  );
+};
 
-      return _react2.default.createElement(
-        'div',
-        { className: 'l_list_container' },
-        _react2.default.createElement(
-          'div',
-          { className: 'l_list_header' },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              _IconButton2.default,
-              { style: { padding: 0 } },
-              _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(_zangyo2.default, null), backgroundColor: _colors.yellow600 })
-            ),
-            _react2.default.createElement(
-              _IconButton2.default,
-              { style: { padding: 0 } },
-              _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(_hensoku2.default, null), backgroundColor: _colors.green500 })
-            )
-          )
-        ),
-        _react2.default.createElement(
-          _List.List,
-          null,
-          _react2.default.createElement(
-            _reactAddonsCssTransitionGroup2.default,
-            {
-              transitionName: 'example',
-              transitionEnterTimeout: 500,
-              transitionLeaveTimeout: 500
-            },
-            applicationList
-          )
-        )
-      );
-    }
-  }]);
-
-  return ApplList;
-}(_react.Component);
+ApplList.propTypes = {
+  applList: _propTypes2.default.arrayOf(_propTypes2.default.object).isRequired,
+  onDelete: _propTypes2.default.func.isRequired,
+  handleOpen: _propTypes2.default.func.isRequired,
+  handleClose: _propTypes2.default.func.isRequired
+};
 
 exports.default = ApplList;
 
@@ -27090,7 +27078,7 @@ var ListItemTemplate = exports.ListItemTemplate = {
 var initialState = {
   EmpId: 42015,
   ShowForm: true,
-  ApplicationList: [],
+  ApplList: [],
   ApplicationForm: {
     MonthValue: 201703,
     DayValue: 6,
@@ -27117,26 +27105,26 @@ function Application() {
 
     case CONST.INIT:
       {
-        if (!action.applicationList || action.applicationList === undefined) {
+        if (!action.ApplList || action.ApplList === undefined) {
           return state;
         }
-        return _extends({}, state, { ApplicationList: action.applicationList });
+        return _extends({}, state, { ApplList: action.ApplList });
       }
 
     case CONST.OPEN_APPLDETAIL:
-      return _extends({}, state, { ApplicationList: OpenApplDetail(state, action.applcationId) });
+      return _extends({}, state, { ApplList: OpenApplDetail(state, action.applId) });
 
     case CONST.CLOSE_APPLDETAIL:
-      return _extends({}, state, { ApplicationList: CloseApplDetail(state, action.applcationId) });
+      return _extends({}, state, { ApplList: CloseApplDetail(state, action.applId) });
 
     case CONST.SHOW_FORM:
       return _extends({}, state, { ShowForm: !state.ShowForm });
 
     case CONST.SUBMIT:
-      return _extends({}, state, { ApplicationList: AddListItem(state, action) });
+      return _extends({}, state, { ApplList: AddListItem(state, action) });
 
     case CONST.DELETE:
-      return _extends({}, state, { ApplicationList: RemoveListItem(state, action.applcationId) });
+      return _extends({}, state, { ApplList: RemoveListItem(state, action.applId) });
 
     case CONST.SNACKBAR:
       return _extends({}, state, { SnackbarOpen: action.snackbarOpen });
@@ -27147,7 +27135,7 @@ function Application() {
 }
 
 function OpenApplDetail(state, id) {
-  var newList = state.ApplicationList.slice();
+  var newList = state.ApplList.slice();
   var i = newList.findIndex(function (item) {
     return item.ShowDetail === true;
   });
@@ -27162,7 +27150,7 @@ function OpenApplDetail(state, id) {
 }
 
 function CloseApplDetail(state, id) {
-  var newList = state.ApplicationList.slice();
+  var newList = state.ApplList.slice();
   var i = newList.findIndex(function (item) {
     return item.ApplId === id;
   });
@@ -27171,15 +27159,15 @@ function CloseApplDetail(state, id) {
 }
 
 function AddListItem(state, action) {
-  var newlist = state.ApplicationList.slice();
+  var newlist = state.ApplList.slice();
   return [action.applicationForm].concat(newlist);
 }
 
 function RemoveListItem(state, id) {
-  var i = state.ApplicationList.findIndex(function (item) {
+  var i = state.ApplList.findIndex(function (item) {
     return item.ApplId === id;
   });
-  var newList = state.ApplicationList.filter(function (item, index) {
+  var newList = state.ApplList.filter(function (item, index) {
     return index !== i;
   });
   return newList;
@@ -27333,6 +27321,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -27359,7 +27349,7 @@ var _FormFields = __webpack_require__(332);
 
 var _Common = __webpack_require__(89);
 
-var Util = _interopRequireWildcard(_Common);
+var common = _interopRequireWildcard(_Common);
 
 var _Validate = __webpack_require__(353);
 
@@ -27375,186 +27365,225 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// actions
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // material-ui component
-var FormOvertime = function FormOvertime(props) {
-  var handleSubmit = props.handleSubmit,
-      pristine = props.pristine,
-      reset = props.reset,
-      submitting = props.submitting;
 
-
-  var handleBlur = function handleBlur(e) {
-    var aaa = undefined.refs.getRenderedComponent();
-    Util.CalcOvertimeHrs(aaa, e.targeet.value);
-  };
-
-  var monthData = [{ text: '2017/02', value: '201702' }, { text: '2017/03', value: '201703' }, { text: '2017/04', value: '201704' }];
-  var monthItems = monthData.map(function (item) {
-    return _react2.default.createElement(_MenuItem2.default, { key: item.value, value: item.value, primaryText: item.text });
-  });
-  var dayData = [{ text: '6(月)', value: 6 }, { text: '7(火)', value: 7 }, { text: '8(水)', value: 8 }, { text: '9(木)', value: 9 }, { text: '10(金)', value: 10 }, { text: '11(土)', value: 11 }, { text: '12(日)', value: 12 }];
-  var dayItems = dayData.map(function (item) {
-    return _react2.default.createElement(_MenuItem2.default, { key: item.value, value: item.value, primaryText: item.text });
-  });
-
-  return _react2.default.createElement(
-    _Paper2.default,
-    { zDepth: 2 },
-    _react2.default.createElement(
-      'form',
-      { onSubmit: function onSubmit(e) {
-          return handleSubmit(e);
-        } },
-      _react2.default.createElement(
-        'div',
-        { className: 'l_form_header' },
-        _react2.default.createElement(
-          'span',
-          null,
-          '\u6B8B\u696D\u7533\u8ACB'
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'l_form_content' },
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(
-            _reduxForm.Field,
-            {
-              name: 'MonthValue',
-              component: _FormFields.renderSelectField,
-              label: '\u7533\u8ACB\u6708',
-              validate: [validate.required]
-            },
-            monthItems
-          ),
-          _react2.default.createElement(
-            _reduxForm.Field,
-            {
-              name: 'DayValue',
-              component: _FormFields.renderSelectField,
-              label: '\u7533\u8ACB\u65E5',
-              validate: [validate.required]
-            },
-            dayItems
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'CustomerCd',
-            component: _FormFields.renderTextField,
-            label: '\u9867\u5BA2\u30B3\u30FC\u30C9'
-          }),
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'ProjectCd',
-            component: _FormFields.renderTextField,
-            label: '\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u30B3\u30FC\u30C9'
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'WorkContent',
-            component: _FormFields.renderTextAreaField,
-            label: '\u4F5C\u696D\u5185\u5BB9',
-            validate: [validate.required]
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'OvertimeStart',
-            component: _FormFields.renderTextField,
-            label: '\u6B8B\u696D\u4E88\u5B9AFrom',
-            validate: [validate.required],
-            format: normalize.Time,
-            normalize: normalize.Time
-          }),
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'OvertimeEnd',
-            component: _FormFields.renderTextField,
-            label: '\u6B8B\u696D\u4E88\u5B9ATo',
-            validate: [validate.required],
-            normalize: normalize.Time
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'OvertimeActualStart',
-            ref: 'OvertimeActualStartRef',
-            component: _FormFields.renderTextField,
-            label: '\u6B8B\u696D\u5B9F\u7E3EFrom',
-            normalize: normalize.Time,
-            withRef: true
-          }),
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'OvertimeActualEnd',
-            component: _FormFields.renderTextField,
-            label: '\u6B8B\u696D\u5B9F\u7E3ETo',
-            normalize: normalize.Time,
-            onBlur: function onBlur(e) {
-              return undefined.handleBlur(e);
-            }
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'l_form_row' },
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'NomalOvertimeHrs',
-            component: _FormFields.renderTextField,
-            label: '\u666E\u901A\u6B8B\u696D',
-            disabled: true,
-            normalize: normalize.Time
-          }),
-          _react2.default.createElement(_reduxForm.Field, {
-            name: 'LateOvertimeHrs',
-            component: _FormFields.renderTextField,
-            label: '\u6DF1\u591C\u6B8B\u696D',
-            disabled: true,
-            normalize: normalize.Time
-          })
-        )
-      ),
-      _react2.default.createElement(
-        _Paper2.default,
-        { zDepth: 1, className: 'l_form_footer' },
-        _react2.default.createElement(_RaisedButton2.default, {
-          label: '申請',
-          secondary: true,
-          disabled: pristine || submitting,
-          type: 'submit',
-          className: 'button'
-        }),
-        _react2.default.createElement(_RaisedButton2.default, {
-          label: 'Clear',
-          disabled: pristine || submitting,
-          onTouchTap: reset
-        })
-      )
-    )
-  );
-};
 
 // component
 
+// actions
+
+
+var FormOvertime = function (_React$Component) {
+  _inherits(FormOvertime, _React$Component);
+
+  function FormOvertime(props) {
+    _classCallCheck(this, FormOvertime);
+
+    var _this = _possibleConstructorReturn(this, (FormOvertime.__proto__ || Object.getPrototypeOf(FormOvertime)).call(this, props));
+
+    _this.state = _this.props;
+    _this.handleBlur = _this.handleBlur.bind(_this);
+    return _this;
+  }
+
+  _createClass(FormOvertime, [{
+    key: 'handleBlur',
+    value: function handleBlur(e) {
+      var fromtime = this.OvertimeActualStartRef.value;
+
+      var _common$CalcOvertimeH = common.CalcOvertimeHrs(fromtime, e.target.value),
+          nomalHrs = _common$CalcOvertimeH.nomalHrs,
+          lateHrs = _common$CalcOvertimeH.lateHrs;
+
+      this.props.change('NomalOvertimeHrs', nomalHrs);
+      this.props.change('LateOvertimeHrs', lateHrs);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          handleSubmit = _props.handleSubmit,
+          pristine = _props.pristine,
+          reset = _props.reset,
+          submitting = _props.submitting;
+
+
+      var monthData = [{ text: '2017/02', value: '201702' }, { text: '2017/03', value: '201703' }, { text: '2017/04', value: '201704' }];
+      var monthItems = monthData.map(function (item) {
+        return _react2.default.createElement(_MenuItem2.default, { key: item.value, value: item.value, primaryText: item.text });
+      });
+      var dayData = [{ text: '6(月)', value: 6 }, { text: '7(火)', value: 7 }, { text: '8(水)', value: 8 }, { text: '9(木)', value: 9 }, { text: '10(金)', value: 10 }, { text: '11(土)', value: 11 }, { text: '12(日)', value: 12 }];
+      var dayItems = dayData.map(function (item) {
+        return _react2.default.createElement(_MenuItem2.default, { key: item.value, value: item.value, primaryText: item.text });
+      });
+
+      return _react2.default.createElement(
+        _Paper2.default,
+        { zDepth: 2 },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: function onSubmit(e) {
+              return handleSubmit(e);
+            } },
+          _react2.default.createElement(
+            'div',
+            { className: 'l_form_header' },
+            _react2.default.createElement(
+              'span',
+              null,
+              '\u6B8B\u696D\u7533\u8ACB'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'l_form_content' },
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(
+                _reduxForm.Field,
+                {
+                  name: 'MonthValue',
+                  component: _FormFields.renderSelectField,
+                  label: '\u7533\u8ACB\u6708',
+                  validate: [validate.required]
+                },
+                monthItems
+              ),
+              _react2.default.createElement(
+                _reduxForm.Field,
+                {
+                  name: 'DayValue',
+                  component: _FormFields.renderSelectField,
+                  label: '\u7533\u8ACB\u65E5',
+                  validate: [validate.required]
+                },
+                dayItems
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'CustomerCd',
+                component: _FormFields.renderTextField,
+                label: '\u9867\u5BA2\u30B3\u30FC\u30C9'
+              }),
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'ProjectCd',
+                component: _FormFields.renderTextField,
+                label: '\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u30B3\u30FC\u30C9'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'WorkContent',
+                component: _FormFields.renderTextAreaField,
+                label: '\u4F5C\u696D\u5185\u5BB9',
+                validate: [validate.required]
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'OvertimeStart',
+                component: _FormFields.renderTextField,
+                label: '\u6B8B\u696D\u4E88\u5B9AFrom',
+                validate: [validate.required],
+                format: normalize.Time,
+                normalize: normalize.Time
+              }),
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'OvertimeEnd',
+                component: _FormFields.renderTextField,
+                label: '\u6B8B\u696D\u4E88\u5B9ATo',
+                validate: [validate.required],
+                normalize: normalize.Time
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'OvertimeActualStart',
+                ref: function ref(c) {
+                  _this2.OvertimeActualStartRef = c;
+                },
+                component: _FormFields.renderTextField,
+                label: '\u6B8B\u696D\u5B9F\u7E3EFrom',
+                normalize: normalize.Time,
+                withRef: true
+              }),
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'OvertimeActualEnd',
+                component: _FormFields.renderTextField,
+                label: '\u6B8B\u696D\u5B9F\u7E3ETo',
+                normalize: normalize.Time,
+                onBlur: function onBlur(e) {
+                  return _this2.handleBlur(e);
+                }
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'l_form_row' },
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'NomalOvertimeHrs',
+                component: _FormFields.renderTextField,
+                label: '\u666E\u901A\u6B8B\u696D',
+                format: normalize.Hrs,
+                disabled: true
+              }),
+              _react2.default.createElement(_reduxForm.Field, {
+                name: 'LateOvertimeHrs',
+                component: _FormFields.renderTextField,
+                label: '\u6DF1\u591C\u6B8B\u696D',
+                format: normalize.Hrs,
+                disabled: true
+              })
+            )
+          ),
+          _react2.default.createElement(
+            _Paper2.default,
+            { zDepth: 1, className: 'l_form_footer' },
+            _react2.default.createElement(_RaisedButton2.default, {
+              label: '申請',
+              secondary: true,
+              disabled: pristine || submitting,
+              type: 'submit',
+              className: 'button'
+            }),
+            _react2.default.createElement(_RaisedButton2.default, {
+              label: 'Clear',
+              disabled: pristine || submitting,
+              onTouchTap: reset
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return FormOvertime;
+}(_react2.default.Component);
 
 FormOvertime.propTypes = {
   handleSubmit: _propTypes2.default.func.isRequired,
   pristine: _propTypes2.default.bool.isRequired,
   reset: _propTypes2.default.func.isRequired,
-  submitting: _propTypes2.default.bool.isRequired
+  submitting: _propTypes2.default.bool.isRequired,
+  change: _propTypes2.default.func.isRequired
 };
 
 exports.default = (0, _reduxForm.reduxForm)({
@@ -27672,26 +27701,6 @@ var OvertimeItem = function OvertimeItem(props) {
           _react2.default.createElement(
             'span',
             null,
-            '\u666E\u901A\uFF1A'
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            item.NomalOvertimeHrs,
-            ' \u6DF1\u591C\uFF1A'
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            item.LateOvertimeHrs
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'span',
-            null,
             '\u5B9F\u7E3E\uFF1A'
           ),
           _react2.default.createElement(
@@ -27700,6 +27709,26 @@ var OvertimeItem = function OvertimeItem(props) {
             item.OvertimeActualStart,
             '\uFF5E',
             item.OvertimeActualEnd
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            '\u666E\u901A\uFF1A'
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            item.NomalOvertimeHrs
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            '\u6DF1\u591C\uFF1A'
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            item.LateOvertimeHrs
           )
         )
       )
@@ -30585,6 +30614,13 @@ var Time = exports.Time = function Time(value) {
   return hour + ':' + min;
 };
 
+var Hrs = exports.Hrs = function Hrs(value) {
+  if (!value) {
+    return value;
+  }
+  return value.toFixed(1);
+};
+
 /***/ }),
 /* 353 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32480,7 +32516,7 @@ exports = module.exports = __webpack_require__(79)(undefined);
 
 
 // module
-exports.push([module.i, ".l_apply_container {\n  padding: 65px 0 1px;\n  width: auto;\n  min-width: 400px;\n  margin: 0 96px;\n  background-color: #ddd;\n}\n.l_apply_container.is_open_menu {\n  width: auto;\n  margin-left: 256px;\n}\n.l_list_container {\n  position: relative;\n  margin: 0;\n  padding: 0;\n}\n.l_list_container .l_list_header {\n  top: 65px;\n  height: 50px;\n}\n.md_card {\n  position: relative;\n  margin: 0 16px 2px 16px;\n}\n.md_card_icon {\n  position: absolute;\n  top: 0;\n  right: 0;\n  z-index: 2;\n}\n.md_card_content {\n  display: flex;\n  position: relative;\n  min-width: 400px;\n}\n.md_card_content .md_card_title {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-align: left;\n  white-space: nowrap;\n  flex: 0 0 auto;\n  width: auto;\n  font-weight: bold;\n}\n.md_card_content .md_card_title span {\n  margin-right: 8px;\n}\n.l_form_container {\n  position: fixed;\n  bottom: 0;\n  right: 96px;\n  width: 480px;\n  height: calc(100vh - 72px);\n  border-top-left-radius: 7.5px;\n  border-top-right-radius: 7.5px;\n  display: none;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: #fff;\n  opacity: 0;\n  z-index: 0;\n}\n.l_form_container.is_open_form {\n  display: flex;\n  opacity: 1;\n  transition: opacity 300ms ease-in;\n  z-index: 3;\n}\n.example-enter {\n  opacity: 0.1;\n}\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 1000ms ease-in;\n}\n.example-leave {\n  opacity: 1;\n}\n.example-leave.example-leave-active {\n  opacity: 0.1;\n  transition: opacity 1000ms ease-in;\n}\n", ""]);
+exports.push([module.i, ".l_apply_container {\n  padding: 65px 0 1px;\n  width: auto;\n  min-width: 400px;\n  margin: 0 96px;\n  background-color: #ddd;\n}\n.l_apply_container.is_open_menu {\n  width: auto;\n  margin-left: 256px;\n}\n.l_list_container {\n  position: relative;\n  margin: 0;\n  padding: 0;\n}\n.l_list_container .l_list_header {\n  top: 65px;\n  height: 50px;\n}\n.md_card {\n  position: relative;\n  margin: 0 16px 2px 16px;\n}\n.md_card_icon {\n  position: absolute;\n  top: 0;\n  right: 0;\n  z-index: 2;\n}\n.md_card_content {\n  display: flex;\n  position: relative;\n  min-width: 400px;\n}\n.md_card_content .md_card_title {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-align: left;\n  white-space: nowrap;\n  flex: 0 0 auto;\n  width: auto;\n  font-weight: bold;\n}\n.md_card_content .md_card_title span {\n  margin-right: 16px;\n}\n.l_form_container {\n  position: fixed;\n  bottom: 0;\n  right: 96px;\n  width: 480px;\n  height: calc(100vh - 72px);\n  border-top-left-radius: 7.5px;\n  border-top-right-radius: 7.5px;\n  display: none;\n  flex-direction: column;\n  justify-content: space-between;\n  background-color: #fff;\n  opacity: 0;\n  z-index: 0;\n}\n.l_form_container.is_open_form {\n  display: flex;\n  opacity: 1;\n  transition: opacity 300ms ease-in;\n  z-index: 3;\n}\n.example-enter {\n  opacity: 0.1;\n}\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 1000ms ease-in;\n}\n.example-leave {\n  opacity: 1;\n}\n.example-leave.example-leave-active {\n  opacity: 0.1;\n  transition: opacity 1000ms ease-in;\n}\n", ""]);
 
 // exports
 
@@ -71819,8 +71855,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/stylus-loader/index.js!./form.styl", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/stylus-loader/index.js!./form.styl");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/stylus-loader/index.js!./Form.styl", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/stylus-loader/index.js!./Form.styl");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});

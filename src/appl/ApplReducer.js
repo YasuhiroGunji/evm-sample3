@@ -4,9 +4,11 @@ import * as Util from '../utils/Common';
 export const ListItemTemplate = {
   ApplId: -1,
   ApplCd: 1,
+  ShowDetail: false,
   ScheduledDate: Util.GetCurrentTimeString(),
   CustomerCd: '',
   ProjectCd: '',
+  WorkContent: '',
   OvertimeStart: 1800,
   OvertimeEnd: 2000,
   OvertimeActualStart: 0,
@@ -18,8 +20,6 @@ export const ListItemTemplate = {
   IrregularActualStart: 0,
   IrregularActualEnd: 0,
   IrregularHrs: 0,
-  WorkContent: '',
-  ShowDetail: false,
 };
 
 const initialState = {
@@ -62,6 +62,9 @@ export default function Application(state = initialState, action = {}) {
 
     case CONST.SHOW_FORM:
       return { ...state, ShowForm: !state.ShowForm };
+
+    case CONST.HIDE_FORM:
+      return { ...state, ShowForm: false };
 
     case CONST.SUBMIT:
       return { ...state, ApplList: AddListItem(state, action) };

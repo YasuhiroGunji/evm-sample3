@@ -10,10 +10,11 @@ import { yellow600, green500 } from 'material-ui/styles/colors';
 import Zangyo from '../images/zangyo';
 import Hensoku from '../images/hensoku';
 import ApplItem from './ApplItem';
+import ApplItemDetail from './ApplItemDetail';
 
 
 const ApplList = (props) => {
-  const { applList, onDelete, handleOpen, handleClose } = props;
+  const { applList, onDelete, handleOpen, handleClose, initialEdit } = props;
 
   return (
     <div className={'l_list_container'}>
@@ -33,15 +34,27 @@ const ApplList = (props) => {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
         >
-          {applList.map(item => (
-            <ApplItem
-              key={item.ApplId}
-              item={item}
-              onDelete={onDelete}
-              handleOpen={handleOpen}
-              handleClose={handleClose}
-            />
-          ))}
+          {applList.map((item) => {
+            if (item.ShowDetail) {
+              return (
+                <ApplItemDetail
+                  key={item.ApplId}
+                  item={item}
+                  onDelete={onDelete}
+                  handleClose={handleClose}
+                  initialEdit={initialEdit}
+                />
+              );
+            }
+            return (
+              <ApplItem
+                key={item.ApplId}
+                item={item}
+                onDelete={onDelete}
+                handleOpen={handleOpen}
+              />
+            );
+          })}
         </CSSTransitionGroup>
       </List>
     </div>
@@ -53,6 +66,7 @@ ApplList.propTypes = {
   onDelete: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
+  initialEdit: PropTypes.func.isRequired,
 };
 
 export default ApplList;

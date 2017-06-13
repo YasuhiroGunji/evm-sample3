@@ -131,6 +131,9 @@ export const OpenListItem = id =>
       type: CONST.OPEN_APPLDETAIL,
       applId: id,
     });
+    dispatch({
+      type: CONST.HIDE_FORM,
+    });
   };
 
 export const CloseListItem = id =>
@@ -141,8 +144,6 @@ export const CloseListItem = id =>
     });
   };
 
-
-
 export const Snackbar = isOpen =>
   dispatch =>
     dispatch({
@@ -150,3 +151,9 @@ export const Snackbar = isOpen =>
       snackbarOpen: isOpen,
     });
 
+export const InitialEdit = (obj) =>
+  dispatch =>
+    dispatch({
+      type: CONST.SNACKBAR,
+      snackbarOpen: obj,
+    });

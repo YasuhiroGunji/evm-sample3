@@ -40,6 +40,7 @@ class Application extends React.Component {
           onDelete={this.state.actions.DeleteApplication}
           handleOpen={this.state.actions.OpenListItem}
           handleClose={this.state.actions.CloseListItem}
+          initialEdit={this.state.actions.InitialEdit}
         />
 
         <FloatingActionButton

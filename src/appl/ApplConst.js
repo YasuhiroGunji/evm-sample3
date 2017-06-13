@@ -1,6 +1,6 @@
 export const INIT = 'INIT';
 export const SHOW_FORM = 'SHOW_FORM';
-
+export const HIDE_FORM = 'HIDE_FORM';
 export const DELETE = 'DELETE';
 export const SUBMIT = 'SUBMIT';
 export const SNACKBAR = 'SNACKBAR';
