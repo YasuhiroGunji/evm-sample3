@@ -1,6 +1,5 @@
 import request from 'superagent';
 
-// const url = 'http://evmapp20170130101609.azurewebsites.net/api/';
 const url = 'http://localhost:18593/api/v1';
 
 
